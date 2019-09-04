@@ -28,27 +28,27 @@ resource "google_project_iam_member" "stackdriver" {
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub" {
-  topic  = "projects/${var.pubsub_project_id}/topics/${var.pubsub_topic_name}"
+  topic   = "projects/${var.pubsub_project_id}/topics/${var.pubsub_topic_name}"
   project = var.pubsub_project_id
-  role   = "roles/pubsub.publisher"
-  member = "serviceAccount:${google_service_account.main.email}"
+  role    = "roles/pubsub.publisher"
+  member  = "serviceAccount:${google_service_account.main.email}"
 }
 
 data "template_file" "slo" {
   template = file("${path.module}/code/slo_config.json.tpl")
 
   vars = {
-    service_name                = var.service_name
-    feature_name                = var.feature_name
-    description                 = var.description
-    name                        = var.name
-    target                      = var.target
-    backend_class               = var.backend_class
-    backend_method              = var.backend_method
-    backend_project_id          = var.backend_project_id
-    backend_measurement         = jsonencode(var.backend_measurement)
-    pubsub_project_id           = var.pubsub_project_id
-    pubsub_topic_name           = var.pubsub_topic_name
+    service_name        = var.service_name
+    feature_name        = var.feature_name
+    description         = var.description
+    name                = var.name
+    target              = var.target
+    backend_class       = var.backend_class
+    backend_method      = var.backend_method
+    backend_project_id  = var.backend_project_id
+    backend_measurement = jsonencode(var.backend_measurement)
+    pubsub_project_id   = var.pubsub_project_id
+    pubsub_topic_name   = var.pubsub_topic_name
   }
 }
 

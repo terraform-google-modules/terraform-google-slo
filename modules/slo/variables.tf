@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 variable "project_id" {
   description = "SLO project id"
 }
@@ -53,7 +53,7 @@ variable "backend_method" {
 
 variable "backend_measurement" {
   description = "SLO measurement config"
-  type = map(string)
+  type        = map(string)
 }
 
 variable "region" {
