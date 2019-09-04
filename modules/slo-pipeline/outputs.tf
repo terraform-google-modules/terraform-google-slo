@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,30 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.0"
+output "project_id" {
+  value = var.project_id
 }
 
-resource "google_storage_bucket" "main" {
-  project = var.project_id
-  name    = var.bucket_name
+output "exporters" {
+  value = data.template_file.exporters.rendered
+}
+
+output "function_name" {
+  value = google_cloudfunctions_function.function.name
+}
+
+output "function_bucket_name" {
+  value = google_storage_bucket.bucket.name
+}
+
+output "function_bucket_object_name" {
+  value = google_storage_bucket_object.main.name
+}
+
+output "pubsub_topic_name" {
+  value = google_pubsub_topic.stream.name
+}
+
+output "bigquery_dataset_self_link" {
+  value = google_bigquery_dataset.main.self_link
 }

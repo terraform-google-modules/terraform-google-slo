@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-variable "project_id" {
-  description = "The project ID to deploy to"
-}
-
-variable "bucket_name" {
-  description = "The name of the bucket to create"
+terraform {
+  required_version = ">= 0.12"
 }

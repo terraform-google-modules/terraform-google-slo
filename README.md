@@ -1,6 +1,7 @@
 # terraform-google-slo
 
-This module was generated from [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template/), which by default generates a module that simply creates a GCS bucket. As the module develops, this README should be updated.
+This module deploys the `slo-generator` to compute SLOs on a schedule using
+a Cloud Scheduler, a Cloud Function and exporters.
 
 The resources/services/activations/deletions that this module will create/trigger are:
 
@@ -11,12 +12,36 @@ The resources/services/activations/deletions that this module will create/trigge
 Basic usage of this module is as follows:
 
 ```hcl
-module "slo" {
-  source  = "terraform-google-modules/slo/google"
-  version = "~> 0.1"
+module "slo-pipeline" {
+  source                      = "terraform-google-modules/slo/"
+  function_name               = "slo-export"
+  region                      = "us-east"
+  project_id                  = "test-project"
+  bigquery_project_id         = "test-project"
+  bigquery_dataset_name       = "slo_reports"
+  stackdriver_host_project_id = "sd-host"
+}
 
-  project_id  = "<PROJECT ID>"
-  bucket_name = "gcs-test-bucket"
+module "slo-definition-1" {
+  source             = "../../modules/slo"
+  name               = "slo-pubsub-ack"
+  region             = "us-east1"
+  description        = "Acked Pub/Sub messages over total number of Pub/Sub messages"
+  service_name       = "test"
+  feature_name       = "test"
+  target             = "0.9"
+  backend_class      = "Stackdriver"
+  backend_project_id = "sd-host"
+  backend_method     = "good_bad_ratio"
+  backend_measurement = {
+    filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\"",
+    filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
+  }
+  schedule          = "* * * * */1"
+  project_id        = module.slo-project.project_id
+  pubsub_project_id = module.slo-pipeline.project_id
+  pubsub_topic_name = module.slo-pipeline.pubsub_topic_name
+  labels            = var.labels
 }
 ```
 

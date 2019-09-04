@@ -14,7 +14,45 @@
  * limitations under the License.
  */
 
-output "bucket_name" {
+output "project_id" {
   description = "The name of the bucket."
-  value       = module.slo.bucket_name
+  value       = module.slo-pipeline.project_id
+}
+
+# SLO Pipeline outputs
+output "exporters" {
+  value = module.slo-pipeline.exporters
+}
+
+output "function_name" {
+  value = module.slo-pipeline.project_id
+}
+
+output "function_bucket_name" {
+  value = module.slo-pipeline.project_id
+}
+
+output "function_bucket_object_name" {
+  value = module.slo-pipeline.project_id
+}
+
+output "pubsub_topic_name" {
+  value = module.slo-pipeline.project_id
+}
+
+output "bigquery_dataset_name" {
+  value = module.slo-pipeline.project_id
+}
+
+# SLO Output
+output "service_account_email" {
+  value = module.slo-definition.service_account_email
+}
+
+output "config" {
+  value = module.slo-definition.config
+}
+
+output "scheduler_job_name" {
+  value = module.slo-definition.scheduler_job_name
 }

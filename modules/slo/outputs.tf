@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-output "bucket_name" {
-  value = google_storage_bucket.main.name
+output "service_account_email" {
+  value = google_service_account.main.email
+}
+
+output "config" {
+  value = data.template_file.slo.rendered
+}
+
+output "scheduler_job_name" {
+  value = module.slo-cloud-function.name
 }
