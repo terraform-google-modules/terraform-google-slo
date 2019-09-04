@@ -15,13 +15,16 @@
  */
 
 output "service_account_email" {
+  description = "Service account email used to run the Cloud Function"
   value = google_service_account.main.email
 }
 
 output "config" {
+  description = "Rendered SLO configuration for `slo-exporter`"
   value = data.template_file.slo.rendered
 }
 
 output "scheduler_job_name" {
+  description = "Cloud Scheduler job name"
   value = module.slo-cloud-function.name
 }

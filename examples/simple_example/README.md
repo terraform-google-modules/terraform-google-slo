@@ -7,14 +7,30 @@ This example illustrates how to use the `slo` module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| bucket\_name | The name of the bucket to create. | string | n/a | yes |
-| project\_id | The ID of the project in which to provision resources. | string | n/a | yes |
+| billing\_account | Billing account id | string | n/a | yes |
+| bucket\_name | GCS bucket name to create | string | n/a | yes |
+| credentials\_path | Path to gcloud credentials | string | n/a | yes |
+| folder\_id | Folder id | string | n/a | yes |
+| labels | Project labels | map | `<map>` | no |
+| org\_id | Organization id | string | n/a | yes |
+| project\_name | Project name | string | `"slo-pipeline"` | no |
+| region | Region | string | n/a | yes |
+| stackdriver\_host\_project\_id | Stackdriver host project id | string | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bucket\_name | The name of the bucket. |
+| bigquery\_dataset\_name |  |
+| config |  |
+| exporters |  |
+| function\_bucket\_name |  |
+| function\_bucket\_object\_name |  |
+| function\_name |  |
+| project\_id | The name of the bucket. |
+| pubsub\_topic\_name |  |
+| scheduler\_job\_name |  |
+| service\_account\_email |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

@@ -1,19 +1,31 @@
 # terraform-google-slo
 
-This module deploys the `slo-generator` to compute SLOs on a schedule using
-a Cloud Scheduler, a Cloud Function and exporters.
+This module deploys the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator) in Cloud Functions in order to compute
+and export SLOs on a schedule.
 
-The resources/services/activations/deletions that this module will create/trigger are:
+## Architecture
 
-- Create a GCS bucket with the provided name
+This module is split into two submodules:
+
+* `slo-pipeline`: This submodule handles exporting SLO reports to different
+destinations (Cloud Pub/Sub, BigQuery, Stackdriver Monitoring). The
+infrastructure is shared by all SLOs.
+
+* `slo`: This submodule deploys the infrastructure needed to compute **one** SLO.
+Users should use one invocation of this submodule by SLO. Once the SLO report
+is computed, the result is fed to the shared Pub/Sub topic created by the
+`slo-pipeline` module.
+
+![Architecture](./diagram.png)
+
 
 ## Usage
 
-Basic usage of this module is as follows:
+First, deploy the SLO pipeline:
 
 ```hcl
 module "slo-pipeline" {
-  source                      = "terraform-google-modules/slo/"
+  source                      = "terraform-google-modules/slo/google//modules/slo-pipeline"
   function_name               = "slo-export"
   region                      = "us-east"
   project_id                  = "test-project"
@@ -21,9 +33,13 @@ module "slo-pipeline" {
   bigquery_dataset_name       = "slo_reports"
   stackdriver_host_project_id = "sd-host"
 }
+```
 
+Now, deploy an SLO definition:
+
+```hcl
 module "slo-definition-1" {
-  source             = "../../modules/slo"
+  source             = "terraform-google-modules/slo/google//modules/slo"
   name               = "slo-pubsub-ack"
   region             = "us-east1"
   description        = "Acked Pub/Sub messages over total number of Pub/Sub messages"
@@ -48,53 +64,8 @@ module "slo-definition-1" {
 Functional examples are included in the
 [examples](./examples/) directory.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| bucket\_name | The name of the bucket to create | string | n/a | yes |
-| project\_id | The project ID to deploy to | string | n/a | yes |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| bucket\_name |  |
-
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-## Requirements
-
-These sections describe requirements for using this module.
-
-### Software
-
-The following dependencies must be available:
-
-- [Terraform][terraform] v0.12
-- [Terraform Provider for GCP][terraform-provider-gcp] plugin v2.0
-
-### Service Account
-
-A service account with the following roles must be used to provision
-the resources of this module:
-
-- Storage Admin: `roles/storage.admin`
-
-The [Project Factory module][project-factory-module] and the
-[IAM module][iam-module] may be used in combination to provision a
-service account with the necessary roles applied.
-
-### APIs
-
-A project with the following APIs enabled must be used to host the
-resources of this module:
-
-- Google Cloud Storage JSON API: `storage-api.googleapis.com`
-
-The [Project Factory module][project-factory-module] can be used to
-provision a project with the necessary APIs enabled.
+Additional information, including description of the Inputes / Outputs is
+available in [`modules/slo-pipeline/README.md`](./modules/slo-pipeline/README.md) and [`modules/slo/README.md`](./modules/slo/README.md).
 
 ## Contributing
 
