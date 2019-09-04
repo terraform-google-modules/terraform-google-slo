@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-output "service_account_email" {
-  description = "Service account email used to run the Cloud Function"
-  value       = google_service_account.main.email
+output "project_id" {
+ description = "Project id"
+ value       = var.project_id
 }
 
 output "config" {
-  description = "Rendered SLO configuration for `slo-exporter`"
-  value       = data.template_file.slo.rendered
+  description = "Rendered configuration passed to `slo-exporter`"
+  value       = jsondecode(data.template_file.slo.rendered)
+}
+
+output "service_account_email" {
+  description = "Service account email used to run the Cloud Function"
+  value       = google_service_account.main.email
 }
 
 output "scheduler_job_name" {

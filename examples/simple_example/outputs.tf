@@ -13,46 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-output "project_id" {
-  description = "The name of the bucket."
-  value       = module.slo-pipeline.project_id
+output "slo-pipeline" {
+  description = "SLO pipeline outputs"
+  value = {
+    project_id                  = module.slo-pipeline.project_id
+    config                      = module.slo-pipeline.config
+    function_name               = module.slo-pipeline.function_name
+    function_bucket_name        = module.slo-pipeline.function_bucket_name
+    function_bucket_object_name = module.slo-pipeline.function_bucket_object_name
+    pubsub_topic_name           = module.slo-pipeline.pubsub_topic_name
+    bigquery_dataset_self_link  = module.slo-pipeline.bigquery_dataset_self_link
+  }
 }
 
-# SLO Pipeline outputs
-output "exporters" {
-  value = module.slo-pipeline.exporters
-}
-
-output "function_name" {
-  value = module.slo-pipeline.project_id
-}
-
-output "function_bucket_name" {
-  value = module.slo-pipeline.project_id
-}
-
-output "function_bucket_object_name" {
-  value = module.slo-pipeline.project_id
-}
-
-output "pubsub_topic_name" {
-  value = module.slo-pipeline.project_id
-}
-
-output "bigquery_dataset_name" {
-  value = module.slo-pipeline.project_id
-}
-
-# SLO Output
-output "service_account_email" {
-  value = module.slo-definition.service_account_email
-}
-
-output "config" {
-  value = module.slo-definition.config
-}
-
-output "scheduler_job_name" {
-  value = module.slo-definition.scheduler_job_name
+output "slo" {
+  description = "SLO outputs"
+  value = {
+    project_id = module.slo.project_id
+    service_account_email = module.slo.service_account_email
+    config = module.slo.config
+    scheduler_job_name = module.slo.scheduler_job_name
+  }
 }

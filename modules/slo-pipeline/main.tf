@@ -88,4 +88,5 @@ resource "google_cloudfunctions_function" "function" {
     event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
     resource   = "projects/${var.project_id}/topics/${google_pubsub_topic.stream.name}"
   }
+  depends_on = [module.app-engine.name]
 }

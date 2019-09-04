@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
+locals {
+  name = "slo-${var.service_name}-${var.feature_name}-${var.name}"
+}
+
 resource "google_service_account" "main" {
-  account_id   = var.name
+  account_id   = local.name
   project      = var.project_id
   display_name = "Service account for SLO computations"
 }
@@ -41,7 +45,7 @@ data "template_file" "slo" {
     service_name        = var.service_name
     feature_name        = var.feature_name
     description         = var.description
-    name                = var.name
+    name                = local.name
     target              = var.target
     backend_class       = var.backend_class
     backend_method      = var.backend_method
@@ -71,10 +75,11 @@ module "slo-cloud-function" {
   source                                = "github.com/terraform-google-modules/terraform-google-scheduled-function"
   project_id                            = var.project_id
   region                                = var.region
-  job_name                              = var.name
+  job_name                              = local.name
   job_schedule                          = var.schedule
-  topic_name                            = var.name
-  function_name                         = var.name
+  topic_name                            = local.name
+  bucket_name                           = local.name
+  function_name                         = local.name
   function_description                  = var.description
   function_entry_point                  = "main"
   function_source_directory             = "${path.module}/code"
@@ -83,5 +88,4 @@ module "slo-cloud-function" {
   function_source_archive_bucket_labels = var.labels
   function_service_account_email        = google_service_account.main.email
   function_labels                       = var.labels
-  bucket_name                           = var.name
 }

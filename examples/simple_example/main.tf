@@ -27,7 +27,7 @@ module "slo-project" {
   org_id                     = var.org_id
   folder_id                  = var.folder_id
   billing_account            = var.billing_account
-  credentials_path           = local.credentials_file_path
+  credentials_path           = var.credentials_path
   auto_create_network        = "true"
   disable_dependent_services = "true"
   labels                     = var.labels
@@ -56,9 +56,9 @@ module "slo-pipeline" {
   stackdriver_host_project_id = var.stackdriver_host_project_id
 }
 
-module "slo-definition" {
+module "slo" {
   source             = "../../modules/slo"
-  name               = "slo-pubsub-ack"
+  name               = "pubsub-acked-msg"
   region             = "${var.region}1"
   description        = "Acked Pub/Sub messages over total number of Pub/Sub messages"
   service_name       = "test"

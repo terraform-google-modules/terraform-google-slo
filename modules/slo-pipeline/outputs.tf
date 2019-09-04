@@ -19,9 +19,9 @@ output "project_id" {
   description = "Project id"
 }
 
-output "exporters" {
-  description = "Rendered exporters configuration for `slo-exporter`"
-  value       = data.template_file.exporters.rendered
+output "config" {
+  description = "Rendered configuration passed to `slo-exporter`"
+  value       = jsondecode(data.template_file.exporters.rendered)
 }
 
 output "function_name" {
