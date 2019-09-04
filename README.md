@@ -5,23 +5,23 @@ and export SLOs on a schedule.
 
 ## Architecture
 
+![Architecture](./diagram.png)
+
 This module is split into two submodules:
 
-* `slo-pipeline`: This submodule handles exporting SLO reports to different
+* `slo`: This submodule deploys the infrastructure needed to compute SLO reports
+for **one** SLO. Users should use **one invocation of this submodule by SLO defined**.
+Once the SLO report is computed, the result is fed to the shared Pub/Sub topic
+created by the `slo-pipeline` module.
+
+* `slo-pipeline`: This submodule handles **exporting** SLO reports to different
 destinations (Cloud Pub/Sub, BigQuery, Stackdriver Monitoring). The
 infrastructure is shared by all SLOs.
-
-* `slo`: This submodule deploys the infrastructure needed to compute **one** SLO.
-Users should use one invocation of this submodule by SLO. Once the SLO report
-is computed, the result is fed to the shared Pub/Sub topic created by the
-`slo-pipeline` module.
-
-![Architecture](./diagram.png)
 
 
 ## Usage
 
-First, deploy the SLO pipeline:
+First, deploy the SLO pipeline (shared module):
 
 ```hcl
 module "slo-pipeline" {
@@ -61,18 +61,16 @@ module "slo-definition-1" {
 }
 ```
 
-Functional examples are included in the
-[examples](./examples/) directory.
-
 Additional information, including description of the Inputes / Outputs is
 available in [`modules/slo-pipeline/README.md`](./modules/slo-pipeline/README.md) and [`modules/slo/README.md`](./modules/slo/README.md).
+
+Functional examples are included in the
+[examples](./examples/) directory.
 
 ## Contributing
 
 Refer to the [contribution guidelines](./CONTRIBUTING.md) for
 information on contributing to this module.
 
-[iam-module]: https://registry.terraform.io/modules/terraform-google-modules/iam/google
-[project-factory-module]: https://registry.terraform.io/modules/terraform-google-modules/project-factory/google
 [terraform-provider-gcp]: https://www.terraform.io/docs/providers/google/index.html
 [terraform]: https://www.terraform.io/downloads.html

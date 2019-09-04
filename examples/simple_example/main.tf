@@ -15,6 +15,7 @@
  */
 
 provider "google" {
+  credentials = file(var.credentials_path)
   version = "~> 2.0"
 }
 
@@ -26,6 +27,7 @@ module "slo-project" {
   org_id                     = var.org_id
   folder_id                  = var.folder_id
   billing_account            = var.billing_account
+  credentials_path           = local.credentials_file_path
   auto_create_network        = "true"
   disable_dependent_services = "true"
   labels                     = var.labels

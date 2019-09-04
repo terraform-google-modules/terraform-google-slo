@@ -25,8 +25,14 @@ resource "random_pet" "main" {
 }
 
 module "example" {
-  source = "../../../examples/simple_example"
-
-  project_id  = var.project_id
-  bucket_name = random_pet.main.id
+  source                      = "../../../examples/simple_example"
+  org_id                      = var.org_id
+  folder_id                   = var.folder_id
+  billing_account             = var.billing_account
+  bucket_name                 = var.bucket_name
+  project_name                = var.project_name
+  stackdriver_host_project_id = var.stackdriver_host_project_id
+  region                      = var.region
+  labels                      = var.labels
+  credentials_path            = var.credentials_path
 }

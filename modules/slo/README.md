@@ -3,6 +3,8 @@
 The SLO submodule deploys infrastructure for computing SLO reports based on an
 SLO definition.
 
+![Architecture](./diagram.png)
+
 The submodule creates the following resources:
 
 * A **Cloud Function** which computes SLO reports using the `slo-generator`
@@ -11,11 +13,9 @@ The submodule creates the following resources:
 * A **Cloud Scheduler** job that will trigger the Cloud Function at a pre-defined
   interval through the Cloud Pub/Sub topic.
 * A **JSON configuration file** (needed by the `slo-generator`), indicating which
-  backends to query metrics from, the method to compute the SLO. More information
-  on backend types and compute methods is available in `slo-generator` documentation.
-
-![Architecture](./diagram.png)
-
+  backend to query metrics from, the method to compute the SLO, and other
+  information. More documentation on backend types and compute methods is
+  available in the `slo-generator` documentation.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
