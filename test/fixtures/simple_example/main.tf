@@ -13,17 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-provider "random" {
-  version = "~> 2.0"
-}
-
-resource "random_pet" "main" {
-  length    = 1
-  prefix    = "simple-example"
-  separator = "-"
-}
-
 module "example" {
   source                      = "../../../examples/simple_example"
   org_id                      = var.org_id
