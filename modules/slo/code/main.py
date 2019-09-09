@@ -31,4 +31,5 @@ def main(data, context):
         slo_config,
         error_budget_policy,
         timestamp=None,
-        client=None)
+        client=None,
+        do_export=True)

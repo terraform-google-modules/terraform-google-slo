@@ -12,10 +12,10 @@ The submodule creates the following resources:
   Function.
 * A **Cloud Scheduler** job that will trigger the Cloud Function at a pre-defined
   interval through the Cloud Pub/Sub topic.
-* A **JSON configuration file** (needed by the `slo-generator`), indicating which
-  backend to query metrics from, the method to compute the SLO, and other
-  information. More documentation on backend types and compute methods is
-  available in the `slo-generator` documentation.
+* A **JSON configuration file**, 1:1 mapping with the `slo-generator`
+  configuration, indicating which backend to query metrics from, the method to
+  compute the SLO, and other information. More documentation on backend types
+  and compute methods is available in the `slo-generator` documentation.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs

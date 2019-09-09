@@ -20,8 +20,8 @@ output "project_id" {
 }
 
 output "config" {
-  description = "Rendered configuration passed to `slo-exporter`"
-  value       = jsondecode(data.template_file.slo.rendered)
+  description = "SLO Config"
+  value       = var.config
 }
 
 output "service_account_email" {

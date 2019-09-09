@@ -17,7 +17,7 @@ import json
 import base64
 
 with open("exporters.json") as f:
-    exporters = json.load(f)['exporters']
+    exporters = json.load(f)
 
 
 def main(data, context):

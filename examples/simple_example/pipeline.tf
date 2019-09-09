@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-output "slo-pipeline" {
-  description = "SLO pipeline outputs"
-  value = module.slo-pipeline
-}
 
-output "slo" {
-  description = "SLO outputs"
-  value = module.slo
+module "slo-pipeline" {
+  source                      = "../../modules/slo-pipeline"
+  project_id                  = var.project_id
+  function_name               = var.function_name
+  bucket_name                 = var.bucket_name
+  region                      = var.region
+  exporters = [
+    {
+      class      = "Stackdriver"
+      project_id = var.stackdriver_host_project_id
+    },
+    {
+      class      = "Bigquery"
+      project_id = var.project_id
+      dataset_id = "slo"
+      table_id   = "reports"
+    }
+  ]
 }

@@ -19,9 +19,9 @@ output "project_id" {
   description = "Project id"
 }
 
-output "config" {
-  description = "Rendered configuration passed to `slo-exporter`"
-  value       = jsondecode(data.template_file.exporters.rendered)
+output "exporters" {
+  description = "Exporter config"
+  value       = var.exporters
 }
 
 output "function_name" {
@@ -40,11 +40,6 @@ output "function_bucket_object_name" {
 }
 
 output "pubsub_topic_name" {
-  description = "PubSub topic between Cloud Scheduler and Cloud Function"
+  description = "Ingress PubSub topic to SLO pipeline"
   value       = google_pubsub_topic.stream.name
-}
-
-output "bigquery_dataset_self_link" {
-  description = "BigQuery dataset self link"
-  value       = google_bigquery_dataset.main.self_link
 }

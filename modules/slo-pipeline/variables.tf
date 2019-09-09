@@ -22,24 +22,6 @@ variable "bucket_name" {
   description = "Name of the bucket to create"
 }
 
-variable "stackdriver_host_project_id" {
-  description = "Stackdriver host project id (to write custom metrics)"
-}
-
-variable "bigquery_project_id" {
-  description = "BigQuery host project id (to write BQ tables)"
-}
-
-variable "bigquery_dataset_name" {
-  description = "BigQuery dataset name (optional)"
-  default     = "slo"
-}
-
-variable "bigquery_table_name" {
-  description = "BigQuery table name (optional)"
-  default     = "reports"
-}
-
 variable "function_name" {
   description = "Cloud Function name"
   default     = "slo-exporter"
@@ -52,5 +34,18 @@ variable "function_memory" {
 
 variable "region" {
   description = "Region for the App Engine app"
-  default     = "us-west"
+  default     = "us-east1"
+}
+
+variable "exporters" {
+  description = "SLO export destinations config"
+
+  # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
+  # type = list(object({
+  #   class = string
+  #   project_id = string
+  #   dataset_id = string
+  #   table_id = string
+  #   topic_name = string
+  # }))
 }

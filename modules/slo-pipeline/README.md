@@ -12,6 +12,22 @@ The SLO pipeline submodule creates the following resources:
 
 ![Architecture](./diagram.png)
 
+## Pre-requisites
+To use this module, you will need:
+
+- A **GCP project** dedicated to the SLO pipeline, with the following APIs enabled:
+  - App Engine API: `appengine.googleapis.com`
+  - Cloud Functions API: `cloudfunctions.googleapis.com`
+  - Cloud Scheduler API: `cloudscheduler.googleapis.com`
+  - Monitoring API: `monitoring.googleapis.com`
+  - Logging API: `logging.googleapis.com`
+  - Pub/Sub API: `pubsub.googleapis.com`
+  - BigQuery API: `bigquery-json.googleapis.com`
+
+- An **App Engine application** enabled on this project.
+
+See the [example_project.tf](../../examples/example_project.tf) for an example to create this project and enable the App Engine application using Terraform and the [Project Factory module](https://github.com/terraform-google-modules/terraform-google-project-factory).
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 

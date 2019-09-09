@@ -18,61 +18,85 @@ variable "project_id" {
   description = "SLO project id"
 }
 
-variable "name" {
-  description = "SLO name"
-}
-
-variable "description" {
-  description = "SLO description"
-}
-
-variable "service_name" {
-  description = "Name of monitored service"
-}
-
-variable "feature_name" {
-  description = "Name of monitored feature"
-}
-
-variable "target" {
-  description = "Target for this SLO"
-}
-
-variable "backend_class" {
-  description = "SLO backend class"
-  default     = "Stackdriver"
-}
-
-variable "backend_project_id" {
-  description = "Project id for the metrics backend"
-}
-
-variable "backend_method" {
-  description = "SLO computation method"
-}
-
-variable "backend_measurement" {
-  description = "SLO measurement config"
-  type        = map(string)
-}
-
 variable "region" {
-  description = "Region"
+  description = "Region to deploy the Cloud Function in"
+  default     = "us-east1"
 }
 
 variable "schedule" {
-  description = "Cron-like schedule"
+  description = "Cron-like schedule for Cloud Scheduler"
   default     = "* * * * */1"
-}
-
-variable "pubsub_project_id" {
-  description = "Pub/Sub project id to send results to"
-}
-
-variable "pubsub_topic_name" {
-  description = "Pub/Sub topic name to send results to"
 }
 
 variable "labels" {
   description = "Labels to apply to all resources created"
+  default     = {}
+}
+
+variable "config" {
+  description = "SLO Configuration"
+  type = object({
+    slo_name = string
+    slo_target = number
+    slo_description = string
+    service_name = string
+    feature_name = string
+    exporters = list(object({
+      class = string
+      project_id = string
+      topic_name = string
+    }))
+    backend = object({
+      class = string
+      project_id = string
+      method = string
+      measurement = map(string)
+    })
+  })
+}
+
+variable "error_budget_policy" {
+  description = "Error budget policy config"
+  type = list(object({
+      error_budget_policy_step_name = string
+      measurement_window_seconds = number
+      alerting_burn_rate_threshold = number
+      urgent_notification = bool
+      overburned_consequence_message = string
+      achieved_consequence_message = string
+  }))
+  default = [
+    {
+      error_budget_policy_step_name = "a.Last 1 hour",
+      measurement_window_seconds = 3600,
+      alerting_burn_rate_threshold = 9,
+      urgent_notification = true,
+      overburned_consequence_message = "Page the SRE team to defend the SLO",
+      achieved_consequence_message = "Last hour on track"
+    },
+    {
+      error_budget_policy_step_name = "b.Last 12 hours",
+      measurement_window_seconds = 43200,
+      alerting_burn_rate_threshold = 3,
+      urgent_notification = true,
+      overburned_consequence_message = "Page the SRE team to defend the SLO",
+      achieved_consequence_message = "Last 12 hours on track"
+    },
+    {
+      error_budget_policy_step_name = "c.Last 7 days",
+      measurement_window_seconds = 604800,
+      alerting_burn_rate_threshold = 1.5,
+      urgent_notification = false,
+      overburned_consequence_message = "Dev team dedicates two Engineers to the action items of the post-mortem",
+      achieved_consequence_message = "Last week on track"
+    },
+    {
+      error_budget_policy_step_name = "d.Last 28 days",
+      measurement_window_seconds = 2419200,
+      alerting_burn_rate_threshold = 1,
+      urgent_notification = false,
+      overburned_consequence_message = "Freeze release, unless related to reliability or security",
+      achieved_consequence_message = "Unfreeze release, per the agreed roll-out policy"
+    }
+  ]
 }

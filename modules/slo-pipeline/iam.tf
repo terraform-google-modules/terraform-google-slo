@@ -21,13 +21,15 @@ resource "google_service_account" "main" {
 }
 
 resource "google_project_iam_member" "bigquery" {
-  project = var.bigquery_project_id
+  count   = length(local.bigquery_configs)
+  project = local.bigquery_configs[count.index]["project_id"]
   role    = "roles/bigquery.dataEditor"
   member  = "serviceAccount:${google_service_account.main.email}"
 }
 
 resource "google_project_iam_member" "stackdriver" {
-  project = var.stackdriver_host_project_id
+  count   = length(local.sd_configs)
+  project = local.sd_configs[count.index]["project_id"]
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${google_service_account.main.email}"
 }

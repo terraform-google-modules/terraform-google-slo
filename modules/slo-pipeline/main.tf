@@ -19,19 +19,8 @@ resource "google_pubsub_topic" "stream" {
   name    = "slo-export-topic"
 }
 
-data "template_file" "exporters" {
-  template = file("${path.module}/code/exporters.json.tpl")
-
-  vars = {
-    stackdriver_host_project_id = var.stackdriver_host_project_id
-    bigquery_project_id         = var.bigquery_project_id
-    bigquery_dataset_name       = var.bigquery_dataset_name
-    bigquery_table_name         = var.bigquery_table_name
-  }
-}
-
 resource "local_file" "exporters" {
-  content  = data.template_file.exporters.rendered
+  content  = jsonencode(var.exporters)
   filename = "${path.module}/code/exporters.json"
 }
 
@@ -42,12 +31,13 @@ data "archive_file" "main" {
 }
 
 resource "google_bigquery_dataset" "main" {
-  dataset_id                  = var.bigquery_dataset_name
-  project                     = var.project_id
+  count                       = length(local.bigquery_configs)
+  dataset_id                  = local.bigquery_configs[count.index].dataset_id
+  project                     = local.bigquery_configs[count.index].project_id
   friendly_name               = "SLO Reports"
   description                 = "Table storing SLO reports from SLO reporting pipeline"
   location                    = "EU"
-  default_table_expiration_ms = 3600000
+  default_table_expiration_ms = 525600000  # 1 year
 }
 
 resource "google_storage_bucket" "bucket" {
@@ -64,20 +54,12 @@ resource "google_storage_bucket_object" "main" {
   content_type        = "application/zip"
 }
 
-module "app-engine" {
-  source           = "terraform-google-modules/project-factory/google//modules/app_engine"
-  location_id      = var.region
-  serving_status   = "SERVING"
-  feature_settings = [{ enabled = true }]
-  project_id       = var.project_id
-}
-
 resource "google_cloudfunctions_function" "function" {
   description           = "SLO Exporter to BigQuery or Stackdriver Monitoring"
   name                  = var.function_name
   available_memory_mb   = var.function_memory
   project               = var.project_id
-  region                = "${var.region}1"
+  region                = var.region
   service_account_email = google_service_account.main.email
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.main.name
@@ -88,5 +70,4 @@ resource "google_cloudfunctions_function" "function" {
     event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
     resource   = "projects/${var.project_id}/topics/${google_pubsub_topic.stream.name}"
   }
-  depends_on = [module.app-engine.name]
 }
