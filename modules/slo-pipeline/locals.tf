@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 locals {
   bigquery_configs = [for e in var.exporters : e if lower(e.class) == "bigquery"]
   sd_configs       = [for e in var.exporters : e if lower(e.class) == "stackdriver"]
