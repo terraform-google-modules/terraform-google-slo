@@ -26,10 +26,12 @@ module "slo-pipeline" {
       project_id = var.stackdriver_host_project_id
     },
     {
-      class      = "Bigquery"
-      project_id = var.project_id
-      dataset_id = "slo"
-      table_id   = "reports"
+      class                      = "Bigquery"
+      project_id                 = var.project_id
+      dataset_id                 = "slo"
+      table_id                   = "reports"
+      location                   = "EU"
+      delete_contents_on_destroy = true
     }
   ]
 }
