@@ -22,6 +22,24 @@ variable "bucket_name" {
   description = "Name of the bucket to create"
 }
 
+variable "exporters" {
+  description = "SLO export destinations config"
+
+  # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
+  # type = list(object({
+  #   class = string
+  #   project_id = string
+  #   dataset_id = string
+  #   table_id = string
+  #   topic_name = string
+  # }))
+}
+
+variable "pubsub_topic_name" {
+  description = "Pub/Sub topic name"
+  default     = "slo-export-topic"
+}
+
 variable "function_name" {
   description = "Cloud Function name"
   default     = "slo-exporter"
@@ -37,15 +55,7 @@ variable "region" {
   default     = "us-east1"
 }
 
-variable "exporters" {
-  description = "SLO export destinations config"
-
-  # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
-  # type = list(object({
-  #   class = string
-  #   project_id = string
-  #   dataset_id = string
-  #   table_id = string
-  #   topic_name = string
-  # }))
+variable "service_account_name" {
+  description = "Name of the service account to create"
+  default     = "slo-exporter"
 }

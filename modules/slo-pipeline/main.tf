@@ -16,7 +16,7 @@
 
 resource "google_pubsub_topic" "stream" {
   project = var.project_id
-  name    = "slo-export-topic"
+  name    = var.pubsub_topic_name
 }
 
 resource "local_file" "exporters" {
@@ -32,11 +32,12 @@ data "archive_file" "main" {
 
 resource "google_bigquery_dataset" "main" {
   count                       = length(local.bigquery_configs)
-  dataset_id                  = local.bigquery_configs[count.index].dataset_id
   project                     = local.bigquery_configs[count.index].project_id
+  dataset_id                  = local.bigquery_configs[count.index].dataset_id
+  delete_contents_on_destroy  = lookup(local.bigquery_configs[count.index], "delete_contents_on_destroy", false)
+  location                    = lookup(local.bigquery_configs[count.index], "location", "EU")
   friendly_name               = "SLO Reports"
   description                 = "Table storing SLO reports from SLO reporting pipeline"
-  location                    = "EU"
   default_table_expiration_ms = 525600000  # 1 year
 }
 
