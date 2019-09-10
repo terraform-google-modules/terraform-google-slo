@@ -22,27 +22,19 @@ The submodule creates the following resources:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| backend\_class | SLO backend class | string | `"Stackdriver"` | no |
-| backend\_measurement | SLO measurement config | map(string) | n/a | yes |
-| backend\_method | SLO computation method | string | n/a | yes |
-| backend\_project\_id | Project id for the metrics backend | string | n/a | yes |
-| description | SLO description | string | n/a | yes |
-| feature\_name | Name of monitored feature | string | n/a | yes |
-| labels | Labels to apply to all resources created | string | n/a | yes |
-| name | SLO name | string | n/a | yes |
+| config | SLO Configuration | object | n/a | yes |
+| error\_budget\_policy | Error budget policy config | object | `<list>` | no |
+| labels | Labels to apply to all resources created | map | `<map>` | no |
 | project\_id | SLO project id | string | n/a | yes |
-| pubsub\_project\_id | Pub/Sub project id to send results to | string | n/a | yes |
-| pubsub\_topic\_name | Pub/Sub topic name to send results to | string | n/a | yes |
-| region | Region | string | n/a | yes |
-| schedule | Cron-like schedule | string | `"* * * * */1"` | no |
-| service\_name | Name of monitored service | string | n/a | yes |
-| target | Target for this SLO | string | n/a | yes |
+| region | Region to deploy the Cloud Function in | string | `"us-east1"` | no |
+| schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| config | Rendered SLO configuration for `slo-exporter` |
+| config | SLO Config |
+| project\_id | Project id |
 | scheduler\_job\_name | Cloud Scheduler job name |
 | service\_account\_email | Service account email used to run the Cloud Function |
 

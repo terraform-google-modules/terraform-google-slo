@@ -13,30 +13,21 @@ The example will create the following resources:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| billing\_account | Billing account id | string | n/a | yes |
 | bucket\_name | GCS bucket name to create | string | n/a | yes |
-| credentials\_path | Path to gcloud credentials | string | n/a | yes |
-| folder\_id | Folder id | string | n/a | yes |
+| credentials\_path | Credentials path | string | n/a | yes |
+| function\_name | Name of the Cloud Function running the SLO pipeline | string | `"slo-shared-export"` | no |
 | labels | Project labels | map | `<map>` | no |
-| org\_id | Organization id | string | n/a | yes |
-| project\_name | Project name | string | `"slo-pipeline"` | no |
-| region | Region | string | n/a | yes |
+| project\_id | Project id | string | n/a | yes |
+| region | Region | string | `"us-east1"` | no |
+| schedule | Cron-like Cloud Scheduler schedule | string | `"* * * * */1"` | no |
 | stackdriver\_host\_project\_id | Stackdriver host project id | string | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bigquery\_dataset\_name |  |
-| config |  |
-| exporters |  |
-| function\_bucket\_name |  |
-| function\_bucket\_object\_name |  |
-| function\_name |  |
-| project\_id | The name of the bucket. |
-| pubsub\_topic\_name |  |
-| scheduler\_job\_name |  |
-| service\_account\_email |  |
+| slo | SLO outputs |
+| slo-pipeline | SLO pipeline outputs |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
