@@ -15,7 +15,7 @@
  */
 
 resource "google_service_account" "main" {
-  account_id   = "slo-exporter"
+  account_id   = var.service_account_name
   project      = var.project_id
   display_name = "Service account for SLO export"
 }
