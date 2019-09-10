@@ -27,7 +27,7 @@ The example will create the following resources:
 | Name | Description |
 |------|-------------|
 | slo | SLO outputs |
-| slo-pipeline | SLO pipeline outputs |
+| slo\_pipeline | SLO pipeline outputs |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
