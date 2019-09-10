@@ -35,27 +35,24 @@ variable "labels" {
 
 variable "config" {
   description = "SLO Configuration"
-  type        = "object"
-  
-  # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
-  # type = object({
-  #   slo_name        = string
-  #   slo_target      = number
-  #   slo_description = string
-  #   service_name    = string
-  #   feature_name    = string
-  #   exporters = list(object({
-  #     class      = string
-  #     project_id = string
-  #     topic_name = string
-  #   }))
-  #   backend = object({
-  #     class       = string
-  #     project_id  = string
-  #     method      = string
-  #     measurement = map(string)
-  #   })
-  # })
+  type = object({
+    slo_name        = string
+    slo_target      = number
+    slo_description = string
+    service_name    = string
+    feature_name    = string
+    exporters = list(object({
+      class      = string
+      project_id = string
+      topic_name = string
+    }))
+    backend = object({
+      class       = string
+      project_id  = string
+      method      = string
+      measurement = map(string)
+    })
+  })
 }
 
 variable "error_budget_policy" {
