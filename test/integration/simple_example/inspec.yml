@@ -6,31 +6,20 @@ depends:
     tag: v0.10.0
 
 attributes:
+
+  - name: credentials_path
+    required: true
+    type: string
+
+  - name: function_name
+    required: true
+    type: string
+
+  - name: bucket_name
+    required: true
+    type: string
+
   - name: project_id
-    required: true
-    type: string
-
-  - name: bucket_name
-    required: true
-    type: string
-
-  - name: org_id
-    required: true
-    type: string
-
-  - name: folder_id
-    required: true
-    type: string
-
-  - name: billing_account
-    required: true
-    type: string
-
-  - name: bucket_name
-    required: true
-    type: string
-
-  - name: project_name
     required: true
     type: string
 
@@ -38,14 +27,14 @@ attributes:
     required: true
     type: string
 
+  - name: schedule
+    required: false
+    type: string
+
   - name: region
-    required: true
+    required: false
     type: string
 
   - name: labels
-    required: true
-    type: map
-
-  - name: credentials_path
-    required: true
+    required: false
     type: string
