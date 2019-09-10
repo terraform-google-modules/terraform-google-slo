@@ -14,40 +14,38 @@
  * limitations under the License.
  */
 
-variable "org_id" {
-  description = "Organization id"
+variable "credentials_path" {
+  description = "Credentials path"
 }
 
-variable "folder_id" {
-  description = "Folder id"
-}
-
-variable "billing_account" {
-  description = "Billing account id"
+variable "function_name" {
+  description = "Name of the Cloud Function running the SLO pipeline"
+  default     = "slo-shared-export"
 }
 
 variable "bucket_name" {
   description = "GCS bucket name to create"
 }
 
-variable "project_name" {
-  description = "Project name"
-  default     = "slo-pipeline"
+variable "project_id" {
+  description = "Project id"
 }
 
 variable "stackdriver_host_project_id" {
   description = "Stackdriver host project id"
 }
 
+variable "schedule" {
+  description = "Cron-like Cloud Scheduler schedule"
+  default     = "* * * * */1"
+}
+
 variable "region" {
   description = "Region"
+  default     = "us-east1"
 }
 
 variable "labels" {
   description = "Project labels"
   default     = {}
-}
-
-variable "credentials_path" {
-  description = "Path to gcloud credentials"
 }
