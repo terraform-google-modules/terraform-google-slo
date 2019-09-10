@@ -38,7 +38,7 @@ resource "google_bigquery_dataset" "main" {
   location                    = lookup(local.bigquery_configs[count.index], "location", "EU")
   friendly_name               = "SLO Reports"
   description                 = "Table storing SLO reports from SLO reporting pipeline"
-  default_table_expiration_ms = 525600000  # 1 year
+  default_table_expiration_ms = 525600000 # 1 year
 }
 
 resource "google_storage_bucket" "bucket" {

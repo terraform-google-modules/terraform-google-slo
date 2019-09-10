@@ -16,7 +16,7 @@
 
 provider "google" {
   credentials = file(var.credentials_path)
-  version = "~> 2.0"
+  version     = "~> 2.0"
 }
 
 module "slo" {
@@ -32,9 +32,9 @@ module "slo" {
     service_name    = "svc"
     feature_name    = "pubsub"
     backend = {
-      class       = "Stackdriver"
-      method      = "good_bad_ratio"
-      project_id  = var.stackdriver_host_project_id
+      class      = "Stackdriver"
+      method     = "good_bad_ratio"
+      project_id = var.stackdriver_host_project_id
       measurement = {
         filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
         filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""

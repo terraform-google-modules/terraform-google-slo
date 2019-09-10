@@ -15,8 +15,8 @@
  */
 
 locals {
- full_name = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
- pubsub_configs = [for e in var.config.exporters: e if lower(e.class) == "pubsub"]
+  full_name      = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
+  pubsub_configs = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
 }
 
 resource "google_service_account" "main" {

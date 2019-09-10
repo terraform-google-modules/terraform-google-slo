@@ -15,11 +15,11 @@
  */
 
 module "slo-pipeline" {
-  source                      = "../../modules/slo-pipeline"
-  project_id                  = var.project_id
-  function_name               = var.function_name
-  bucket_name                 = var.bucket_name
-  region                      = var.region
+  source        = "../../modules/slo-pipeline"
+  project_id    = var.project_id
+  function_name = var.function_name
+  bucket_name   = var.bucket_name
+  region        = var.region
   exporters = [
     {
       class      = "Stackdriver"

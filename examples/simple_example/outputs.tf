@@ -16,10 +16,10 @@
 
 output "slo_pipeline" {
   description = "SLO pipeline outputs"
-  value = module.slo-pipeline
+  value       = module.slo-pipeline
 }
 
 output "slo" {
   description = "SLO outputs"
-  value = module.slo
+  value       = module.slo
 }

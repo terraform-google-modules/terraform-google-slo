@@ -15,8 +15,8 @@
  */
 
 output "project_id" {
- description = "Project id"
- value       = var.project_id
+  description = "Project id"
+  value       = var.project_id
 }
 
 output "config" {
