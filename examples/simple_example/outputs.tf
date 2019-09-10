@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-output "slo-pipeline" {
+
+output "slo_pipeline" {
   description = "SLO pipeline outputs"
   value = module.slo-pipeline
 }
