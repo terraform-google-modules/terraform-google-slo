@@ -1,1 +1,1 @@
-slo_generator==0.1.4
+slo_generator==0.1.5

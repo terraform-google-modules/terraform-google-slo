@@ -32,6 +32,7 @@ module "project" {
     "logging.googleapis.com",
     "monitoring.googleapis.com",
     "pubsub.googleapis.com",
+    "storage.googleapis.com"
   ]
 }
 
