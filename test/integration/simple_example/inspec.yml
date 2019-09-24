@@ -1,12 +1,40 @@
 name: simple_example
+
 depends:
   - name: inspec-gcp
     git: https://github.com/inspec/inspec-gcp.git
     tag: v0.10.0
+
 attributes:
+
+  - name: credentials_path
+    required: true
+    type: string
+
+  - name: function_name
+    required: true
+    type: string
+
+  - name: bucket_name
+    required: true
+    type: string
+
   - name: project_id
     required: true
     type: string
-  - name: bucket_name
+
+  - name: stackdriver_host_project_id
     required: true
+    type: string
+
+  - name: schedule
+    required: false
+    type: string
+
+  - name: region
+    required: false
+    type: string
+
+  - name: labels
+    required: false
     type: string

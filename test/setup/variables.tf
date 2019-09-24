@@ -24,3 +24,8 @@ variable "folder_id" {
 variable "billing_account" {
   description = "The billing account id associated with the project, e.g. XXXXXX-YYYYYY-ZZZZZZ"
 }
+
+variable "region" {
+  description = "Region for the App Engine app"
+  default     = "us-east1"
+}

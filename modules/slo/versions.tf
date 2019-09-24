@@ -15,10 +15,5 @@
  */
 
 terraform {
-  required_version = "~> 0.12.0"
-}
-
-resource "google_storage_bucket" "main" {
-  project = var.project_id
-  name    = var.bucket_name
+  required_version = ">= 0.12"
 }

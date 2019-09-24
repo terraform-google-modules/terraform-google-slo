@@ -1,82 +1,88 @@
 # terraform-google-slo
 
-This module was generated from [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template/), which by default generates a module that simply creates a GCS bucket. As the module develops, this README should be updated.
+This module deploys the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator) in Cloud Functions in order to compute
+and export SLOs on a schedule.
 
-The resources/services/activations/deletions that this module will create/trigger are:
+## Architecture
 
-- Create a GCS bucket with the provided name
+![Architecture](./diagram.png)
+
+This module is split into two submodules:
+
+* `slo`: This submodule deploys the infrastructure needed to compute SLO reports
+for **one** SLO. Users should use **one invocation of this submodule by SLO defined**.
+Once the SLO report is computed, the result is fed to the shared Pub/Sub topic
+created by the `slo-pipeline` module.
+
+* `slo-pipeline`: This submodule handles **exporting** SLO reports to different
+destinations (Cloud Pub/Sub, BigQuery, Stackdriver Monitoring). The
+infrastructure is shared by all SLOs.
+
+## Compatibility
+
+This module is meant for use with Terraform 0.12.
 
 ## Usage
 
-Basic usage of this module is as follows:
+First, deploy the SLO pipeline (shared module):
 
 ```hcl
-module "slo" {
-  source  = "terraform-google-modules/slo/google"
-  version = "~> 0.1"
-
-  project_id  = "<PROJECT ID>"
-  bucket_name = "gcs-test-bucket"
+module "slo-pipeline" {
+  source                      = "terraform-google-modules/slo/google//modules/slo-pipeline"
+  function_name               = "slo-export"
+  region                      = "us-east"
+  project_id                  = "test-project"
+  bigquery_project_id         = "test-project"
+  bigquery_dataset_name       = "slo_reports"
+  stackdriver_host_project_id = "sd-host"
 }
 ```
 
+Now, deploy an SLO definition:
+
+```hcl
+module "slo" {
+  source     = "terraform-google-modules/slo/google//modules/slo"
+  schedule   = var.schedule
+  region     = var.region
+  project_id = var.project_id
+  labels     = var.labels
+  config = {
+    slo_name        = "pubsub-ack"
+    slo_target      = "0.9"
+    slo_description = "Acked Pub/Sub messages over total number of Pub/Sub messages"
+    service_name    = "svc"
+    feature_name    = "pubsub"
+    backend = {
+      class       = "Stackdriver"
+      method      = "good_bad_ratio"
+      project_id  = var.stackdriver_host_project_id
+      measurement = {
+        filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
+        filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""
+      }
+    }
+    exporters = [
+      {
+        class      = "Pubsub"
+        project_id = module.slo-pipeline.project_id
+        topic_name = module.slo-pipeline.pubsub_topic_name
+      }
+    ]
+  }
+}
+```
+
+Additional information, including description of the Inputs / Outputs is
+available in [`modules/slo-pipeline/README.md`](./modules/slo-pipeline/README.md) and [`modules/slo/README.md`](./modules/slo/README.md).
+
 Functional examples are included in the
 [examples](./examples/) directory.
-
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| bucket\_name | The name of the bucket to create | string | n/a | yes |
-| project\_id | The project ID to deploy to | string | n/a | yes |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| bucket\_name |  |
-
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-## Requirements
-
-These sections describe requirements for using this module.
-
-### Software
-
-The following dependencies must be available:
-
-- [Terraform][terraform] v0.12
-- [Terraform Provider for GCP][terraform-provider-gcp] plugin v2.0
-
-### Service Account
-
-A service account with the following roles must be used to provision
-the resources of this module:
-
-- Storage Admin: `roles/storage.admin`
-
-The [Project Factory module][project-factory-module] and the
-[IAM module][iam-module] may be used in combination to provision a
-service account with the necessary roles applied.
-
-### APIs
-
-A project with the following APIs enabled must be used to host the
-resources of this module:
-
-- Google Cloud Storage JSON API: `storage-api.googleapis.com`
-
-The [Project Factory module][project-factory-module] can be used to
-provision a project with the necessary APIs enabled.
 
 ## Contributing
 
 Refer to the [contribution guidelines](./CONTRIBUTING.md) for
 information on contributing to this module.
 
-[iam-module]: https://registry.terraform.io/modules/terraform-google-modules/iam/google
-[project-factory-module]: https://registry.terraform.io/modules/terraform-google-modules/project-factory/google
 [terraform-provider-gcp]: https://www.terraform.io/docs/providers/google/index.html
 [terraform]: https://www.terraform.io/downloads.html

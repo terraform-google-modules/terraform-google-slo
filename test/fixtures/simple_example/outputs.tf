@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-output "bucket_name" {
-  description = "The name of the bucket."
-  value       = module.example.bucket_name
+output "slo_pipeline" {
+  description = "SLO pipeline outputs"
+  value       = module.example.slo_pipeline
+}
+
+output "slo" {
+  description = "SLO outputs"
+  value       = module.example.slo
 }
 
 output "project_id" {

@@ -13,20 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-provider "random" {
-  version = "~> 2.0"
-}
-
-resource "random_pet" "main" {
-  length    = 1
-  prefix    = "simple-example"
-  separator = "-"
-}
-
 module "example" {
-  source = "../../../examples/simple_example"
-
-  project_id  = var.project_id
-  bucket_name = random_pet.main.id
+  source                      = "../../../examples/simple_example"
+  project_id                  = var.project_id
+  function_name               = var.function_name
+  bucket_name                 = var.bucket_name
+  stackdriver_host_project_id = var.stackdriver_host_project_id
+  schedule                    = var.schedule
+  region                      = var.region
+  labels                      = var.labels
+  credentials_path            = var.credentials_path
 }

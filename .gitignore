@@ -42,4 +42,7 @@ crash.log
 # version control.
 **/*.tfvars
 
+**/*.zip
+modules/**/*.json
+
 credentials.json

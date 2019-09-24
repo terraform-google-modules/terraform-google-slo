@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-variable "project_id" {
-  description = "The project ID to deploy to"
-}
-
-variable "bucket_name" {
-  description = "The name of the bucket to create"
+locals {
+  bigquery_configs = [for e in var.exporters : e if lower(e.class) == "bigquery"]
+  sd_configs       = [for e in var.exporters : e if lower(e.class) == "stackdriver"]
 }

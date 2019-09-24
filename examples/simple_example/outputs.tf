@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
-output "bucket_name" {
-  description = "The name of the bucket."
-  value       = module.slo.bucket_name
+# Note: As most of the submodules outputs are needed: we are just forwarding all
+# submodules outputs here. Please refer to the submodules outputs.tf file to
+# have a breakdown.
+
+output "slo_pipeline" {
+  description = "SLO pipeline outputs"
+  value       = module.slo-pipeline
+}
+
+output "slo" {
+  description = "SLO outputs"
+  value       = module.slo
 }

@@ -14,12 +14,38 @@
  * limitations under the License.
  */
 
-variable "project_id" {
-  description = "The ID of the project in which to provision resources."
-  type        = string
+variable "credentials_path" {
+  description = "Credentials path"
+}
+
+variable "function_name" {
+  description = "Name of the Cloud Function running the SLO pipeline"
+  default     = "slo-shared-export"
 }
 
 variable "bucket_name" {
-  description = "The name of the bucket to create."
-  type        = string
+  description = "GCS bucket name to create"
+}
+
+variable "project_id" {
+  description = "Project id"
+}
+
+variable "stackdriver_host_project_id" {
+  description = "Stackdriver host project id"
+}
+
+variable "schedule" {
+  description = "Cron-like Cloud Scheduler schedule"
+  default     = "* * * * */1"
+}
+
+variable "region" {
+  description = "Region"
+  default     = "us-east1"
+}
+
+variable "labels" {
+  description = "Project labels"
+  default     = {}
 }
