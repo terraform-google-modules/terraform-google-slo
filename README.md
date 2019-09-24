@@ -18,6 +18,9 @@ created by the `slo-pipeline` module.
 destinations (Cloud Pub/Sub, BigQuery, Stackdriver Monitoring). The
 infrastructure is shared by all SLOs.
 
+## Compatibility
+
+This module is meant for use with Terraform 0.12.
 
 ## Usage
 
