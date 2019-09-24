@@ -2,9 +2,9 @@
 
 The SLO pipeline submodule creates the following resources:
 
-* A **Pub/Sub topic** that will receive each SLO report
+* A **Pub/Sub topic** that will receive each SLO report.
 * A **Cloud Function** that will process each SLO report and send them to a
-  destination (BigQuery / Stackdriver Monitoring)
+  destination (BigQuery / Stackdriver Monitoring).
 * A **JSON configuration file** (needed by the `slo-generator`), indicating what
   export destinations will be configured (`exporters.json`).
 * A **JSON configuration file** (needed by the `slo-generator`), describing
@@ -15,16 +15,26 @@ The SLO pipeline submodule creates the following resources:
 ## Pre-requisites
 To use this module, you will need:
 
-- A **GCP project** dedicated to the SLO pipeline, with the following APIs enabled:
+- A **GCP project** with the following APIs enabled:
   - App Engine API: `appengine.googleapis.com`
   - Cloud Functions API: `cloudfunctions.googleapis.com`
-  - Cloud Scheduler API: `cloudscheduler.googleapis.com`
   - Monitoring API: `monitoring.googleapis.com`
   - Logging API: `logging.googleapis.com`
   - Pub/Sub API: `pubsub.googleapis.com`
+  - Storage API: `storage.googleapis.com`
   - BigQuery API: `bigquery-json.googleapis.com`
 
-- An **App Engine application** enabled on this project.
+- The following **IAM roles** on the project, for the service account running the Terraform:
+  - App Engine Admin (`roles/appengine.appAdmin`)
+  - Cloud Functions Admin (`roles/cloudfunctions.admin`)
+  - PubSub Admin (`roles/pubsub.admin`)
+  - Storage Admin (`roles/storage.admin`)
+  - IAM Admin (`roles/iam.admin`)
+
+
+- For the **BigQuery exporter**:
+  - BigQuery Admin (`roles/bigquery.admin`)
+
 
 See the [fixture project](../../test/setup/main.tf) for an example to create this project and enable the App Engine application using Terraform and the [Project Factory module](https://github.com/terraform-google-modules/terraform-google-project-factory).
 

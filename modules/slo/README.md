@@ -17,6 +17,30 @@ The submodule creates the following resources:
   compute the SLO, and other information. More documentation on backend types
   and compute methods is available in the `slo-generator` documentation.
 
+
+## Pre-requisites
+To use this module, you will need:
+
+- A **GCP project** with the following APIs enabled:
+  - App Engine API: `appengine.googleapis.com`
+  - Cloud Functions API: `cloudfunctions.googleapis.com`
+  - Cloud Scheduler API: `cloudscheduler.googleapis.com`
+  - Cloud Pub/Sub API: `pubsub.googleapis.com`
+  - Cloud Storage API: `storage.googleapis.com`
+
+- An **App Engine application** enabled on this project (make sure the region
+  you choose for App Engine supports Cloud Functions as well, cf [here](https://cloud.google.com/functions/docs/locations)).
+
+- The following **IAM roles** on the project, for the service account running the Terraform:
+  - Cloud Scheduler Admin (`roles/cloudscheduler.admin`)
+  - Cloud Functions Admin (`roles/cloudfunctions.admin`)
+  - Cloud Pub/Sub Admin (`roles/pubsub.admin`)
+  - Cloud Storage Admin (`roles/storage.admin`)
+  - IAM Admin (`roles/iam.admin`)
+  - Monitoring Viewer (`roles/monitoring.viewer`) on the Stackdriver host project.
+
+See the [fixture project](../../test/setup/main.tf) for an example to create this project and enable the App Engine application using Terraform and the [Project Factory module](https://github.com/terraform-google-modules/terraform-google-project-factory).
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
