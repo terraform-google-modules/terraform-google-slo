@@ -70,7 +70,7 @@ module "slo" {
 }
 ```
 
-Additional information, including description of the Inputes / Outputs is
+Additional information, including description of the Inputs / Outputs is
 available in [`modules/slo-pipeline/README.md`](./modules/slo-pipeline/README.md) and [`modules/slo/README.md`](./modules/slo/README.md).
 
 Functional examples are included in the
