@@ -39,7 +39,7 @@ Now, deploy an SLO definition:
 
 ```hcl
 module "slo" {
-  source     = "../../modules/slo"
+  source     = "terraform-google-modules/slo/google//modules/slo"
   schedule   = var.schedule
   region     = var.region
   project_id = var.project_id
