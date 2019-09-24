@@ -19,6 +19,28 @@ provider "google" {
   version     = "~> 2.0"
 }
 
+module "slo-pipeline" {
+  source        = "../../modules/slo-pipeline"
+  project_id    = var.project_id
+  function_name = var.function_name
+  bucket_name   = var.bucket_name
+  region        = var.region
+  exporters = [
+    {
+      class      = "Stackdriver"
+      project_id = var.stackdriver_host_project_id
+    },
+    {
+      class                      = "Bigquery"
+      project_id                 = var.project_id
+      dataset_id                 = "slo"
+      table_id                   = "reports"
+      location                   = "EU"
+      delete_contents_on_destroy = true
+    }
+  ]
+}
+
 module "slo" {
   source     = "../../modules/slo"
   schedule   = var.schedule
