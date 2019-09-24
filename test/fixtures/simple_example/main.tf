@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 module "example" {
   source                      = "../../../examples/simple_example"
   project_id                  = var.project_id
@@ -22,5 +23,4 @@ module "example" {
   schedule                    = var.schedule
   region                      = var.region
   labels                      = var.labels
-  credentials_path            = var.credentials_path
 }

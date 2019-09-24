@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Credentials path"
-}
-
 variable "function_name" {
   description = "Name of the Cloud Function running the SLO pipeline"
   default     = "slo-shared-export"
