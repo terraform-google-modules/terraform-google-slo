@@ -8,6 +8,14 @@ The example will create the following resources:
 - An [SLO pipeline](../../modules/slo-pipeline) that export SLO results to BigQuery, Stackdriver Monitoring
 - A sample [SLO](../../modules/slo) that computes the number of exported Pub/Sub messages over the total number of Pub/Sub messages
 
+## Prerequisites
+
+To run this example, you'll need:
+
+- a GCP project (see an example definition [here](../../test/setup/main.tf).
+- the IAM role `roles/owner` on the project for the service account running the Terraform.
+
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
