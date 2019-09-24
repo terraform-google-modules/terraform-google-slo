@@ -15,8 +15,7 @@
  */
 
 provider "google" {
-  credentials = file(var.credentials_path)
-  version     = "~> 2.0"
+  version = "~> 2.0"
 }
 
 module "slo-pipeline" {
