@@ -43,3 +43,8 @@ output "pubsub_topic_name" {
   description = "Ingress PubSub topic to SLO pipeline"
   value       = google_pubsub_topic.stream.name
 }
+
+output "service_account_email" {
+  description = "Service account email used to run the Cloud Function"
+  value       = local.service_account_email
+}

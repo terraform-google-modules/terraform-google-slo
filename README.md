@@ -1,7 +1,7 @@
 # terraform-google-slo
 
-This module deploys the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator) in Cloud Functions in order to compute
-and export SLOs on a schedule.
+This module deploys the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
+in Cloud Functions in order to compute and export SLOs on a schedule.
 
 ## Architecture
 

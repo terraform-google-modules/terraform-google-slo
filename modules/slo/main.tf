@@ -15,9 +15,10 @@
  */
 
 locals {
-  full_name      = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
-  pubsub_configs = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
-  suffix         = random_id.suffix.hex 
+  full_name             = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
+  pubsub_configs        = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
+  service_account_email = var.service_account_email != "" ? var.service_account_email : google_service_account.main[0].email
+  suffix                = random_id.suffix.hex 
 }
   
 resource "random_id" "suffix" {
@@ -25,24 +26,25 @@ resource "random_id" "suffix" {
 }
   
 resource "google_service_account" "main" {
+  count        = var.service_account_email != "" ? 0 : 1
   account_id   = local.full_name
   project      = var.project_id
   display_name = "Service account for SLO computations"
 }
 
 resource "google_project_iam_member" "stackdriver" {
-  count   = var.config.backend.class == "Stackdriver" ? 1 : 0
+  count   = var.grant_iam_roles && var.config.backend.class == "Stackdriver" ? 1 : 0
   project = var.config.backend.project_id
   role    = "roles/monitoring.viewer"
-  member  = "serviceAccount:${google_service_account.main.email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub" {
-  count   = length(local.pubsub_configs)
+  count   = var.grant_iam_roles ? length(local.pubsub_configs) : 0
   topic   = local.pubsub_configs[count.index].topic_name
   project = local.pubsub_configs[count.index].project_id
   role    = "roles/pubsub.publisher"
-  member  = "serviceAccount:${google_service_account.main.email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }
 
 resource "local_file" "slo" {
@@ -70,6 +72,6 @@ module "slo-cloud-function" {
   function_available_memory_mb          = 128
   function_runtime                      = "python37"
   function_source_archive_bucket_labels = var.labels
-  function_service_account_email        = google_service_account.main.email
+  function_service_account_email        = local.service_account_email
   function_labels                       = var.labels
 }

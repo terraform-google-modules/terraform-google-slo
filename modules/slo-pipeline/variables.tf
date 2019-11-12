@@ -60,3 +60,13 @@ variable "service_account_name" {
   description = "Name of the service account to create"
   default     = "slo-exporter"
 }
+
+variable "service_account_email" {
+  description = "Service account email (optional)"
+  default     = ""
+}
+
+variable "grant_iam_roles" {
+  description = "Grant IAM roles to created service accounts"
+  default     = true
+}

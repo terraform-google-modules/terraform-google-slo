@@ -100,3 +100,13 @@ variable "error_budget_policy" {
     }
   ]
 }
+
+variable "service_account_email" {
+  description = "Service account email (optional)"
+  default     = ""
+}
+
+variable "grant_iam_roles" {
+  description = "Grant IAM roles to created service accounts"
+  default     = true
+}
