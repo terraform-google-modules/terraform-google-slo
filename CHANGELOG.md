@@ -9,6 +9,9 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+- Added random suffix to bucket names to allow easy recreation. [#3]
+
 ## [0.1.0] - 20XX-YY-ZZ
 
 ### Added
@@ -17,3 +20,5 @@ and this project adheres to
 
 [Unreleased]: https://github.com/terraform-google-modules/terraform-google-slo/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/terraform-google-modules/terraform-google-slo/releases/tag/v0.1.0
+
+[#3]: https://github.com/terraform-google-modules/terraform-google-slo/pull/3

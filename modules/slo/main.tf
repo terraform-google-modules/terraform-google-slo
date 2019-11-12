@@ -18,8 +18,13 @@ locals {
   full_name             = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
   pubsub_configs        = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
   service_account_email = var.service_account_email != "" ? var.service_account_email : google_service_account.main[0].email
+  suffix                = random_id.suffix.hex 
 }
-
+  
+resource "random_id" "suffix" {
+  byte_length = 2
+}
+  
 resource "google_service_account" "main" {
   count        = var.service_account_email != "" ? 0 : 1
   account_id   = local.full_name
@@ -59,7 +64,7 @@ module "slo-cloud-function" {
   job_schedule                          = var.schedule
   job_name                              = local.full_name
   topic_name                            = local.full_name
-  bucket_name                           = local.full_name
+  bucket_name                           = "${local.full_name}-${local.suffix}"
   function_name                         = local.full_name
   function_description                  = var.config.slo_description
   function_entry_point                  = "main"
