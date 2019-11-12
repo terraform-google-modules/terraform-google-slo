@@ -61,7 +61,7 @@ resource "google_cloudfunctions_function" "function" {
   available_memory_mb   = var.function_memory
   project               = var.project_id
   region                = var.region
-  service_account_email = google_service_account.main.email
+  service_account_email = local.service_account_email
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.main.name
   runtime               = "python37"

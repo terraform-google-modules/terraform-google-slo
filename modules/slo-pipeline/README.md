@@ -64,5 +64,6 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | function\_name | Cloud Function name |
 | project\_id | Project id |
 | pubsub\_topic\_name | Ingress PubSub topic to SLO pipeline |
+| service\_account\_email | Service account email used to run the Cloud Function |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

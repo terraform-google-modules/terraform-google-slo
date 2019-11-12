@@ -15,7 +15,7 @@
  */
 
 locals {
-  service_account_email = var.service_account_email != "" ? var.service_account_email : google_service_account.main.email
+  service_account_email = var.service_account_email != "" ? var.service_account_email : google_service_account.main[0].email
 }
 
 resource "google_service_account" "main" {
