@@ -48,10 +48,12 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 |------|-------------|:----:|:-----:|:-----:|
 | config | SLO Configuration | object | n/a | yes |
 | error\_budget\_policy | Error budget policy config | object | `<list>` | no |
+| grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
 | labels | Labels to apply to all resources created | map | `<map>` | no |
 | project\_id | SLO project id | string | n/a | yes |
 | region | Region to deploy the Cloud Function in | string | `"us-east1"` | no |
 | schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
+| service\_account\_email | Service account email (optional) | string | `""` | no |
 
 ## Outputs
 

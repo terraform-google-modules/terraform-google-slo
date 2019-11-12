@@ -14,22 +14,27 @@
  * limitations under the License.
  */
 
+locals {
+  service_account_email = var.service_account_email != "" ? var.service_account_email : google_service_account.main.email
+}
+
 resource "google_service_account" "main" {
+  count        = var.service_account_email != "" ? 0 : 1
   account_id   = var.service_account_name
   project      = var.project_id
   display_name = "Service account for SLO export"
 }
 
 resource "google_project_iam_member" "bigquery" {
-  count   = length(local.bigquery_configs)
+  count   = var.grant_iam_roles ? length(local.bigquery_configs) : 0
   project = local.bigquery_configs[count.index]["project_id"]
   role    = "roles/bigquery.dataEditor"
-  member  = "serviceAccount:${google_service_account.main.email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }
 
 resource "google_project_iam_member" "stackdriver" {
-  count   = length(local.sd_configs)
+  count   = var.grant_iam_roles ? length(local.sd_configs) : 0
   project = local.sd_configs[count.index]["project_id"]
   role    = "roles/monitoring.metricWriter"
-  member  = "serviceAccount:${google_service_account.main.email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }

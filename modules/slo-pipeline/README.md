@@ -47,9 +47,11 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | exporters | SLO export destinations config | list | n/a | yes |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name | string | `"slo-exporter"` | no |
+| grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
 | project\_id | Project id to create SLO infrastructure | string | n/a | yes |
 | pubsub\_topic\_name | Pub/Sub topic name | string | `"slo-export-topic"` | no |
 | region | Region for the App Engine app | string | `"us-east1"` | no |
+| service\_account\_email | Service account email (optional) | string | `""` | no |
 | service\_account\_name | Name of the service account to create | string | `"slo-exporter"` | no |
 
 ## Outputs
