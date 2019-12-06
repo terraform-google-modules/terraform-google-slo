@@ -24,7 +24,7 @@ variable "bucket_name" {
 
 variable "exporters" {
   description = "SLO export destinations config"
-  type        = list()
+  type        = list(object({}))
 
   # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
   # type = list(object({
@@ -54,6 +54,16 @@ variable "function_memory" {
 variable "region" {
   description = "Region for the App Engine app"
   default     = "us-east1"
+}
+
+variable "storage_bucket_location" {
+  description = "The GCS location"
+  default     = "US"
+}
+
+variable "storage_bucket_storage_class" {
+  description = "The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
+  default     = "STANDARD"
 }
 
 variable "service_account_name" {
