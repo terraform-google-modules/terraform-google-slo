@@ -44,7 +44,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | bucket\_name | Name of the bucket to create | string | n/a | yes |
-| exporters | SLO export destinations config | object | n/a | yes |
+| exporters | SLO export destinations config | list | n/a | yes |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name | string | `"slo-exporter"` | no |
 | grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |

@@ -24,7 +24,7 @@ variable "bucket_name" {
 
 variable "exporters" {
   description = "SLO export destinations config"
-  type        = list(object({}))
+  type        = "list"
 
   # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
   # type = list(object({
