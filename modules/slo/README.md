@@ -46,20 +46,29 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| bucket\_force\_destroy | When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first. | string | `"true"` | no |
 | config | SLO Configuration | object | n/a | yes |
 | error\_budget\_policy | Error budget policy config | object | `<list>` | no |
+| function\_environment\_variables | A set of key/value environment variable pairs to assign to the function. | map(string) | `<map>` | no |
+| function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
+| function\_source\_archive\_bucket\_labels | A set of key/value label pairs to assign to the function source archive bucket. | map(string) | `<map>` | no |
+| function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
+| function\_timeout\_s | The amount of time in seconds allotted for the execution of the function. | number | `"60"` | no |
 | grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
 | labels | Labels to apply to all resources created | map | `<map>` | no |
+| message\_data | The data to send in the topic message. | string | `"dGVzdA=="` | no |
 | project\_id | SLO project id | string | n/a | yes |
 | region | Region to deploy the Cloud Function in | string | `"us-east1"` | no |
 | schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
+| time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | config | SLO Config |
+| function\_zip\_output\_path | Cloud Function zip output path |
 | project\_id | Project id |
 | scheduler\_job\_name | Cloud Scheduler job name |
 | service\_account\_email | Service account email used to run the Cloud Function |
