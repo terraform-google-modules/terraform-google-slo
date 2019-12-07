@@ -56,6 +56,16 @@ variable "region" {
   default     = "us-east1"
 }
 
+variable "storage_bucket_location" {
+  description = "The GCS location"
+  default     = "US"
+}
+
+variable "storage_bucket_storage_class" {
+  description = "The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
+  default     = "STANDARD"
+}
+
 variable "service_account_name" {
   description = "Name of the service account to create"
   default     = "slo-exporter"
