@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+locals {
+  exporters_hash            = substr(sha256(local_file.exporters.content), 0, 2)
+  function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
+  cf_suffix                 = "${substr(random_uuid.config_hash.result, 0, 2)}${substr(exporters_hash, 0, 2)}"
+}
+
 resource "google_pubsub_topic" "stream" {
   project = var.project_id
   name    = var.pubsub_topic_name
@@ -24,10 +30,24 @@ resource "local_file" "exporters" {
   filename = "${path.module}/code/exporters.json"
 }
 
+# Generate a random uuid that will regenerate when one of the file in the source
+# directory is updated.
+resource "random_uuid" "code_hash" {
+  keepers = {
+    for filename in fileset("${path.module}/code", "**/*") :
+    filename => filemd5("${local.function_source_directory}/${filename}")
+  }
+}
+
+# Regenerate the archive whenever one of the Cloud Function code files, SLO
+# config or Error Budget policy is updated.
 data "archive_file" "main" {
   type        = "zip"
-  output_path = pathexpand("${path.module}/code.zip")
-  source_dir  = pathexpand("${path.module}/code")
+  output_path = pathexpand("code-pipeline-${local.cf_suffix}.zip")
+  source_dir  = pathexpand(local.function_source_directory)
+  depends_on = [
+    local_file.exporters
+  ]
 }
 
 resource "google_bigquery_dataset" "main" {

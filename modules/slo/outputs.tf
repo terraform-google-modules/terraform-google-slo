@@ -31,5 +31,10 @@ output "service_account_email" {
 
 output "scheduler_job_name" {
   description = "Cloud Scheduler job name"
-  value       = module.slo-cloud-function.name
+  value       = google_cloud_scheduler_job.job.name
+}
+
+output "function_zip_output_path" {
+  description = "Cloud Function zip output path"
+  value       = data.archive_file.main.output_path
 }

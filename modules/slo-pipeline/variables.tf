@@ -70,3 +70,9 @@ variable "grant_iam_roles" {
   description = "Grant IAM roles to created service accounts"
   default     = true
 }
+
+variable "function_source_directory" {
+  type        = string
+  description = "The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code)"
+  default     = ""
+}
