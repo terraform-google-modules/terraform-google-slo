@@ -18,10 +18,6 @@ variable "project_id" {
   description = "Project id to create SLO infrastructure"
 }
 
-variable "bucket_name" {
-  description = "Name of the bucket to create"
-}
-
 variable "exporters" {
   description = "SLO export destinations config"
   type        = "list"
@@ -41,9 +37,14 @@ variable "pubsub_topic_name" {
   default     = "slo-export-topic"
 }
 
+variable "function_bucket_name" {
+  description = "Name of the bucket to create to store the Cloud Function code"
+  default     = "slo-pipeline"
+}
+
 variable "function_name" {
   description = "Cloud Function name"
-  default     = "slo-exporter"
+  default     = "slo-pipeline"
 }
 
 variable "function_memory" {
@@ -58,7 +59,7 @@ variable "region" {
 
 variable "service_account_name" {
   description = "Name of the service account to create"
-  default     = "slo-exporter"
+  default     = "slo-pipeline"
 }
 
 variable "service_account_email" {

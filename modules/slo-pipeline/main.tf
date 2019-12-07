@@ -15,9 +15,15 @@
  */
 
 locals {
-  exporters_hash            = substr(sha256(local_file.exporters.content), 0, 2)
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
-  cf_suffix                 = "${substr(random_uuid.config_hash.result, 0, 2)}${substr(exporters_hash, 0, 2)}"
+  bucket_suffix             = random_id.suffix.hex
+
+  # Cloud Function suffix so that it updates on code / config change
+  cf_suffix = "${substr(random_uuid.code_hash.result, 0, 2)}${substr(md5(local_file.exporters.content), 0, 2)}"
+}
+
+resource "random_id" "suffix" {
+  byte_length = 2
 }
 
 resource "google_pubsub_topic" "stream" {
@@ -62,12 +68,12 @@ resource "google_bigquery_dataset" "main" {
 }
 
 resource "google_storage_bucket" "bucket" {
-  name    = var.bucket_name
+  name    = "${var.function_bucket_name}-${local.bucket_suffix}"
   project = var.project_id
 }
 
 resource "google_storage_bucket_object" "main" {
-  name                = "slo_exporter.zip"
+  name                = "code-pipeline-${local.cf_suffix}"
   bucket              = google_storage_bucket.bucket.name
   source              = data.archive_file.main.output_path
   content_disposition = "attachment"
@@ -77,7 +83,7 @@ resource "google_storage_bucket_object" "main" {
 
 resource "google_cloudfunctions_function" "function" {
   description           = "SLO Exporter to BigQuery or Stackdriver Monitoring"
-  name                  = var.function_name
+  name                  = "${var.function_name}-${local.cf_suffix}"
   available_memory_mb   = var.function_memory
   project               = var.project_id
   region                = var.region
