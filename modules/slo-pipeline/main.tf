@@ -68,8 +68,10 @@ resource "google_bigquery_dataset" "main" {
 }
 
 resource "google_storage_bucket" "bucket" {
-  name    = "${var.function_bucket_name}-${local.bucket_suffix}"
-  project = var.project_id
+  name          = "${var.function_bucket_name}-${local.bucket_suffix}"
+  project       = var.project_id
+  location      = var.storage_bucket_location
+  storage_class = var.storage_bucket_storage_class
 }
 
 resource "google_storage_bucket_object" "main" {

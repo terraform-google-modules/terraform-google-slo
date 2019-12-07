@@ -53,6 +53,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | region | Region for the App Engine app | string | `"us-east1"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | service\_account\_name | Name of the service account to create | string | `"slo-exporter"` | no |
+| storage\_bucket\_location | The GCS location | string | `"US"` | no |
+| storage\_bucket\_storage\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 
 ## Outputs
 
