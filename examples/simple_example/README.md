@@ -21,8 +21,6 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| bucket\_name | GCS bucket name to create | string | n/a | yes |
-| function\_name | Name of the Cloud Function running the SLO pipeline | string | `"slo-shared-export"` | no |
 | labels | Project labels | map | `<map>` | no |
 | project\_id | Project id | string | n/a | yes |
 | region | Region | string | `"us-east1"` | no |

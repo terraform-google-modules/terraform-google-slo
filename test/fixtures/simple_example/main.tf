@@ -17,8 +17,6 @@
 module "example" {
   source                      = "../../../examples/simple_example"
   project_id                  = var.project_id
-  function_name               = var.function_name
-  bucket_name                 = var.bucket_name
   stackdriver_host_project_id = var.stackdriver_host_project_id
   schedule                    = var.schedule
   region                      = var.region
