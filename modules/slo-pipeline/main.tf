@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+locals {
+  function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
+  bucket_suffix             = random_id.suffix.hex
+
+  # Cloud Function suffix so that it updates on code / config change
+  cf_suffix = "${substr(random_uuid.code_hash.result, 0, 2)}${substr(md5(local_file.exporters.content), 0, 2)}"
+}
+
+resource "random_id" "suffix" {
+  byte_length = 2
+}
+
 resource "google_pubsub_topic" "stream" {
   project = var.project_id
   name    = var.pubsub_topic_name
@@ -24,10 +36,24 @@ resource "local_file" "exporters" {
   filename = "${path.module}/code/exporters.json"
 }
 
+# Generate a random uuid that will regenerate when one of the file in the source
+# directory is updated.
+resource "random_uuid" "code_hash" {
+  keepers = {
+    for filename in fileset("${path.module}/code", "**/*") :
+    filename => filemd5("${local.function_source_directory}/${filename}")
+  }
+}
+
+# Regenerate the archive whenever one of the Cloud Function code files, SLO
+# config or Error Budget policy is updated.
 data "archive_file" "main" {
   type        = "zip"
-  output_path = pathexpand("${path.module}/code.zip")
-  source_dir  = pathexpand("${path.module}/code")
+  output_path = pathexpand("code-pipeline-${local.cf_suffix}.zip")
+  source_dir  = pathexpand(local.function_source_directory)
+  depends_on = [
+    local_file.exporters
+  ]
 }
 
 resource "google_bigquery_dataset" "main" {
@@ -42,14 +68,14 @@ resource "google_bigquery_dataset" "main" {
 }
 
 resource "google_storage_bucket" "bucket" {
-  name          = var.bucket_name
+  name          = "${var.function_bucket_name}-${local.bucket_suffix}"
   project       = var.project_id
   location      = var.storage_bucket_location
   storage_class = var.storage_bucket_storage_class
 }
 
 resource "google_storage_bucket_object" "main" {
-  name                = "slo_exporter.zip"
+  name                = "code-pipeline-${local.cf_suffix}"
   bucket              = google_storage_bucket.bucket.name
   source              = data.archive_file.main.output_path
   content_disposition = "attachment"
@@ -59,7 +85,7 @@ resource "google_storage_bucket_object" "main" {
 
 resource "google_cloudfunctions_function" "function" {
   description           = "SLO Exporter to BigQuery or Stackdriver Monitoring"
-  name                  = var.function_name
+  name                  = "${var.function_name}-${local.cf_suffix}"
   available_memory_mb   = var.function_memory
   project               = var.project_id
   region                = var.region

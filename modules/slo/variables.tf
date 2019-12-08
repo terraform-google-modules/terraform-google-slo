@@ -110,3 +110,51 @@ variable "grant_iam_roles" {
   description = "Grant IAM roles to created service accounts"
   default     = true
 }
+
+variable "message_data" {
+  type        = string
+  description = "The data to send in the topic message."
+  default     = "dGVzdA=="
+}
+
+variable "time_zone" {
+  type        = string
+  description = "The timezone to use in scheduler"
+  default     = "Etc/UTC"
+}
+
+variable "bucket_force_destroy" {
+  type        = "string"
+  default     = "true"
+  description = "When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first."
+}
+
+variable "function_timeout_s" {
+  type        = number
+  default     = 60
+  description = "The amount of time in seconds allotted for the execution of the function."
+}
+
+variable "function_source_archive_bucket_labels" {
+  type        = map(string)
+  default     = {}
+  description = "A set of key/value label pairs to assign to the function source archive bucket."
+}
+
+variable "function_source_directory" {
+  type        = string
+  description = "The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code)"
+  default     = ""
+}
+
+variable "function_labels" {
+  type        = map(string)
+  default     = {}
+  description = "A set of key/value label pairs to assign to the function."
+}
+
+variable "function_environment_variables" {
+  type        = map(string)
+  default     = {}
+  description = "A set of key/value environment variable pairs to assign to the function."
+}

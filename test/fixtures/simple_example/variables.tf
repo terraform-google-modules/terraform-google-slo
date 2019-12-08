@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-variable "function_name" {
-  description = "Name of the Cloud Function running the SLO pipeline"
-  default     = "slo-shared-export"
-}
-
-variable "bucket_name" {
-  description = "GCS bucket name to create"
-}
-
 variable "project_id" {
   description = "Project id"
 }
