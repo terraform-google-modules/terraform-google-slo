@@ -4,7 +4,6 @@ This example illustrates how to use the `slo` module.
 
 The example will create the following resources:
 
-- A new project to host the SLO pipeline
 - An [SLO pipeline](../../modules/slo-pipeline) that export SLO results to BigQuery, Stackdriver Monitoring
 - A sample [SLO](../../modules/slo) that computes the number of exported Pub/Sub messages over the total number of Pub/Sub messages
 
