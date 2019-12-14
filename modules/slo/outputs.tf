@@ -36,5 +36,5 @@ output "scheduler_job_name" {
 
 output "function_zip_output_path" {
   description = "Cloud Function zip output path"
-  value       ="${local.function_source_directory}.zip"
+  value       = "${local.function_source_directory}.zip"
 }
