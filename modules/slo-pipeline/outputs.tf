@@ -26,17 +26,12 @@ output "exporters" {
 
 output "function_name" {
   description = "Cloud Function name"
-  value       = google_cloudfunctions_function.function.name
+  value       = module.event_function.name
 }
 
 output "function_bucket_name" {
   description = "Cloud Function bucket name"
-  value       = google_storage_bucket.bucket.name
-}
-
-output "function_bucket_object_name" {
-  description = "Cloud Function code GCS object name"
-  value       = google_storage_bucket_object.main.name
+  value       = local.bucket_name
 }
 
 output "pubsub_topic_name" {
