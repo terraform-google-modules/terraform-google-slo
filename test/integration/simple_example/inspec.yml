@@ -34,3 +34,7 @@ attributes:
   - name: labels
     required: false
     type: string
+
+  - name: slo_pipeline
+    required: true
+    type: hash
