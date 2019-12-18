@@ -46,10 +46,8 @@ resource "google_bigquery_dataset" "main" {
 }
 
 module "event_function" {
-  # TODO update version once event-function is released with new functionality
-  source = "github.com/taylorludwig/terraform-google-event-function?ref=feature%2F37-terraform-created-files-in-archive"
-  # source  = "terraform-google-modules/event-function/google"
-  # version = "~> 1.1"
+  source  = "terraform-google-modules/event-function/google"
+  version = "~> 1.2"
 
   description            = "SLO Exporter to BigQuery or Stackdriver Monitoring"
   name                   = var.function_name

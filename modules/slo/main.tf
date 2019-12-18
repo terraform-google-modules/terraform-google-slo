@@ -37,10 +37,8 @@ resource "local_file" "error_budget_policy" {
 }
 
 module "slo_cloud_function" {
-  # TODO update version once event-function is released with new functionality
-  # source                              = "github.com/terraform-google-modules/terraform-google-scheduled-function"
-  # version                             = "~> 1.1"
-  source                                = "github.com/taylorludwig/terraform-google-scheduled-function?ref=feature%2Fuse-new-event-function"
+  source                              = "github.com/terraform-google-modules/terraform-google-scheduled-function"
+  version                             = "~> 1.3"
   project_id                            = var.project_id
   region                                = var.region
   job_schedule                          = var.schedule
