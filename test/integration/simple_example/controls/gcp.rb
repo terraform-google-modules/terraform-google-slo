@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+slo_pipeline = attribute('slo_pipeline')
+
 control "gcp" do
   title "GCP Resources"
 
-  describe google_storage_bucket(name: attribute("bucket_name")) do
+  describe google_storage_bucket(name: slo_pipeline["function_bucket_name"]) do
     it { should exist }
   end
 end

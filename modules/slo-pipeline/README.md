@@ -63,7 +63,6 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 |------|-------------|
 | exporters | Exporter config |
 | function\_bucket\_name | Cloud Function bucket name |
-| function\_bucket\_object\_name | Cloud Function code GCS object name |
 | function\_name | Cloud Function name |
 | project\_id | Project id |
 | pubsub\_topic\_name | Ingress PubSub topic to SLO pipeline |
