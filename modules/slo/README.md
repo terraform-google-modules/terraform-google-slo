@@ -60,8 +60,10 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | project\_id | SLO project id | string | n/a | yes |
 | region | Region to deploy the Cloud Function in | string | `"us-east1"` | no |
 | schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
+| scheduler\_job | An existing Cloud Scheduler job instance | object | `"null"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
+| topic\_name | Topic name | string | `""` | no |
 
 ## Outputs
 
@@ -70,6 +72,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | config | SLO Config |
 | function\_zip\_output\_path | Cloud Function zip output path |
 | project\_id | Project id |
+| pubsub\_topic\_name | PubSub topic name |
+| scheduler\_job | Cloud Scheduler job |
 | scheduler\_job\_name | Cloud Scheduler job name |
 | service\_account\_email | Service account email used to run the Cloud Function |
 
