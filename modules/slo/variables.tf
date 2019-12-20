@@ -158,3 +158,14 @@ variable "function_environment_variables" {
   default     = {}
   description = "A set of key/value environment variable pairs to assign to the function."
 }
+
+variable "scheduler_job" {
+  type        = object({ name = string })
+  description = "An existing Cloud Scheduler job instance"
+  default     = null
+}
+
+variable "topic_name" {
+  description = "Topic name"
+  default     = ""
+}

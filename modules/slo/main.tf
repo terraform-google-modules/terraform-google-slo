@@ -37,14 +37,13 @@ resource "local_file" "error_budget_policy" {
 }
 
 module "slo_cloud_function" {
-  source  = "terraform-google-modules/scheduled-function/google"
-  version = "~> 1.3"
-
+  source                                = "terraform-google-modules/scheduled-function/google"
+  version                               = "~> 1.4"
   project_id                            = var.project_id
   region                                = var.region
   job_schedule                          = var.schedule
   job_name                              = local.full_name
-  topic_name                            = local.full_name
+  topic_name                            = var.topic_name != "" ? var.topic_name : local.full_name
   bucket_name                           = "${local.full_name}-${local.suffix}"
   function_name                         = "${local.full_name}-${local.suffix}"
   function_description                  = var.config.slo_description
@@ -56,4 +55,5 @@ module "slo_cloud_function" {
   function_source_archive_bucket_labels = var.labels
   function_service_account_email        = local.service_account_email
   function_labels                       = var.labels
+  scheduler_job                         = var.scheduler_job
 }

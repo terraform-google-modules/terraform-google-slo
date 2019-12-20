@@ -34,6 +34,16 @@ output "scheduler_job_name" {
   value       = module.slo_cloud_function.name
 }
 
+output "pubsub_topic_name" {
+  description = "PubSub topic name"
+  value       = module.slo_cloud_function.pubsub_topic_name
+}
+
+output "scheduler_job" {
+  description = "Cloud Scheduler job"
+  value       = module.slo_cloud_function.scheduler_job
+}
+
 output "function_zip_output_path" {
   description = "Cloud Function zip output path"
   value       = "${local.function_source_directory}.zip"
