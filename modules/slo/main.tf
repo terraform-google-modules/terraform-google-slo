@@ -38,7 +38,7 @@ resource "local_file" "error_budget_policy" {
 
 module "slo_cloud_function" {
   source  = "terraform-google-modules/scheduled-function/google"
-  version = "~> 1.2"
+  version = "~> 1.4"
 
   project_id                            = var.project_id
   region                                = var.region
