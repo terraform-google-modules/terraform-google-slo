@@ -59,18 +59,21 @@ module "event_function" {
   source  = "terraform-google-modules/event-function/google"
   version = "~> 1.2"
 
-  description            = "SLO Exporter to BigQuery or Stackdriver Monitoring"
-  name                   = var.function_name
-  available_memory_mb    = var.function_memory
-  project_id             = var.project_id
-  region                 = var.region
-  service_account_email  = local.service_account_email
-  source_directory       = local.function_source_directory
-  source_dependent_files = [local_file.exporters]
-  bucket_name            = local.bucket_name
-  runtime                = "python37"
-  timeout_s              = "60"
-  entry_point            = "main"
+  description           = "SLO Exporter to BigQuery or Stackdriver Monitoring"
+  name                  = var.function_name
+  available_memory_mb   = var.function_memory
+  project_id            = var.project_id
+  region                = var.region
+  service_account_email = local.service_account_email
+  source_directory      = local.function_source_directory
+  source_dependent_files = [
+    local_file.exporters,
+    local_file.requirements_txt
+  ]
+  bucket_name = local.bucket_name
+  runtime     = "python37"
+  timeout_s   = "60"
+  entry_point = "main"
 
   event_trigger = {
     event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
