@@ -61,6 +61,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | region | Region to deploy the Cloud Function in | string | `"us-east1"` | no |
 | schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
+| slo\_generator\_version | SLO generator library version | string | `"0.1.7"` | no |
 | time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
 
 ## Outputs
