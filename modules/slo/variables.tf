@@ -33,6 +33,11 @@ variable "labels" {
   default     = {}
 }
 
+variable "slo_generator_version" {
+  description = "SLO generator library version"
+  default     = "0.1.7"
+}
+
 variable "config" {
   description = "SLO Configuration"
   type = object({

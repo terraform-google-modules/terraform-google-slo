@@ -18,6 +18,11 @@ locals {
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   bucket_suffix             = random_id.suffix.hex
   bucket_name               = "${var.function_bucket_name}-${local.bucket_suffix}"
+  requirements_txt = templatefile(
+    "${path.module}/code/requirements.txt.tpl", {
+      slo_generator_version = var.slo_generator_version
+    }
+  )
 }
 
 resource "random_id" "suffix" {
@@ -27,6 +32,11 @@ resource "random_id" "suffix" {
 resource "google_pubsub_topic" "stream" {
   project = var.project_id
   name    = var.pubsub_topic_name
+}
+
+resource "local_file" "requirements_txt" {
+  content  = local.requirements_txt
+  filename = "${path.module}/code/requirements.txt"
 }
 
 resource "local_file" "exporters" {
