@@ -87,3 +87,8 @@ variable "function_source_directory" {
   description = "The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code)"
   default     = ""
 }
+
+variable "slo_generator_version" {
+  description = "SLO generator library version"
+  default     = "0.1.7"
+}

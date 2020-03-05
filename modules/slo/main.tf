@@ -20,10 +20,20 @@ locals {
   service_account_email     = var.service_account_email != "" ? var.service_account_email : google_service_account.main[0].email
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
+  requirements_txt = templatefile(
+    "${path.module}/code/requirements.txt.tpl", {
+      slo_generator_version = var.slo_generator_version
+    }
+  )
 }
 
 resource "random_id" "suffix" {
   byte_length = 2
+}
+
+resource "local_file" "requirements_txt" {
+  content  = local.requirements_txt
+  filename = "${path.module}/code/requirements.txt"
 }
 
 resource "local_file" "slo" {
@@ -40,17 +50,21 @@ module "slo_cloud_function" {
   source  = "terraform-google-modules/scheduled-function/google"
   version = "~> 1.3"
 
-  project_id                            = var.project_id
-  region                                = var.region
-  job_schedule                          = var.schedule
-  job_name                              = local.full_name
-  topic_name                            = local.full_name
-  bucket_name                           = "${local.full_name}-${local.suffix}"
-  function_name                         = "${local.full_name}-${local.suffix}"
-  function_description                  = var.config.slo_description
-  function_entry_point                  = "main"
-  function_source_directory             = local.function_source_directory
-  function_source_dependent_files       = [local_file.error_budget_policy, local_file.slo]
+  project_id                = var.project_id
+  region                    = var.region
+  job_schedule              = var.schedule
+  job_name                  = local.full_name
+  topic_name                = local.full_name
+  bucket_name               = "${local.full_name}-${local.suffix}"
+  function_name             = "${local.full_name}-${local.suffix}"
+  function_description      = var.config.slo_description
+  function_entry_point      = "main"
+  function_source_directory = local.function_source_directory
+  function_source_dependent_files = [
+    local_file.error_budget_policy,
+    local_file.slo,
+    local_file.requirements_txt
+  ]
   function_available_memory_mb          = 128
   function_runtime                      = "python37"
   function_source_archive_bucket_labels = var.labels
