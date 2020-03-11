@@ -43,7 +43,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| dataset\_default\_table\_expiration\_ms | (Optional) The default lifetime of the slo table in the dataset, in milliseconds. Default is 1 year (86400000) | string | `"86400000"` | no |
+| dataset\_default\_table\_expiration\_ms | (Optional) The default lifetime of the slo table in the dataset, in milliseconds. Default is 1 year (31536000000) | string | `"31536000000"` | no |
 | exporters | SLO export destinations config | list | n/a | yes |
 | function\_bucket\_name | Name of the bucket to create to store the Cloud Function code | string | `"slo-pipeline"` | no |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |

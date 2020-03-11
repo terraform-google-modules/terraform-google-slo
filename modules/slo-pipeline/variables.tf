@@ -90,7 +90,7 @@ variable "function_source_directory" {
 
 variable "dataset_default_table_expiration_ms" {
   type        = string
-  description = "(Optional) The default lifetime of the slo table in the dataset, in milliseconds. Default is 1 year (86400000)"
+  description = "(Optional) The default lifetime of the slo table in the dataset, in milliseconds. Default is 1 year (31536000000)"
   default     = "31536000000"
 }
 
