@@ -12,9 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from slo_generator import compute
+import base64
 import json
 import pprint
+import time
+from datetime import datetime
+from slo_generator import compute
 
 with open("error_budget_policy.json") as f:
     error_budget_policy = json.load(f)
@@ -27,9 +30,50 @@ def main(data, context):
     print("Running SLO computations:")
     print("SLO Config: %s" % pprint.pformat(slo_config))
     print("Error Budget Policy: %s" % pprint.pformat(error_budget_policy))
-    compute.compute(
-        slo_config,
-        error_budget_policy,
-        timestamp=None,
-        client=None,
-        do_export=True)
+    timestamp = fetch_timestamp(data, context)
+    compute.compute(slo_config,
+                    error_budget_policy,
+                    timestamp=timestamp,
+                    client=None,
+                    do_export=True)
+
+
+def fetch_timestamp(data, context):
+    """Fetch timestamp from either Pub/Sub data, or incoming context.
+
+    Args:
+        data (dict): Pub/Sub data (base64 encoded).
+
+    Returns:
+        timestamp (float): UNIX timestamp.
+    """
+    try:
+        timestamp = float(base64.b64decode(data['data']).decode('utf-8'))
+    except ValueError:
+        timestamp = None
+    if not timestamp:
+        if context:
+            timestamp = convert_timestamp_iso6801_to_unix(context.timestamp)
+        else:
+            timestamp = time.time()
+    return timestamp
+
+
+def convert_timestamp_iso6801_to_unix(timestamp_iso6801):
+    """Convert timestamp in ISO6801 format to UNIX timestamp.
+
+    Args:
+        timestamp_iso6801 (str): Timestamp in ISO6801 format.
+
+    Returns:
+        float: UNIX timestamp.
+    """
+    if '.' in timestamp_iso6801:
+        timestamp_datetime = datetime.strptime(timestamp_iso6801,
+                                               '%Y-%m-%dT%H:%M:%S.%fZ')
+    else:
+        timestamp_datetime = datetime.strptime(timestamp_iso6801,
+                                               '%Y-%m-%dT%H:%M:%SZ')
+    timestamp_unix = (timestamp_datetime -
+                      datetime(1970, 1, 1)).total_seconds()
+    return timestamp_unix
