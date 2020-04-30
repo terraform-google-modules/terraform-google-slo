@@ -43,7 +43,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| dataset\_default\_table\_expiration\_ms | The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended) | string | `"null"` | no |
+| dataset\_default\_table\_expiration\_ms | The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended) | number | `"-1"` | no |
 | exporters | SLO export destinations config | list | n/a | yes |
 | function\_bucket\_name | Name of the bucket to create to store the Cloud Function code | string | `"slo-pipeline"` | no |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
@@ -55,7 +55,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | region | Region for the App Engine app | string | `"us-east1"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | service\_account\_name | Name of the service account to create | string | `"slo-pipeline"` | no |
-| slo\_generator\_version | SLO generator library version | string | `"0.1.7"` | no |
+| slo\_generator\_version | SLO generator library version | string | `"1.0.1"` | no |
 | storage\_bucket\_location | The GCS location | string | `"US"` | no |
 | storage\_bucket\_storage\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 
