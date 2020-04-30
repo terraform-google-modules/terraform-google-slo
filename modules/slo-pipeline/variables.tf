@@ -91,7 +91,7 @@ variable "function_source_directory" {
 variable "dataset_default_table_expiration_ms" {
   type        = number
   description = "The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended)"
-  default     = -1
+  default     = -1 # no expiration
 }
 
 variable "slo_generator_version" {

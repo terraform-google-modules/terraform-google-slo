@@ -23,6 +23,7 @@ locals {
       slo_generator_version = var.slo_generator_version
     }
   )
+  dataset_expiration = var.dataset_default_table_expiration_ms == -1 ? null : var.dataset_default_table_expiration_ms
 }
 
 resource "random_id" "suffix" {
