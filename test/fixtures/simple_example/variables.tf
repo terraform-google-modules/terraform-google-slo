@@ -29,7 +29,7 @@ variable "schedule" {
 
 variable "region" {
   description = "Region"
-  default     = "europe-west1"
+  default     = "us-east1"
 }
 
 variable "labels" {
