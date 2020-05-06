@@ -15,13 +15,29 @@
  */
 
 provider "google" {
-  version = "~> 2.0"
+  version = "~> 3.19"
+}
+
+provider "google-beta" {
+  version = "~> 3.19"
+}
+
+resource "google_service_account" "slo" {
+  account_id = "test-slo"
+  project    = var.project_id
+}
+
+resource "google_service_account" "slo_pipeline" {
+  account_id = "test-slo-pipeline"
+  project    = var.project_id
 }
 
 module "slo-pipeline" {
-  source     = "../../modules/slo-pipeline"
-  project_id = var.project_id
-  region     = var.region
+  source                     = "../../modules/slo-pipeline"
+  project_id                 = var.project_id
+  region                     = var.region
+  use_custom_service_account = true
+  service_account_email      = google_service_account.slo.email
   exporters = [
     {
       class      = "Stackdriver"
@@ -39,11 +55,13 @@ module "slo-pipeline" {
 }
 
 module "slo" {
-  source     = "../../modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
+  source                     = "../../modules/slo"
+  schedule                   = var.schedule
+  region                     = var.region
+  project_id                 = var.project_id
+  labels                     = var.labels
+  use_custom_service_account = true
+  service_account_email      = google_service_account.slo_pipeline.email
   config = {
     slo_name        = "pubsub-ack"
     slo_target      = "0.9"

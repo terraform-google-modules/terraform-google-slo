@@ -26,7 +26,7 @@ module "project" {
 
   activate_apis = [
     "appengine.googleapis.com",
-    "bigquery-json.googleapis.com",
+    "bigquery.googleapis.com",
     "cloudfunctions.googleapis.com",
     "cloudscheduler.googleapis.com",
     "logging.googleapis.com",

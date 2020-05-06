@@ -20,7 +20,7 @@ variable "project_id" {
 
 variable "exporters" {
   description = "SLO export destinations config"
-  type        = "list"
+  type        = list(any)
 
   # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
   # type = list(object({
@@ -70,6 +70,12 @@ variable "storage_bucket_storage_class" {
 variable "service_account_name" {
   description = "Name of the service account to create"
   default     = "slo-pipeline"
+}
+
+variable "use_custom_service_account" {
+  type        = bool
+  description = "Use a custom service account (pass service_account_email if true)"
+  default     = false
 }
 
 variable "service_account_email" {

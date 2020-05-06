@@ -15,11 +15,11 @@
  */
 
 locals {
-  service_account_email = var.service_account_email != "" ? var.service_account_email : google_service_account.main[0].email
+  service_account_email = var.use_custom_service_account ? var.service_account_email : google_service_account.main[0].email
 }
 
 resource "google_service_account" "main" {
-  count        = var.service_account_email != "" ? 0 : 1
+  count        = var.use_custom_service_account ? 0 : 1
   account_id   = var.service_account_name
   project      = var.project_id
   display_name = "Service account for SLO export"

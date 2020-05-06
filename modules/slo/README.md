@@ -63,6 +63,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | slo\_generator\_version | SLO generator library version | string | `"1.0.1"` | no |
 | time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
+| use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
 
 ## Outputs
 

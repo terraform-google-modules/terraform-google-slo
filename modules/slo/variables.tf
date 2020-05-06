@@ -110,7 +110,14 @@ variable "error_budget_policy" {
   ]
 }
 
+variable "use_custom_service_account" {
+  type        = bool
+  description = "Use a custom service account (pass service_account_email if true)"
+  default     = false
+}
+
 variable "service_account_email" {
+  type        = string
   description = "Service account email (optional)"
   default     = ""
 }
@@ -133,7 +140,7 @@ variable "time_zone" {
 }
 
 variable "bucket_force_destroy" {
-  type        = "string"
+  type        = string
   default     = "true"
   description = "When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first."
 }

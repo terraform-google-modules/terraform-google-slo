@@ -17,7 +17,6 @@
 locals {
   full_name                 = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
   pubsub_configs            = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
-  service_account_email     = var.service_account_email != "" ? var.service_account_email : google_service_account.main[0].email
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
   requirements_txt = templatefile(
