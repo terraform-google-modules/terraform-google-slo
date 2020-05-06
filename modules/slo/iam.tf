@@ -15,7 +15,7 @@
  */
 
 locals {
-  service_account_email = var.use_custom_service_account ? var.service_account_email : google_service_account.main[0].email
+  service_account_email = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
 }
 
 resource "google_service_account" "main" {
