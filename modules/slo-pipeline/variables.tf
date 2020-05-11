@@ -20,7 +20,7 @@ variable "project_id" {
 
 variable "exporters" {
   description = "SLO export destinations config"
-  type        = "list"
+  type        = list(any)
 
   # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
   # type = list(object({
@@ -72,6 +72,12 @@ variable "service_account_name" {
   default     = "slo-pipeline"
 }
 
+variable "use_custom_service_account" {
+  type        = bool
+  description = "Use a custom service account (pass service_account_email if true)"
+  default     = false
+}
+
 variable "service_account_email" {
   description = "Service account email (optional)"
   default     = ""
@@ -89,12 +95,12 @@ variable "function_source_directory" {
 }
 
 variable "dataset_default_table_expiration_ms" {
-  type = number
+  type        = number
   description = "The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended)"
-  default     = null
+  default     = -1 # no expiration
 }
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "0.1.7"
+  default     = "1.0.1"
 }

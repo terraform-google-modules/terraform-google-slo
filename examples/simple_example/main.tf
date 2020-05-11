@@ -15,7 +15,11 @@
  */
 
 provider "google" {
-  version = "~> 2.0"
+  version = "~> 3.19"
+}
+
+provider "google-beta" {
+  version = "~> 3.19"
 }
 
 module "slo-pipeline" {

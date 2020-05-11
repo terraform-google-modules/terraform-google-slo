@@ -16,7 +16,7 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 3.0"
+  version = "~> 8.0"
 
   name              = "ci-slo"
   random_project_id = "true"
@@ -26,7 +26,7 @@ module "project" {
 
   activate_apis = [
     "appengine.googleapis.com",
-    "bigquery-json.googleapis.com",
+    "bigquery.googleapis.com",
     "cloudfunctions.googleapis.com",
     "cloudscheduler.googleapis.com",
     "logging.googleapis.com",
