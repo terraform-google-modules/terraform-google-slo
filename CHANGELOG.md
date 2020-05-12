@@ -14,22 +14,17 @@ and this project adheres to
 
 * Revert "Update changelog, release first version of module" ([2dbf361](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/2dbf3615147edeedd661b52739259598ac967874))
 
-## [Unreleased]
 
 ### Fixed
 
-## [0.1.0] - 2020-05-12
-
-### Fixed
-
--   Updating SLO configs now correctly re-deploys Cloud Functions. Fixes [#7]
--   Allow to use a custom service account in both modules. Fixes [#13]
--   Upgrade to latest slo-generator version. Fixes [#14]
+* Updating SLO configs now correctly re-deploys Cloud Functions. Fixes [#7]
+* Allow to use a custom service account in both modules. Fixes [#13]
+* Upgrade to latest slo-generator version. Fixes [#14]
 
 ### Added
 
--   Added random suffix to bucket names to allow easy recreation. [#3]
--   Initial release
+* Added random suffix to bucket names to allow easy recreation. [#3]
+* Initial release
 
 [unreleased]: https://github.com/terraform-google-modules/terraform-google-slo/compare/v0.1.0...HEAD
 
