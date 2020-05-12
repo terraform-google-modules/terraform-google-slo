@@ -7,6 +7,13 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.1.0 (2020-05-12)
+
+
+### Reverts
+
+* Revert "Update changelog, release first version of module" ([2dbf361](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/2dbf3615147edeedd661b52739259598ac967874))
+
 ## [Unreleased]
 
 ### Fixed
