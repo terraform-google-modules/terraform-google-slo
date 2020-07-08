@@ -51,9 +51,9 @@ module "slo_cloud_function" {
 
   project_id                = var.project_id
   region                    = var.region
-  job_schedule              = var.schedule
-  job_name                  = local.full_name
-  topic_name                = local.full_name
+  job_schedule              = var.use_custom_pubsub_trigger ? null : var.schedule
+  job_name                  = var.use_custom_pubsub_trigger ? null : local.full_name
+  topic_name                = var.use_custom_pubsub_trigger ? var.pubsub_trigger : local.full_name
   bucket_name               = "${local.full_name}-${local.suffix}"
   bucket_force_destroy      = "true"
   function_name             = "${local.full_name}-${local.suffix}"

@@ -24,8 +24,19 @@ variable "region" {
 }
 
 variable "schedule" {
-  description = "Cron-like schedule for Cloud Scheduler"
+  description = "Cron-like schedule for Cloud Scheduler (ignored if use_custom_pubsub_trigger is true)"
   default     = "* * * * */1"
+}
+
+variable "use_custom_pubsub_trigger" {
+  type        = bool
+  description = "Use a custom pubsub trigger (pass pubsub_trigger if true)"
+  default     = false
+}
+
+variable "pubsub_trigger" {
+  description = "The topic name of the pubsub (in the same project) to trigg the slo compute."
+  type        = string
 }
 
 variable "labels" {
