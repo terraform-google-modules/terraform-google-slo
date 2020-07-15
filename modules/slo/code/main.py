@@ -16,8 +16,10 @@ import base64
 import json
 import pprint
 import time
+import logging
 from datetime import datetime
 from slo_generator import compute
+import google.cloud.logging
 
 with open("error_budget_policy.json") as f:
     error_budget_policy = json.load(f)
@@ -26,10 +28,16 @@ with open("slo_config.json") as f:
     slo_config = json.load(f)
 
 
+log_client = google.cloud.logging.Client()
+log_client.get_default_handler()
+log_client.setup_logging()
+
+
 def main(data, context):
-    print("Running SLO computations:")
-    print("SLO Config: %s" % pprint.pformat(slo_config))
-    print("Error Budget Policy: %s" % pprint.pformat(error_budget_policy))
+    logging.info("Running SLO computations:")
+    logging.info("SLO Config: %s", pprint.pformat(slo_config))
+    logging.info("Error Budget Policy: %s",
+                 pprint.pformat(error_budget_policy))
     timestamp = fetch_timestamp(data, context)
     compute.compute(slo_config,
                     error_budget_policy,
