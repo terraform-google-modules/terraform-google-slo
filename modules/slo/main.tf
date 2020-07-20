@@ -20,7 +20,7 @@ locals {
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
   requirements_txt = templatefile(
-    "${path.module}/code/requirements.txt.tpl", {
+    "${path.module}/templates/requirements.txt.tpl", {
       slo_generator_version = var.slo_generator_version
     }
   )
@@ -33,6 +33,11 @@ resource "random_id" "suffix" {
 resource "local_file" "requirements_txt" {
   content  = local.requirements_txt
   filename = "${path.module}/code/requirements.txt"
+}
+
+resource "local_file" "main_py" {
+  content  = file("${path.module}/templates/main.py")
+  filename = "${path.module}/code/main.py"
 }
 
 resource "local_file" "slo" {
@@ -63,7 +68,8 @@ module "slo_cloud_function" {
   function_source_dependent_files = [
     local_file.error_budget_policy,
     local_file.slo,
-    local_file.requirements_txt
+    local_file.requirements_txt,
+    local_file.main_py
   ]
   function_available_memory_mb          = 128
   function_runtime                      = "python37"
