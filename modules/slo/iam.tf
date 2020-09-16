@@ -33,6 +33,12 @@ resource "google_project_iam_member" "stackdriver" {
   member  = "serviceAccount:${local.sa_email}"
 }
 
+resource "google_project_iam_member" "logs-writer" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${local.service_account_email}"
+}
+
 resource "google_pubsub_topic_iam_member" "pubsub" {
   count   = var.grant_iam_roles ? length(local.pubsub_configs) : 0
   topic   = local.pubsub_configs[count.index].topic_name
