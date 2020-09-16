@@ -55,7 +55,6 @@ module "slo_cloud_function" {
   job_name                  = local.full_name
   topic_name                = local.full_name
   bucket_name               = "${local.full_name}-${local.suffix}"
-  bucket_force_destroy      = "true"
   function_name             = "${local.full_name}-${local.suffix}"
   function_description      = var.config.slo_description
   function_entry_point      = "main"
@@ -68,6 +67,6 @@ module "slo_cloud_function" {
   function_available_memory_mb          = 128
   function_runtime                      = "python37"
   function_source_archive_bucket_labels = var.labels
-  function_service_account_email        = local.sa_email
+  function_service_account_email        = local.service_account_email
   function_labels                       = var.labels
 }
