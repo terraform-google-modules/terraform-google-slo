@@ -7,12 +7,15 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.1.0...v0.2.0) (2020-09-16)
+
+
+### Features
+
+* Add support for native SLOs ([#33](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/33)) ([55b2319](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/55b23194494273ddb968ed1a39d5e32894b14a85))
+
+
 ## 0.1.0 (2020-05-12)
-
-### Reverts
-
-* Revert "Update changelog, release first version of module" ([2dbf361](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/2dbf3615147edeedd661b52739259598ac967874))
-
 
 ### Fixed
 
