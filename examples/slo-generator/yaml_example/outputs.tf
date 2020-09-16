@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,23 @@
  * limitations under the License.
  */
 
-module "example" {
-  source                      = "../../../examples/slo-generator/simple_example"
-  project_id                  = var.project_id
-  stackdriver_host_project_id = var.stackdriver_host_project_id
-  schedule                    = var.schedule
-  region                      = var.region
-  labels                      = var.labels
+# Note: As most of the submodules outputs are needed: we are just forwarding all
+# submodules outputs here. Please refer to the submodules outputs.tf file to
+# have a breakdown.
+
+output "slo_pipeline" {
+  description = "SLO pipeline outputs"
+  value       = module.slo-pipeline
+}
+
+output "slo-generator-bq-latency" {
+  value = module.slo-generator-bq-latency
+}
+
+output "slo-generator-gcf-errors" {
+  value = module.slo-generator-gcf-errors
+}
+
+output "slo-generator-pubsub-ack" {
+  value = module.slo-generator-pubsub-ack
 }

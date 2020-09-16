@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-module "example" {
-  source                      = "../../../examples/slo-generator/simple_example"
-  project_id                  = var.project_id
-  stackdriver_host_project_id = var.stackdriver_host_project_id
-  schedule                    = var.schedule
-  region                      = var.region
-  labels                      = var.labels
+data "google_monitoring_app_engine_service" "default" {
+  project   = var.app_engine_project_id
+  module_id = "default"
+}
+
+resource "google_monitoring_custom_service" "customsrv" {
+  project      = var.project_id
+  service_id   = "custom-srv-request-slos"
+  display_name = "My Custom Service"
 }

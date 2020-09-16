@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,14 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
+pipeline:
+  - class: Bigquery
+    project_id: ${project_id}
+    dataset_id: slo_reports
+    table_name: report
 
-steps:
-- name: 'gcr.io/cloud-foundation-cicd/cft/developer-tools:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  id: 'lint'
-  args: ['/usr/local/bin/test_lint.sh']
-tags:
-- 'ci'
-- 'lint'
-substitutions:
-  _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
-  _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '0.8.0'
+  - class: Stackdriver
+    project_id: ${stackdriver_host_project_id}
+
+slo:
+  - class: Pubsub
+    project_id: ${project_id}
+    topic_name: ${pubsub_topic_name}

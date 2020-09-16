@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  description = "Project id"
-  value       = var.project_id
+output "slo-cass-latency5ms-window" {
+  value = module.slo-cass-latency5ms-window
 }
 
-output "config" {
-  description = "SLO Config"
-  value       = var.config
+output "slo-gae-latency500ms" {
+  value = module.slo-gae-latency500ms
 }
 
-output "service_account_email" {
-  description = "Service account email used to run the Cloud Function"
-  value       = local.sa_email
+output "slo-gcp-latency400ms" {
+  value = module.slo-gcp-latency400ms
 }
 
-output "scheduler_job_name" {
-  description = "Cloud Scheduler job name"
-  value       = module.slo_cloud_function.name
+output "slo-gcp-latency500ms-window" {
+  value = module.slo-gcp-latency500ms-window
 }
 
-output "function_zip_output_path" {
-  description = "Cloud Function zip output path"
-  value       = "${local.function_source_directory}.zip"
+output "slo-uptime-latency500ms" {
+  value = module.slo-uptime-latency500ms-window
+}
+
+output "slo-uptime-pass" {
+  value = module.slo-uptime-pass-window
 }
