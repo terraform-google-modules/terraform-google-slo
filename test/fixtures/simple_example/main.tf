@@ -15,7 +15,7 @@
  */
 
 module "example" {
-  source                      = "../../../examples/slo-generator/simple_example"
+  source                      = "../../../examples/simple_example"
   project_id                  = var.project_id
   stackdriver_host_project_id = var.stackdriver_host_project_id
   schedule                    = var.schedule

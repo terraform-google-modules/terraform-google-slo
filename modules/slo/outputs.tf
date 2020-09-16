@@ -26,7 +26,7 @@ output "config" {
 
 output "service_account_email" {
   description = "Service account email used to run the Cloud Function"
-  value       = local.sa_email
+  value       = local.service_account_email
 }
 
 output "scheduler_job_name" {
