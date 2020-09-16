@@ -56,13 +56,32 @@ module "slo-pipeline" {
   exporters  = local.exporters.pipeline
 }
 
-module "slos" {
-  for_each            = local.slo_config_map
+module "slo-generator-bq-latency" {
   source              = "../../../modules/slo"
   schedule            = var.schedule
   region              = var.region
   project_id          = var.project_id
   labels              = var.labels
-  config              = each.value
+  config              = local.slo_config_map["generator-bq-latency"]
+  error_budget_policy = local.error_budget_policy
+}
+
+module "slo-generator-gcf-errors" {
+  source              = "../../../modules/slo"
+  schedule            = var.schedule
+  region              = var.region
+  project_id          = var.project_id
+  labels              = var.labels
+  config              = local.slo_config_map["generator-gcf-errors"]
+  error_budget_policy = local.error_budget_policy
+}
+
+module "slo-generator-pubsub-ack" {
+  source              = "../../../modules/slo"
+  schedule            = var.schedule
+  region              = var.region
+  project_id          = var.project_id
+  labels              = var.labels
+  config              = local.slo_config_map["generator-pubsub-ack"]
   error_budget_policy = local.error_budget_policy
 }

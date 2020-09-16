@@ -15,7 +15,7 @@
 service_name:    generator
 feature_name:    pubsub
 slo_description: 99% of outstanding PubSub messages are acknowledged
-slo_name:        queue
+slo_name:        ack
 slo_target:      0.99
 backend:
   class:         Stackdriver
