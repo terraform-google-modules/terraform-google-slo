@@ -59,7 +59,7 @@ variable "config" {
       class       = string
       project_id  = string
       method      = string
-      measurement = map(string)
+      measurement = map(any)
     })
   })
 }
