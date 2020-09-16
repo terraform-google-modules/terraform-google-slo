@@ -47,7 +47,7 @@ locals {
 }
 
 module "slo-pipeline" {
-  source     = "../../../modules/slo-generator/slo-export"
+  source     = "../../../modules/slo-pipeline"
   project_id = var.project_id
   region     = var.region
   exporters  = local.exporters.pipeline
@@ -55,7 +55,7 @@ module "slo-pipeline" {
 
 module "slos" {
   for_each   = local.slo_config_map
-  source     = "../../../modules/slo-generator/slo"
+  source     = "../../../modules/slo"
   schedule   = var.schedule
   region     = var.region
   project_id = var.project_id

@@ -46,7 +46,7 @@ Using `templatefile` you can also use placeholders in your YAML files and use th
 See [examples/yaml_example](examples/native/yaml_example) for an example of how to do this.
 
 ## SLO generator (any monitoring backend)
-The [`slo-export`](./modules/slo-export) and [`slo`] modules deploy the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
+The [`slo-pipeline`](./modules/slo-pipeline) and [`slo`] modules deploy the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
 in Cloud Functions in order to compute and export SLOs on a schedule.
 
 **Use this setup if:**
@@ -65,9 +65,9 @@ This architecture requires two submodules:
 * `slo`: This submodule deploys the infrastructure needed to compute SLO reports
 for **one** SLO. Users should use **one invocation of this submodule by SLO defined**.
 Once the SLO report is computed, the result is fed to the shared Pub/Sub topic
-created by the `slo-export` module.
+created by the `slo-pipeline` module.
 
-* `slo-export`: This submodule handles **exporting** SLO reports to different
+* `slo-pipeline`: This submodule handles **exporting** SLO reports to different
 destinations (Cloud Pub/Sub, BigQuery, Cloud Monitoring). The infrastructure is
 shared by all SLOs and a Pub/Sub topic created as input stream for SLO reports.
 
@@ -81,8 +81,8 @@ First, deploy the SLO export pipeline (shared module):
 
 ```hcl
 module "slo-pipeline" {
-  source                      = "terraform-google-modules/slo/google//modules/slo-generator/slo-export"
-  function_name               = "slo-export"
+  source                      = "terraform-google-modules/slo/google//modules/slo-pipeline"
+  function_name               = "slo-pipeline"
   region                      = "us-east"
   project_id                  = "test-project"
   bigquery_project_id         = "test-project"
@@ -96,7 +96,7 @@ Now, deploy an SLO definition:
 ### HCL format
 ```hcl
 module "slo" {
-  source     = "terraform-google-modules/slo/google//modules/slo-generator/slo"
+  source     = "terraform-google-modules/slo/google//modules/slo"
   schedule   = var.schedule
   region     = var.region
   project_id = var.project_id
@@ -135,7 +135,7 @@ locals {
 }
 
 module "slo" {
-  source     = "terraform-google-modules/slo/google//modules/slo-generator/slo"
+  source     = "terraform-google-modules/slo/google//modules/slo"
   schedule   = var.schedule
   region     = var.region
   project_id = var.project_id
@@ -147,7 +147,7 @@ A standard SRE practice is to write SLO definitions as YAML files, and follow DR
 
 
 Additional information, including description of the Inputs / Outputs is
-available in [`modules/slo-generator/slo-export/README.md`](./modules/slo-generator/slo-export/README.md) and [`modules/slo-generator/slo/README.md`](./modules/slo/README.md).
+available in [`modules/slo-pipeline/README.md`](./modules/slo-pipeline/README.md) and [`modules/slo/README.md`](./modules/slo/README.md).
 
 ## Contributing
 

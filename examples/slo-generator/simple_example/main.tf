@@ -23,7 +23,7 @@ provider "google-beta" {
 }
 
 module "slo-pipeline" {
-  source     = "../../../modules/slo-generator/slo-export"
+  source     = "../../../modules/slo-pipeline"
   project_id = var.project_id
   region     = var.region
   exporters = [
@@ -43,7 +43,7 @@ module "slo-pipeline" {
 }
 
 module "slo" {
-  source     = "../../../modules/slo-generator/slo"
+  source     = "../../../modules/slo"
   schedule   = var.schedule
   region     = var.region
   project_id = var.project_id
