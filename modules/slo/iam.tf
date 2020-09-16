@@ -15,13 +15,12 @@
  */
 
 locals {
-  sa_name  = var.service_account_name != "" ? var.service_account_name : local.full_name
-  sa_email = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
+  service_account_email = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
 }
 
 resource "google_service_account" "main" {
   count        = var.use_custom_service_account ? 0 : 1
-  account_id   = local.sa_name
+  account_id   = local.full_name
   project      = var.project_id
   display_name = "Service account for SLO computations"
 }
@@ -30,13 +29,13 @@ resource "google_project_iam_member" "stackdriver" {
   count   = var.grant_iam_roles && var.config.backend.class == "Stackdriver" ? 1 : 0
   project = var.config.backend.project_id
   role    = "roles/monitoring.viewer"
-  member  = "serviceAccount:${local.sa_email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }
 
 resource "google_project_iam_member" "logs-writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${local.sa_email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub" {
@@ -44,5 +43,5 @@ resource "google_pubsub_topic_iam_member" "pubsub" {
   topic   = local.pubsub_configs[count.index].topic_name
   project = local.pubsub_configs[count.index].project_id
   role    = "roles/pubsub.publisher"
-  member  = "serviceAccount:${local.sa_email}"
+  member  = "serviceAccount:${local.service_account_email}"
 }
