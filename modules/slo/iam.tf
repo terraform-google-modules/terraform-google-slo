@@ -36,7 +36,7 @@ resource "google_project_iam_member" "stackdriver" {
 resource "google_project_iam_member" "logs-writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${local.service_account_email}"
+  member  = "serviceAccount:${local.sa_email}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub" {
