@@ -11,9 +11,6 @@ and this project adheres to
 
 ### Added
 
--   Add examples for YAML-based SLOs [#28]
--   Add native SLO module [#28]
-
 ### Fixed
 
 ## [0.1.0] - 2020-05-12
