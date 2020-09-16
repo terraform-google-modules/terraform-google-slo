@@ -1,1 +1,0 @@
-slo_generator==1.0.1
