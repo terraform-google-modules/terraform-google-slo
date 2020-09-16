@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-module "example" {
-  source                      = "../../../examples/slo-generator/simple_example"
-  project_id                  = var.project_id
-  stackdriver_host_project_id = var.stackdriver_host_project_id
-  schedule                    = var.schedule
-  region                      = var.region
-  labels                      = var.labels
+terraform {
+  required_version = ">= 0.12"
 }

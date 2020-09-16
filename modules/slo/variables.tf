@@ -59,7 +59,7 @@ variable "config" {
       class       = string
       project_id  = string
       method      = string
-      measurement = map(string)
+      measurement = map(any)
     })
   })
 }
@@ -119,6 +119,12 @@ variable "use_custom_service_account" {
 variable "service_account_email" {
   type        = string
   description = "Service account email (optional)"
+  default     = ""
+}
+
+variable "service_account_name" {
+  type        = string
+  description = "Service account name (in case the generated one is too long)"
   default     = ""
 }
 
