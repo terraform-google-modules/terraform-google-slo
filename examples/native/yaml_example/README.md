@@ -25,6 +25,17 @@ To run this example, you'll need:
 | app\_engine\_project\_id | App Engine project id | string | n/a | yes |
 | project\_id | Project id | string | n/a | yes |
 
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| slo-cass-latency5ms-window |  |
+| slo-gae-latency500ms |  |
+| slo-gcp-latency400ms |  |
+| slo-gcp-latency500ms-window |  |
+| slo-uptime-latency500ms |  |
+| slo-uptime-pass |  |
+
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 To provision this example, run the following from within this directory:
