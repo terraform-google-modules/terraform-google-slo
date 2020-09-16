@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-output "project_id" {
+variable "project_id" {
   description = "Project id"
-  value       = var.project_id
 }
 
-output "config" {
-  description = "SLO Config"
-  value       = var.config
-}
-
-output "service_account_email" {
-  description = "Service account email used to run the Cloud Function"
-  value       = local.service_account_email
-}
-
-output "scheduler_job_name" {
-  description = "Cloud Scheduler job name"
-  value       = module.slo_cloud_function.name
-}
-
-output "function_zip_output_path" {
-  description = "Cloud Function zip output path"
-  value       = "${local.function_source_directory}.zip"
+variable "app_engine_project_id" {
+  description = "App Engine project id"
 }

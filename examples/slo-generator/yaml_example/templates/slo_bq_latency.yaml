@@ -1,0 +1,32 @@
+# Copyright 2020 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#            http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+service_name:    generator
+feature_name:    bq
+slo_description: >
+  99% of BigQuery API HTTP response latencies < 400ms
+slo_name:        latency
+slo_target:      0.99
+backend:
+  class:         Stackdriver
+  project_id:    "${stackdriver_host_project_id}"
+  method:        distribution_cut
+  measurement:
+    filter_valid: >
+      metric.type="serviceruntime.googleapis.com/api/request_latencies"
+      resource.type="consumed_api"
+      resource.label."project_id"="${project_id}"
+      resource.label."service"="bigquery.googleapis.com"
+    good_below_threshold: true
+    threshold_bucket: 17

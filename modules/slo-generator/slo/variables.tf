@@ -122,6 +122,12 @@ variable "service_account_email" {
   default     = ""
 }
 
+variable "service_account_name" {
+  type        = string
+  description = "Service account name (in case the generated one is too long)"
+  default     = ""
+}
+
 variable "grant_iam_roles" {
   description = "Grant IAM roles to created service accounts"
   default     = true
