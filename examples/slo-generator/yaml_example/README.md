@@ -30,8 +30,8 @@ To run this example, you'll need:
 
 | Name | Description |
 |------|-------------|
-| slo-bq-latency | SLO outputs |
 | slo\_pipeline | SLO pipeline outputs |
+| slos | SLO outputs |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

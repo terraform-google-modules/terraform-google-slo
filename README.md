@@ -85,9 +85,20 @@ module "slo-pipeline" {
   function_name               = "slo-pipeline"
   region                      = "us-east"
   project_id                  = "test-project"
-  bigquery_project_id         = "test-project"
-  bigquery_dataset_name       = "slo_reports"
-  stackdriver_host_project_id = "sd-host"
+  exporters = [
+    {
+      class      = "Stackdriver"
+      project_id = var.stackdriver_host_project_id
+    },
+    {
+      class                      = "Bigquery"
+      project_id                 = "test-project"
+      dataset_id                 = "slo"
+      table_id                   = "reports"
+      location                   = "EU"
+      delete_contents_on_destroy = true
+    }
+  ]
 }
 ```
 

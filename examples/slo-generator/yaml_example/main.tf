@@ -23,6 +23,9 @@ provider "google-beta" {
 }
 
 locals {
+  // Load error budget policy
+  error_budget_policy = yamldecode(file("templates/error_budget_policy.yaml"))
+
   // Load exporters for pipeline and SLOs
   exporters = yamldecode(templatefile("templates/exporters.yaml",
     {
@@ -43,7 +46,7 @@ locals {
       exporters = local.exporters.slo
     })
   ]
-  slo_config_map = { for config in local.slo_configs : config.slo_description => config }
+  slo_config_map = { for config in local.slo_configs : "${config.service_name}-${config.feature_name}-${config.slo_name}" => config }
 }
 
 module "slo-pipeline" {
@@ -54,11 +57,12 @@ module "slo-pipeline" {
 }
 
 module "slos" {
-  for_each   = local.slo_config_map
-  source     = "../../../modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
-  config     = each.value
+  for_each            = local.slo_config_map
+  source              = "../../../modules/slo"
+  schedule            = var.schedule
+  region              = var.region
+  project_id          = var.project_id
+  labels              = var.labels
+  config              = each.value
+  error_budget_policy = local.error_budget_policy
 }
