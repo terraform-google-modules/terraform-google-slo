@@ -29,6 +29,7 @@ suites:
   - name: simple_example
     driver:
       root_module_directory: test/fixtures/simple_example/
+      verify_version: false
     verifier:
       color: false
       systems:
