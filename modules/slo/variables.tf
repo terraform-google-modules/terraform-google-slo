@@ -46,7 +46,15 @@ variable "config" {
     slo_description = string
     service_name    = string
     feature_name    = string
-    exporters       = list(any)
+    backend         = any
+    # wait on https://github.com/hashicorp/terraform/issues/19898 to get a
+    # resolution
+    # backend = object({
+    #   class       = string
+    #   method      = string
+    #   measurement = map(any)
+    # })
+    exporters = list(any)
     # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
     # type = list(object({
     #   class = string
@@ -55,12 +63,6 @@ variable "config" {
     #   table_id = string
     #   topic_name = string
     # }))
-    backend = object({
-      class       = string
-      project_id  = string
-      method      = string
-      measurement = map(any)
-    })
   })
 }
 
