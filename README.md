@@ -14,7 +14,7 @@ Deploy your SLO directly to the Service Monitoring API:
 #### HCL format
 ```hcl
 module "slo_basic" {
-  source = "../../../modules/slo-native"
+  source = "terraform-google-modules/slo/google//modules/slo-native"
   config = {
     project_id        = var.app_engine_project_id
     service           = data.google_monitoring_app_engine_service.default.service_id
@@ -28,7 +28,7 @@ module "slo_basic" {
   }
 }
 ```
-See [examples/native/simple_example](./examples/simple_example) for another example.
+See [`examples/native/simple_example`](./examples/native/simple_example) for another example.
 
 #### YAML format
 You can also write an SLO in a YAML definition file and load it into the module:
@@ -38,12 +38,11 @@ locals {
 }
 
 module "slo_basic" {
-  source = "../../../modules/slo-native"
+  source = "terraform-google-modules/slo/google//modules/slo-native"
   config = local.config
 }
 ```
-Using `templatefile` you can also use placeholders in your YAML files and use them as templates for any application in your organization.
-See [examples/yaml_example](examples/native/yaml_example) for an example of how to do this.
+A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/slo-generator/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
 
 ## SLO generator (any monitoring backend)
 The [`slo-pipeline`](./modules/slo-pipeline) and [`slo`] modules deploy the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
@@ -154,7 +153,7 @@ module "slo" {
   config     = local.config
 }
 ```
-A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [examples/yaml_example](examples/slo-generator/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
+A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/slo-generator/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
 
 
 Additional information, including description of the Inputs / Outputs is
