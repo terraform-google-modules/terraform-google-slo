@@ -15,8 +15,11 @@
  */
 
 locals {
-  sa_name  = var.service_account_name != "" ? var.service_account_name : local.full_name
-  sa_email = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
+  sa_name   = var.service_account_name != "" ? var.service_account_name : local.full_name
+  sa_email  = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
+  ssm_class = var.config.backend.class == "StackdriverServiceMonitoring"
+  sd_class  = var.config.backend.class == "Stackdriver"
+  backend_project_id = lookup(var.config.backend, "project_id", null)
 }
 
 resource "google_service_account" "main" {
@@ -27,9 +30,16 @@ resource "google_service_account" "main" {
 }
 
 resource "google_project_iam_member" "stackdriver" {
-  count   = var.grant_iam_roles && var.config.backend.class == "Stackdriver" ? 1 : 0
-  project = lookup(var.config.backend, "project_id", null)
+  count   = var.grant_iam_roles && (local.sd_class || local.ssm_class) ? 1 : 0
+  project = local.backend_project_id
   role    = "roles/monitoring.viewer"
+  member  = "serviceAccount:${local.sa_email}"
+}
+
+resource "google_project_iam_member" "stackdriver-ssm-svc-editor" {
+  count   = var.grant_iam_roles && local.ssm_class ? 1 : 0
+  project = local.backend_project_id
+  role    = "roles/monitoring.servicesEditor"
   member  = "serviceAccount:${local.sa_email}"
 }
 
