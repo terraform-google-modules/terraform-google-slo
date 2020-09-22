@@ -57,7 +57,6 @@ variable "config" {
     # }))
     backend = object({
       class       = string
-      project_id  = string
       method      = string
       measurement = map(any)
     })
