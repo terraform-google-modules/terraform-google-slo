@@ -28,7 +28,7 @@ resource "google_service_account" "main" {
 
 resource "google_project_iam_member" "stackdriver" {
   count   = var.grant_iam_roles && var.config.backend.class == "Stackdriver" ? 1 : 0
-  project = var.config.backend.project_id
+  project = lookup(var.config.backend, "project_id", null)
   role    = "roles/monitoring.viewer"
   member  = "serviceAccount:${local.sa_email}"
 }
