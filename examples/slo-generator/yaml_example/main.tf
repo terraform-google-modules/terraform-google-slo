@@ -85,3 +85,9 @@ module "slo-generator-pubsub-ack" {
   config              = local.slo_config_map["generator-pubsub-ack"]
   error_budget_policy = local.error_budget_policy
 }
+
+module "slo-generator-alerts" {
+  source              = "../../../modules/slo-alert"
+  project_id          = var.stackdriver_host_project_id
+  error_budget_policy = local.error_budget_policy
+}
