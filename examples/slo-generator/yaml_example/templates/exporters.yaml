@@ -16,7 +16,7 @@ pipeline:
   - class: Bigquery
     project_id: ${project_id}
     dataset_id: slo_reports
-    table_name: report
+    table_id: report
 
   - class: Stackdriver
     project_id: ${stackdriver_host_project_id}
