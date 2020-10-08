@@ -56,13 +56,21 @@ module "slo-pipeline" {
   exporters  = local.exporters.pipeline
 }
 
+resource "google_service_account" "slo-generator" {
+  project      = var.project_id
+  display_name = "SLO Generator Service Account"
+  account_id   = "slo-generator"
+}
+
 module "slos" {
-  for_each            = local.slo_config_map
-  source              = "../../../modules/slo"
-  schedule            = var.schedule
-  region              = var.region
-  project_id          = var.project_id
-  labels              = var.labels
-  config              = each.value
-  error_budget_policy = local.error_budget_policy
+  for_each                   = local.slo_config_map
+  source                     = "../../../modules/slo"
+  schedule                   = var.schedule
+  region                     = var.region
+  project_id                 = var.project_id
+  labels                     = var.labels
+  config                     = each.value
+  error_budget_policy        = local.error_budget_policy
+  use_custom_service_account = true
+  service_account_email      = google_service_account.slo-generator.email
 }

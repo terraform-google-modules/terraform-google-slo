@@ -17,8 +17,9 @@
 locals {
   full_name                 = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
   pubsub_configs            = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
-  function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
+  function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
+  function_target_directory = "${path.module}/code_${local.suffix}"
   requirements_txt = templatefile(
     "${path.module}/code/requirements.txt.tpl", {
       slo_generator_version = var.slo_generator_version
@@ -26,23 +27,35 @@ locals {
   )
 }
 
+resource "null_resource" "copy_gcf_folder" {
+  triggers = { suffix = local.function_target_directory }
+  provisioner "local-exec" {
+    command = "mkdir -p ${local.function_target_directory} && cp -R ${local.function_source_directory}/* ${local.function_target_directory}"
+  }
+}
+
 resource "random_id" "suffix" {
-  byte_length = 2
+  byte_length = 6
 }
 
 resource "local_file" "requirements_txt" {
   content  = local.requirements_txt
-  filename = "${path.module}/code/requirements.txt"
+  filename = "${local.function_target_directory}/requirements.txt"
 }
 
 resource "local_file" "slo" {
   content  = jsonencode(var.config)
-  filename = "${path.module}/code/slo_config.json"
+  filename = "${local.function_target_directory}/slo_config.json"
 }
 
 resource "local_file" "error_budget_policy" {
   content  = jsonencode(var.error_budget_policy)
-  filename = "${path.module}/code/error_budget_policy.json"
+  filename = "${local.function_target_directory}/error_budget_policy.json"
+}
+
+resource "local_file" "info_file" {
+  content  = "Suffix: ${local.suffix}\nId: ${null_resource.copy_gcf_folder.id}"
+  filename = "${local.function_target_directory}/info.txt"
 }
 
 module "slo_cloud_function" {
@@ -59,11 +72,12 @@ module "slo_cloud_function" {
   function_name             = "${local.full_name}-${local.suffix}"
   function_description      = var.config.slo_description
   function_entry_point      = "main"
-  function_source_directory = local.function_source_directory
+  function_source_directory = local.function_target_directory
   function_source_dependent_files = [
     local_file.error_budget_policy,
     local_file.slo,
-    local_file.requirements_txt
+    local_file.requirements_txt,
+    local_file.info_file
   ]
   function_available_memory_mb          = 128
   function_runtime                      = "python37"
