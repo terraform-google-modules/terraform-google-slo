@@ -27,15 +27,13 @@ locals {
   )
 }
 
-resource "null_resource" "copy_gcf_folder" {
-  triggers = { suffix = local.function_target_directory }
-  provisioner "local-exec" {
-    command = "mkdir -p ${local.function_target_directory} && cp -R ${local.function_source_directory}/* ${local.function_target_directory}"
-  }
-}
-
 resource "random_id" "suffix" {
   byte_length = 6
+}
+
+resource "local_file" "main" {
+  content  = file("${local.function_source_directory}/main.py")
+  filename = "${local.function_target_directory}/main.py"
 }
 
 resource "local_file" "requirements_txt" {
@@ -51,11 +49,6 @@ resource "local_file" "slo" {
 resource "local_file" "error_budget_policy" {
   content  = jsonencode(var.error_budget_policy)
   filename = "${local.function_target_directory}/error_budget_policy.json"
-}
-
-resource "local_file" "info_file" {
-  content  = "Suffix: ${local.suffix}\nId: ${null_resource.copy_gcf_folder.id}"
-  filename = "${local.function_target_directory}/info.txt"
 }
 
 module "slo_cloud_function" {
@@ -74,10 +67,10 @@ module "slo_cloud_function" {
   function_entry_point      = "main"
   function_source_directory = local.function_target_directory
   function_source_dependent_files = [
+    local_file.main,
     local_file.error_budget_policy,
     local_file.slo,
     local_file.requirements_txt,
-    local_file.info_file
   ]
   function_available_memory_mb          = 128
   function_runtime                      = "python37"
