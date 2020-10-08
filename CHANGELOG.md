@@ -14,6 +14,9 @@ and this project adheres to
 
 * upgrade defaut slo-generator version to 1.1.2 [[#46](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/46)] ([f16b8d6](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/f16b8d6b9611c14636dffa1e20efb19f79e2932b))
 
+### Features
+* Add dataset_create flag to skip creation if already exists [[#48](https://github.com/terraform-google-modules/terraform-google-slo/pull/48)] ([638078d](https://github.com/terraform-google-modules/terraform-google-slo/commit/638078df81cd78f404994ab51db21a6920f11940))
+
 ### [0.2.1](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.2.0...v0.2.1) (2020-09-22)
 
 
