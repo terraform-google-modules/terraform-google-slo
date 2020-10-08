@@ -102,5 +102,5 @@ variable "dataset_default_table_expiration_ms" {
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "1.0.1"
+  default     = "1.1.2"
 }
