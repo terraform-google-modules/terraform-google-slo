@@ -46,7 +46,7 @@ resource "local_file" "exporters" {
 }
 
 resource "google_bigquery_dataset" "main" {
-  count                       = length(local.bigquery_configs)
+  count                       = var.dataset_create == false ? 0 : length(local.bigquery_configs)
   project                     = local.bigquery_configs[count.index].project_id
   dataset_id                  = local.bigquery_configs[count.index].dataset_id
   delete_contents_on_destroy  = lookup(local.bigquery_configs[count.index], "delete_contents_on_destroy", false)

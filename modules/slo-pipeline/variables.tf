@@ -100,6 +100,12 @@ variable "dataset_default_table_expiration_ms" {
   default     = -1 # no expiration
 }
 
+variable "dataset_create" {
+  type        = bool
+  description = "Whether to create the BigQuery dataset"
+  default     = true
+}
+
 variable "slo_generator_version" {
   description = "SLO generator library version"
   default     = "1.1.2"
