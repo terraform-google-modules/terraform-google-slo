@@ -7,6 +7,13 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [0.2.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.2.1...v0.2.2) (2020-10-08)
+
+
+### Bug Fixes
+
+* upgrade defaut slo-generator version to 1.1.2 [[#46](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/46)] ([f16b8d6](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/f16b8d6b9611c14636dffa1e20efb19f79e2932b))
+
 ### [0.2.1](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.2.0...v0.2.1) (2020-09-22)
 
 
