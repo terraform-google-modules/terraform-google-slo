@@ -20,13 +20,7 @@ import logging
 from datetime import datetime
 from slo_generator import compute
 import google.cloud.logging
-
-with open("error_budget_policy.json") as f:
-    error_budget_policy = json.load(f)
-
-with open("slo_config.json") as f:
-    slo_config = json.load(f)
-
+import google.cloud.storage
 
 log_client = google.cloud.logging.Client()
 log_client.get_default_handler()
@@ -34,6 +28,9 @@ log_client.setup_logging()
 
 
 def main(data, context):
+    logging.info("Downloading configs from GCS")
+    error_budget_policy = download_gcs("${error_budget_policy_gcs_filepath}")
+    slo_config = download_gcs("${slo_config_gcs_filepath}")
     logging.info("Running SLO computations:")
     logging.info("SLO Config: %s", pprint.pformat(slo_config))
     logging.info("Error Budget Policy: %s",
@@ -85,3 +82,21 @@ def convert_timestamp_iso6801_to_unix(timestamp_iso6801):
     timestamp_unix = (timestamp_datetime -
                       datetime(1970, 1, 1)).total_seconds()
     return timestamp_unix
+
+def download_gcs(filepath):
+    """Download config from GCS and load it with json module.
+
+    Args:
+        filepath: Config filepath.
+
+    Returns:
+        dict: Loaded configuration.
+    """
+    split_url = filepath.split('/')
+    bucket = split_url[2]
+    filepath = '/'.join(split_url[2:])
+    storage_client = google.cloud.storage.Client()
+    bucket = storage_client.get_bucket(bucket)
+    blob = bucket.blob(filepath)
+    data = json.loads(blob.download_as_string(client=None))
+    return data

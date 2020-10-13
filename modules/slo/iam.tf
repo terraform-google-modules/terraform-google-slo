@@ -49,6 +49,12 @@ resource "google_project_iam_member" "logs-writer" {
   member  = "serviceAccount:${local.sa_email}"
 }
 
+resource "google_project_iam_member" "config-viewer" {
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${local.sa_email}"
+}
+
 resource "google_pubsub_topic_iam_member" "pubsub" {
   count   = var.grant_iam_roles ? length(local.pubsub_configs) : 0
   topic   = local.pubsub_configs[count.index].topic_name

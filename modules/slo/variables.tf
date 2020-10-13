@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+variable "configs_bucket_name" {
+  description = "GCS buckets holding SLO generator configs"
+}
 
 variable "project_id" {
   description = "SLO project id"
