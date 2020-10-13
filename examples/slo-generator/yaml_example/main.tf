@@ -53,7 +53,6 @@ resource "google_service_account" "slo-generator" {
   project      = var.project_id
   display_name = "SLO Generator Service Account"
   account_id   = "slo-generator"
-}
 
 resource "google_storage_bucket" "slos" {
   project  = var.project_id

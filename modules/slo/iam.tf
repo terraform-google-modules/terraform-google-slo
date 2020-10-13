@@ -58,8 +58,8 @@ resource "google_pubsub_topic_iam_member" "pubsub" {
 }
 
 resource "google_storage_bucket_iam_member" "object-viewer" {
-  count   = var.grant_iam_roles ? 1 : 0
-  bucket  = local.slo_bucket_name
-  role    = "roles/storage.objectViewer"
-  member  = "serviceAccount:${local.sa_email}"
+  count  = var.grant_iam_roles ? 1 : 0
+  bucket = local.slo_bucket_name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${local.sa_email}"
 }
