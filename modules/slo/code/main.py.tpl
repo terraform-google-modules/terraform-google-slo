@@ -100,4 +100,3 @@ def download_gcs(filepath):
     blob = bucket.blob(filepath)
     data = json.loads(blob.download_as_string(client=None))
     return data
-    
