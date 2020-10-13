@@ -29,11 +29,6 @@ output "service_account_email" {
   value       = local.sa_email
 }
 
-output "scheduler_job_name" {
-  description = "Cloud Scheduler job name"
-  value       = module.slo_cloud_function.name
-}
-
 output "function_zip_output_path" {
   description = "Cloud Function zip output path"
   value       = "${local.function_source_directory}.zip"
