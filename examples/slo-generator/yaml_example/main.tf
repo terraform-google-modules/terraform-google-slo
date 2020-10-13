@@ -80,6 +80,5 @@ module "slos" {
   error_budget_policy        = local.error_budget_policy
   use_custom_service_account = true
   service_account_email      = google_service_account.slo-generator.email
-  slo_generator_version      = "1.1.2"
   config_bucket              = google_storage_bucket.slos.name
 }
