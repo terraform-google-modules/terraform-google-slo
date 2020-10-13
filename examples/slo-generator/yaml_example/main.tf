@@ -49,17 +49,24 @@ locals {
   slo_config_map = { for config in local.slo_configs : "${config.service_name}-${config.feature_name}-${config.slo_name}" => config }
 }
 
-module "slo-pipeline" {
-  source     = "../../../modules/slo-pipeline"
-  project_id = var.project_id
-  region     = var.region
-  exporters  = local.exporters.pipeline
-}
-
 resource "google_service_account" "slo-generator" {
   project      = var.project_id
   display_name = "SLO Generator Service Account"
   account_id   = "slo-generator"
+}
+
+resource "google_storage_bucket" "slos" {
+  project  = var.project_id
+  location = "EU"
+  name     = "rnm-slos-test"
+}
+
+module "slo-pipeline" {
+  source         = "../../../modules/slo-pipeline"
+  project_id     = var.project_id
+  region         = var.region
+  exporters      = local.exporters.pipeline
+  dataset_create = false
 }
 
 module "slos" {
@@ -73,4 +80,6 @@ module "slos" {
   error_budget_policy        = local.error_budget_policy
   use_custom_service_account = true
   service_account_email      = google_service_account.slo-generator.email
+  slo_generator_version      = "1.1.2"
+  config_bucket              = google_storage_bucket.slos.name
 }

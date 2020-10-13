@@ -38,6 +38,35 @@ variable "slo_generator_version" {
   default     = "1.1.2"
 }
 
+variable "extra_files" {
+  description = "Extra files to add to the Google Cloud Function code"
+  default = []
+  type = list(object({
+    content = string,
+    filename = string
+  }))
+}
+
+variable "config_bucket" {
+  description = "SLO generator GCS bucket to store configs. Create one if empty."
+  default     = ""
+}
+
+variable "vpc_connector" {
+  description = "VPC Connector URI"
+  default     = null
+}
+
+variable "vpc_connector_egress_settings" {
+  description = "VPC Connector Egress Settings"
+  default     = null
+}
+
+variable "environment_variables" {
+  description = "SLO generator env variables"
+  default     = {}
+}
+
 variable "config" {
   description = "SLO Configuration"
   type = object({
