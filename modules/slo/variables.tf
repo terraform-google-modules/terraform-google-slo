@@ -40,9 +40,9 @@ variable "slo_generator_version" {
 
 variable "extra_files" {
   description = "Extra files to add to the Google Cloud Function code"
-  default = []
+  default     = []
   type = list(object({
-    content = string,
+    content  = string,
     filename = string
   }))
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 locals {
   slo_bucket_name         = var.config_bucket == "" ? google_storage_bucket.slos.name : var.config_bucket
   slo_config_url          = "gs://${local.slo_bucket_name}/${google_storage_bucket_object.slo_config.output_name}"

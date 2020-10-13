@@ -27,17 +27,17 @@ locals {
   )
   main_py = templatefile(
     "${path.module}/code/main.py.tpl", {
-      slo_config_gcs_filepath = local.slo_config_url
+      slo_config_gcs_filepath          = local.slo_config_url
       error_budget_policy_gcs_filepath = local.error_budget_policy_url
     }
   )
   default_files = [
     {
-      content = local.requirements_txt
+      content  = local.requirements_txt
       filename = "requirements.txt"
     },
     {
-      content = local.main_py
+      content  = local.main_py
       filename = "main.py"
     }
   ]
@@ -50,7 +50,7 @@ resource "random_id" "suffix" {
 
 resource "random_uuid" "this" {
   keepers = {
-    for filename in fileset(local.function_source_directory, "**/*"):
+    for filename in fileset(local.function_source_directory, "**/*") :
     filename => filemd5("${local.function_source_directory}/${filename}")
   }
 }
@@ -61,16 +61,16 @@ data "archive_file" "gcf_code" {
   dynamic "source" {
     for_each = local.files
     content {
-      content = source.value["content"]
+      content  = source.value["content"]
       filename = source.value["filename"]
     }
   }
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name    = "gcf/code-${random_uuid.this.result}.zip"
-  bucket  = local.slo_bucket_name
-  source  = data.archive_file.gcf_code.output_path
+  name   = "gcf/code-${random_uuid.this.result}.zip"
+  bucket = local.slo_bucket_name
+  source = data.archive_file.gcf_code.output_path
 }
 
 resource "google_pubsub_topic" "scheduler_topic" {
@@ -84,7 +84,7 @@ resource "google_pubsub_topic" "scheduler_topic" {
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  project  = var.project_id 
+  project  = var.project_id
   region   = var.region
   name     = "scheduler-job-${random_uuid.this.result}"
   schedule = var.schedule
@@ -112,8 +112,8 @@ resource "google_cloudfunctions_function" "function" {
       retry = false
     }
   }
-  service_account_email = local.sa_email
-  environment_variables = var.environment_variables
-  vpc_connector = var.vpc_connector
+  service_account_email         = local.sa_email
+  environment_variables         = var.environment_variables
+  vpc_connector                 = var.vpc_connector
   vpc_connector_egress_settings = var.vpc_connector_egress_settings
 }

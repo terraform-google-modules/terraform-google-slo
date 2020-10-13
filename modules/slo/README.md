@@ -48,7 +48,10 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 |------|-------------|:----:|:-----:|:-----:|
 | bucket\_force\_destroy | When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first. | string | `"true"` | no |
 | config | SLO Configuration | object | n/a | yes |
+| config\_bucket | SLO generator GCS bucket to store configs. Create one if empty. | string | `""` | no |
+| environment\_variables | SLO generator env variables | map | `<map>` | no |
 | error\_budget\_policy | Error budget policy config | object | `<list>` | no |
+| extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
 | function\_environment\_variables | A set of key/value environment variable pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_source\_archive\_bucket\_labels | A set of key/value label pairs to assign to the function source archive bucket. | map(string) | `<map>` | no |
@@ -65,6 +68,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | slo\_generator\_version | SLO generator library version | string | `"1.1.2"` | no |
 | time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
 | use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
+| vpc\_connector | VPC Connector URI | string | `"null"` | no |
+| vpc\_connector\_egress\_settings | VPC Connector Egress Settings | string | `"null"` | no |
 
 ## Outputs
 
