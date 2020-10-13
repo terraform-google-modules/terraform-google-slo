@@ -57,7 +57,7 @@ resource "google_service_account" "slo-generator" {
 resource "google_storage_bucket" "slos" {
   project  = var.project_id
   location = "EU"
-  name     = "rnm-slos-test"
+  name     = var.bucket_name
 }
 
 module "slo-pipeline" {
