@@ -116,27 +116,3 @@ resource "google_cloudfunctions_function" "function" {
   vpc_connector                 = var.vpc_connector
   vpc_connector_egress_settings = var.vpc_connector_egress_settings
 }
-
-resource "google_cloudfunctions_function" "function" {
-  project               = var.project_id
-  region                = var.region
-  name                  = local.full_name
-  description           = var.config.slo_description
-  runtime               = "python37"
-  available_memory_mb   = 128
-  source_archive_bucket = local.slo_bucket_name
-  source_archive_object = google_storage_bucket_object.archive.name
-  entry_point           = "main"
-  labels                = var.labels
-  event_trigger {
-    event_type = "google.pubsub.topic.publish"
-    resource   = google_pubsub_topic.scheduler_topic.name
-    failure_policy {
-      retry = false
-    }
-  }
-  service_account_email = local.sa_email
-  environment_variables = var.environment_variables
-  vpc_connector = var.vpc_connector
-  vpc_connector_egress_settings = var.vpc_connector_egress_settings
-}
