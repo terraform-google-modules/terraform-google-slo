@@ -35,7 +35,7 @@ variable "labels" {
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "1.1.2"
+  default     = "1.2.0"
 }
 
 variable "extra_files" {
