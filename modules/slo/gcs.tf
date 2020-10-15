@@ -21,6 +21,7 @@ locals {
 }
 
 resource "google_storage_bucket" "slos" {
+  count    = var.config_bucket == "" ? 1 : 0
   project  = var.project_id
   name     = "${local.full_name}-conf"
   location = "EU"

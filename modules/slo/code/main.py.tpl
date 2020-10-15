@@ -90,7 +90,7 @@ def download_gcs(filepath):
     """
     split_url = filepath.split('/')
     bucket = split_url[2]
-    filepath = '/'.join(split_url[2:])
+    filepath = '/'.join(split_url[3:])
     storage_client = google.cloud.storage.Client()
     bucket = storage_client.get_bucket(bucket)
     blob = bucket.blob(filepath)
