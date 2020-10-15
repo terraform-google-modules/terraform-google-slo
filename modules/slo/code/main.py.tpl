@@ -19,21 +19,17 @@ import time
 import logging
 from datetime import datetime
 from slo_generator import compute
-import google.cloud.logging
 import google.cloud.storage
 
-log_client = google.cloud.logging.Client()
-log_client.get_default_handler()
-log_client.setup_logging()
-
+LOGGER = logging.getLogger(__name__)
 
 def main(data, context):
-    logging.info("Downloading configs from GCS")
+    LOGGER.info("Downloading configs from GCS")
     error_budget_policy = download_gcs("${error_budget_policy_gcs_filepath}")
     slo_config = download_gcs("${slo_config_gcs_filepath}")
-    logging.info("Running SLO computations:")
-    logging.info("SLO Config: %s", pprint.pformat(slo_config))
-    logging.info("Error Budget Policy: %s",
+    LOGGER.info("Running SLO computations:")
+    LOGGER.info("SLO Config: %s", pprint.pformat(slo_config))
+    LOGGER.info("Error Budget Policy: %s",
                  pprint.pformat(error_budget_policy))
     timestamp = fetch_timestamp(data, context)
     compute.compute(slo_config,
