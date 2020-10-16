@@ -67,7 +67,7 @@ data "archive_file" "gcf_code" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = "gcf/code-${random_uuid.this.result}.zip"
+  name   = "gcf/code-${data.archive_file.gcf_code.output_md5}.zip"
   bucket = local.slo_bucket_name
   source = data.archive_file.gcf_code.output_path
 }
