@@ -16,8 +16,8 @@
 
 locals {
   slo_bucket_name         = var.config_bucket == "" ? google_storage_bucket.slos[0].name : var.config_bucket
-  slo_config_url          = google_storage_bucket_object.slo_config.media_link
-  error_budget_policy_url = google_storage_bucket_object.error_budget_policy.media_link
+  slo_config_url          = google_storage_bucket_object.slo_config.self_link
+  error_budget_policy_url = google_storage_bucket_object.error_budget_policy.self_link
 }
 
 resource "google_storage_bucket" "slos" {
