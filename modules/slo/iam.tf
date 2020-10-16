@@ -64,7 +64,7 @@ resource "google_storage_bucket_iam_member" "object-viewer" {
   member = "serviceAccount:${local.sa_email}"
 }
 
-resource "google_storage_bucket_iam_member" "object-viewer" {
+resource "google_storage_bucket_iam_member" "object-viewer-legacy" {
   count  = var.grant_iam_roles ? 1 : 0
   bucket = local.slo_bucket_name
   role   = "roles/storage.legacyBucketReader"
