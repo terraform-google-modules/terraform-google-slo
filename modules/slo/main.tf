@@ -19,7 +19,6 @@ locals {
   pubsub_configs            = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
-  slo_bucket                = google_storage_bucket.slos.name
   requirements_txt = templatefile(
     "${path.module}/code/requirements.txt.tpl", {
       slo_generator_version = var.slo_generator_version

@@ -15,12 +15,13 @@
  */
 
 locals {
-  slo_bucket_name         = var.config_bucket == "" ? google_storage_bucket.slos.name : var.config_bucket
+  slo_bucket_name         = var.config_bucket == "" ? google_storage_bucket.slos[0].name : var.config_bucket
   slo_config_url          = "gs://${local.slo_bucket_name}/${google_storage_bucket_object.slo_config.output_name}"
   error_budget_policy_url = "gs://${local.slo_bucket_name}/${google_storage_bucket_object.error_budget_policy.output_name}"
 }
 
 resource "google_storage_bucket" "slos" {
+  count    = var.config_bucket == "" ? 1 : 0
   project  = var.project_id
   name     = "${local.full_name}-conf"
   location = "EU"
