@@ -26,8 +26,8 @@ locals {
   )
   main_py = templatefile(
     "${path.module}/code/main.py.tpl", {
-      slo_config_gcs_filepath          = local.slo_config_url
-      error_budget_policy_gcs_filepath = local.error_budget_policy_url
+      slo_config_url          = local.slo_config_url
+      error_budget_policy_url = local.error_budget_policy_url
     }
   )
   default_files = [

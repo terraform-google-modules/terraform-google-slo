@@ -27,8 +27,8 @@ LOGGER = logging.getLogger(__name__)
 
 def main(data, context):
     LOGGER.info("Downloading configs from GCS")
-    error_budget_policy = download_gcs("${error_budget_policy_gcs_filepath}")
-    slo_config = download_gcs("${slo_config_gcs_filepath}")
+    error_budget_policy = download_gcs("${error_budget_policy_url}")
+    slo_config = download_gcs("${slo_config_url}")
     LOGGER.info("Running SLO computations:")
     LOGGER.info("SLO Config: %s", pprint.pformat(slo_config))
     LOGGER.info("Error Budget Policy: %s",
@@ -96,11 +96,11 @@ def decode_gcs_url(url):
     bucket, file_path = path[0], path[1] 
     return bucket, file_path
 
-def download_gcs(filepath):
+def download_gcs(url):
     """Download config from GCS and load it with json module.
 
     Args:
-        filepath: Config filepath.
+        url: Config URL.
 
     Returns:
         dict: Loaded configuration.
