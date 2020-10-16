@@ -89,12 +89,12 @@ def decode_gcs_url(url):
         url (str): GCS URL.
 
     Returns:
-        tuple: (bucket, file_path)
+        tuple: (bucket_name, file_path)
     """
-    p = urlparse(url)
-    path = p.path[1:].split('/', 1)
-    bucket, file_path = path[0], path[1] 
-    return bucket, file_path
+    split_url = url.split('/')
+    bucket_name = split_url[2]
+    file_path = '/'.join(split_url[3:])
+    return (bucket_name, file_path)
 
 def download_gcs(url):
     """Download config from GCS and load it with json module.
