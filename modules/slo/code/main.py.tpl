@@ -14,12 +14,14 @@
 
 import base64
 import json
+import logging
 import pprint
 import time
-import logging
 from datetime import datetime
-from slo_generator import compute
+from urllib.parse import urlparse
+
 import google.cloud.storage
+from slo_generator import compute
 
 LOGGER = logging.getLogger(__name__)
 
@@ -79,6 +81,21 @@ def convert_timestamp_iso6801_to_unix(timestamp_iso6801):
                       datetime(1970, 1, 1)).total_seconds()
     return timestamp_unix
 
+
+def decode_gcs_url(url):
+    """Decode GCS URL.
+
+    Args:
+        url (str): GCS URL.
+
+    Returns:
+        tuple: (bucket, file_path)
+    """
+    p = urlparse(url)
+    path = p.path[1:].split('/', 1)
+    bucket, file_path = path[0], path[1] 
+    return bucket, file_path
+
 def download_gcs(filepath):
     """Download config from GCS and load it with json module.
 
@@ -88,10 +105,8 @@ def download_gcs(filepath):
     Returns:
         dict: Loaded configuration.
     """
-    split_url = filepath.split('/')
-    bucket = split_url[2]
-    filepath = '/'.join(split_url[3:])
     storage_client = google.cloud.storage.Client()
+    bucket, filepath = decode_gcs_url(url)
     bucket = storage_client.get_bucket(bucket)
     blob = bucket.blob(filepath)
     data = json.loads(blob.download_as_string(client=None))
