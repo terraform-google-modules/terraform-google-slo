@@ -63,3 +63,10 @@ resource "google_storage_bucket_iam_member" "object-viewer" {
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${local.sa_email}"
 }
+
+resource "google_storage_bucket_iam_member" "object-viewer" {
+  count  = var.grant_iam_roles ? 1 : 0
+  bucket = local.slo_bucket_name
+  role   = "roles/storage.legacyBucketReader"
+  member = "serviceAccount:${local.sa_email}"
+}
