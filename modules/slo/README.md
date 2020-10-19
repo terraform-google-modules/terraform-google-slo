@@ -49,11 +49,11 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | bucket\_force\_destroy | When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first. | string | `"true"` | no |
 | config\_bucket | SLO generator GCS bucket to store configs. Create one if empty. | string | `""` | no |
 | config\_path | Path to SLO config | string | n/a | yes |
-| config\_vars | Variables to dynamically replace in SLO config | map | n/a | yes |
+| config\_vars | Variables to dynamically replace in SLO config | map | `<map>` | no |
 | environment\_variables | SLO generator env variables | map | `<map>` | no |
 | error\_budget\_policy\_path | Error budget policy path | string | n/a | yes |
 | exporters\_path | Path to SLO exporters | string | n/a | yes |
-| exporters\_vars | variables to dynamically replace in SLO exporters config | map | n/a | yes |
+| exporters\_vars | variables to dynamically replace in SLO exporters config | map | `<map>` | no |
 | extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
 | function\_environment\_variables | A set of key/value environment variable pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |

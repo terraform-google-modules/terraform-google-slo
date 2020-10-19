@@ -75,6 +75,7 @@ variable "config_path" {
 variable "config_vars" {
   description = "Variables to dynamically replace in SLO config"
   type        = map
+  default     = {}
 }
 
 variable "exporters_path" {
@@ -85,6 +86,7 @@ variable "exporters_path" {
 variable "exporters_vars" {
   description = "variables to dynamically replace in SLO exporters config"
   type        = map
+  default     = {}
 }
 
 variable "error_budget_policy_path" {

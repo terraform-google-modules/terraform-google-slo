@@ -46,7 +46,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | dataset\_create | Whether to create the BigQuery dataset | bool | `"true"` | no |
 | dataset\_default\_table\_expiration\_ms | The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended) | number | `"-1"` | no |
 | exporters\_path | SLO exporters config file path | string | n/a | yes |
-| exporters\_vars | Variables to dynamically replace in exporters config | map | n/a | yes |
+| exporters\_vars | Variables to dynamically replace in exporters config | map | `<map>` | no |
 | function\_bucket\_name | Name of the bucket to create to store the Cloud Function code | string | `"slo-pipeline"` | no |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name | string | `"slo-pipeline"` | no |

@@ -26,6 +26,7 @@ variable "exporters_path" {
 variable "exporters_vars" {
   description = "Variables to dynamically replace in exporters config"
   type        = map
+  default     = {}
 }
 
 variable "pubsub_topic_name" {
