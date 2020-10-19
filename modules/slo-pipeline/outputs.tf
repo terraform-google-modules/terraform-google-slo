@@ -21,7 +21,7 @@ output "project_id" {
 
 output "exporters" {
   description = "Exporter config"
-  value       = var.exporters
+  value       = local.exporters
 }
 
 output "function_name" {

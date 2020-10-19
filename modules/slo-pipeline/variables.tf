@@ -28,11 +28,6 @@ variable "exporters_vars" {
   type        = map
 }
 
-variable "exporters_key" {
-  description = "Key in config to extract exporters from"
-  default     = null
-}
-
 variable "pubsub_topic_name" {
   description = "Pub/Sub topic name"
   default     = "slo-export-topic"
