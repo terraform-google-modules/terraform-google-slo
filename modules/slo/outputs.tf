@@ -21,7 +21,7 @@ output "project_id" {
 
 output "config" {
   description = "SLO Config"
-  value       = var.config
+  value       = local.config
 }
 
 output "service_account_email" {

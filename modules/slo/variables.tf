@@ -87,11 +87,6 @@ variable "exporters_vars" {
   type        = map
 }
 
-variable "exporters_key" {
-  description = "Key in config to extract exporters from"
-  default     = null
-}
-
 variable "error_budget_policy_path" {
   description = "Error budget policy path"
   type        = string
