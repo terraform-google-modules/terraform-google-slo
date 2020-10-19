@@ -84,13 +84,12 @@ module "slo-pipeline" {
   function_name  = "slo-pipeline"
   region         = "us-east"
   project_id     = "test-project"
-  exporters_path = <PATH_TO_EXPORTERS_CONFIG>
+  exporters_path = var.exporters_path
 }
 ```
 
 Now, deploy an SLO definition:
 
-### HCL format
 ```hcl
 module "slo" {
   source      = "terraform-google-modules/slo/google//modules/slo"
@@ -98,25 +97,7 @@ module "slo" {
   region      = var.region
   project_id  = var.project_id
   labels      = var.labels
-  config_path = <PATH_TO_SLO_CONFIG>
-  }
-}
-```
-
-#### YAML format
-
-```hcl
-locals {
-  config = yamldecode(file("configs/my_slo_config.yaml"))
-}
-
-module "slo" {
-  source     = "terraform-google-modules/slo/google//modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
-  config     = local.config
+  config_path = var.slo_config_path
 }
 ```
 A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/slo-generator/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
