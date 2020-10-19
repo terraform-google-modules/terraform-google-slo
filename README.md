@@ -80,24 +80,11 @@ First, deploy the SLO export pipeline (shared module):
 
 ```hcl
 module "slo-pipeline" {
-  source                      = "terraform-google-modules/slo/google//modules/slo-pipeline"
-  function_name               = "slo-pipeline"
-  region                      = "us-east"
-  project_id                  = "test-project"
-  exporters = [
-    {
-      class      = "Stackdriver"
-      project_id = var.stackdriver_host_project_id
-    },
-    {
-      class                      = "Bigquery"
-      project_id                 = "test-project"
-      dataset_id                 = "slo"
-      table_id                   = "reports"
-      location                   = "EU"
-      delete_contents_on_destroy = true
-    }
-  ]
+  source         = "terraform-google-modules/slo/google//modules/slo-pipeline"
+  function_name  = "slo-pipeline"
+  region         = "us-east"
+  project_id     = "test-project"
+  exporters_path = <PATH_TO_EXPORTERS_CONFIG>
 }
 ```
 
@@ -106,33 +93,12 @@ Now, deploy an SLO definition:
 ### HCL format
 ```hcl
 module "slo" {
-  source     = "terraform-google-modules/slo/google//modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
-  config = {
-    slo_name        = "pubsub-ack"
-    slo_target      = "0.9"
-    slo_description = "Acked Pub/Sub messages over total number of Pub/Sub messages"
-    service_name    = "svc"
-    feature_name    = "pubsub"
-    backend = {
-      class       = "Stackdriver"
-      method      = "good_bad_ratio"
-      project_id  = var.stackdriver_host_project_id
-      measurement = {
-        filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
-        filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""
-      }
-    }
-    exporters = [
-      {
-        class      = "Pubsub"
-        project_id = module.slo-pipeline.project_id
-        topic_name = module.slo-pipeline.pubsub_topic_name
-      }
-    ]
+  source      = "terraform-google-modules/slo/google//modules/slo"
+  schedule    = var.schedule
+  region      = var.region
+  project_id  = var.project_id
+  labels      = var.labels
+  config_path = <PATH_TO_SLO_CONFIG>
   }
 }
 ```
