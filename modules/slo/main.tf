@@ -15,10 +15,22 @@
  */
 
 locals {
-  full_name                 = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
-  pubsub_configs            = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
+  # Template rendering
+  config_tpl                = templatefile(var.config_path, var.config_vars)
+  config                    = local.config_tpl.contains(".yaml") ? yamldecode(local.config_tpl) : jsondecode(local.config_tpl)
+  error_budget_policy_tpl   = file(var.error_budget_policy_path)
+  error_budget_policy       = var.error_budget_policy_path.contains(".yaml") ? yamldecode(local.error_budget_policy_tpl) : jsondecode(local.error_budget_policy_tpl)
+  exporters_tpl             = templatefile(var.exporters_path, var.exporters_vars)
+  exporters_map             = var.exporters_path.contains(".yaml") ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
+  exporters                 = var.exporters_key != null ? exporters_map.key : exporters_map
+
+  # Other vars
+  full_name                 = "slo-${local.config.service_name}-${local.config.feature_name}-${local.config.slo_name}"
+  pubsub_configs            = [for e in local.config.exporters : e if lower(e.class) == "pubsub"]
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
+  
+  # Cloud function files
   requirements_txt = templatefile(
     "${path.module}/code/requirements.txt.tpl", {
       slo_generator_version = var.slo_generator_version
@@ -97,7 +109,7 @@ resource "google_cloudfunctions_function" "function" {
   project               = var.project_id
   region                = var.region
   name                  = local.full_name
-  description           = var.config.slo_description
+  description           = local.config.slo_description
   runtime               = "python37"
   available_memory_mb   = 128
   source_archive_bucket = local.slo_bucket_name

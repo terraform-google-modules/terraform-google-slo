@@ -41,7 +41,7 @@ resource "local_file" "requirements_txt" {
 }
 
 resource "local_file" "exporters" {
-  content  = jsonencode(var.exporters)
+  content  = jsonencode(local.exporters)
   filename = "${path.module}/code/exporters.json"
 }
 

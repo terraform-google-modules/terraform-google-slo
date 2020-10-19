@@ -15,6 +15,9 @@
  */
 
 locals {
-  bigquery_configs = [for e in var.exporters : e if lower(e.class) == "bigquery"]
-  sd_configs       = [for e in var.exporters : e if lower(e.class) == "stackdriver"]
+  exporters_tpl    = templatefile(var.exporters_path, var.exporters_vars)
+  exporters_map    = var.exporters_path.contains(".yaml") ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
+  exporters        = var.exporters_key != null ? exporters_map.key : exporters_map
+  bigquery_configs = [for e in local.exporters : e if lower(e.class) == "bigquery"]
+  sd_configs       = [for e in local.exporters : e if lower(e.class) == "stackdriver"]
 }

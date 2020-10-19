@@ -18,18 +18,19 @@ variable "project_id" {
   description = "Project id to create SLO infrastructure"
 }
 
-variable "exporters" {
-  description = "SLO export destinations config"
-  type        = list(any)
+variable "exporters_path" {
+  description = "SLO exporters config file path"
+  type        = string
+}
 
-  # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
-  # type = list(object({
-  #   class = string
-  #   project_id = string
-  #   dataset_id = string
-  #   table_id = string
-  #   topic_name = string
-  # }))
+variable "exporters_vars" {
+  description = "Variables to dynamically replace in exporters config"
+  type        = map
+}
+
+variable "exporters_key" {
+  description = "Key in config to extract exporters from"
+  default     = null
 }
 
 variable "pubsub_topic_name" {
@@ -108,5 +109,5 @@ variable "dataset_create" {
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "1.2.0"
+  default     = "1.3.0"
 }

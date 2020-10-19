@@ -17,10 +17,10 @@
 locals {
   sa_name            = var.service_account_name != "" ? var.service_account_name : local.full_name
   sa_email           = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
-  ssm_class          = var.config.backend.class == "StackdriverServiceMonitoring"
-  ssm_project_id     = lookup(lookup(lookup(var.config.backend, "measurement", {}), "cluster_istio", {}), "project_id", "")
-  sd_class           = var.config.backend.class == "Stackdriver"
-  backend_project_id = lookup(var.config.backend, "project_id", null)
+  ssm_class          = local.config.backend.class == "StackdriverServiceMonitoring"
+  ssm_project_id     = lookup(lookup(lookup(local.config.backend, "measurement", {}), "cluster_istio", {}), "project_id", "")
+  sd_class           = local.config.backend.class == "Stackdriver"
+  backend_project_id = lookup(local.config.backend, "project_id", null)
 }
 
 resource "google_service_account" "main" {

@@ -29,12 +29,12 @@ resource "google_storage_bucket" "slos" {
 
 resource "google_storage_bucket_object" "slo_config" {
   name    = "slos/${local.full_name}/slo_config.json"
-  content = jsonencode(var.config)
+  content = jsonencode(local.config)
   bucket  = local.slo_bucket_name
 }
 
 resource "google_storage_bucket_object" "error_budget_policy" {
   name    = "slos/${local.full_name}/error_budget_policy.json"
-  content = jsonencode(var.error_budget_policy)
+  content = jsonencode(local.error_budget_policy)
   bucket  = local.slo_bucket_name
 }
