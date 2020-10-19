@@ -76,22 +76,20 @@ variable "config" {
     service_name    = string
     feature_name    = string
     backend         = any
-    # wait on https://github.com/hashicorp/terraform/issues/19898 to get a
-    # resolution
-    # backend = object({
-    #   class       = string
-    #   method      = string
-    #   measurement = map(any)
-    # })
-    exporters = list(any)
-    # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
-    # type = list(object({
-    #   class = string
-    #   project_id = string
-    #   dataset_id = string
-    #   table_id = string
-    #   topic_name = string
-    # }))
+    exporters       = list(object({
+      class                      = string
+      project_id                 = string
+      app_key                    = string
+      api_key                    = string
+      api_token                  = string
+      api_url                    = string
+      dataset_id                 = string
+      table_id                   = string
+      topic_name                 = string
+      location                   = string
+      delete_contents_on_destroy = bool
+      metrics                    = list(any)
+    }))
   })
 }
 
