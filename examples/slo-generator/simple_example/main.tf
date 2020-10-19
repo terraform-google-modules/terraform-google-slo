@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.19"
-}
-
-provider "google-beta" {
-  version = "~> 3.19"
-}
-
-module "slo-pipeline" {
-  source     = "../../../modules/slo-pipeline"
-  project_id = var.project_id
-  region     = var.region
-  exporters = [
+locals {
+  # Required because TF does not support complex types (optional map args, maps
+  # with different types, ...).
+  default_exporter_settings = {
+    project_id                 = null
+    app_key                    = null
+    api_key                    = null
+    api_token                  = null
+    api_url                    = null
+    dataset_id                 = null
+    table_id                   = null
+    topic_name                 = null
+    location                   = null
+    delete_contents_on_destroy = false
+    metrics                    = []
+  }
+  exporters_pipeline = [
     {
       class      = "Stackdriver"
       project_id = var.stackdriver_host_project_id
@@ -40,6 +44,30 @@ module "slo-pipeline" {
       delete_contents_on_destroy = true
     }
   ]
+  exporters_slo = [
+    {
+      class      = "Pubsub"
+      project_id = module.slo-pipeline.project_id
+      topic_name = module.slo-pipeline.pubsub_topic_name
+    }  
+  ]
+  exporters_pipeline_merged = merge(local.default_exporter_settings, local.exporters_pipeline)
+  exporters_slo_merged      = merge(local.default_exporter_settings, local.exporters_slo)
+}
+
+provider "google" {
+  version = "~> 3.19"
+}
+
+provider "google-beta" {
+  version = "~> 3.19"
+}
+
+module "slo-pipeline" {
+  source     = "../../../modules/slo-pipeline"
+  project_id = var.project_id
+  region     = var.region
+  exporters  = local.exporters_pipeline_merged
 }
 
 module "slo" {
@@ -63,12 +91,6 @@ module "slo" {
         filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""
       }
     }
-    exporters = [
-      {
-        class      = "Pubsub"
-        project_id = module.slo-pipeline.project_id
-        topic_name = module.slo-pipeline.pubsub_topic_name
-      }
-    ]
+    exporters = local.exporters_slo_merged
   }
 }

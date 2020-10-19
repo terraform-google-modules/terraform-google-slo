@@ -23,6 +23,22 @@ provider "google-beta" {
 }
 
 locals {
+  # Required because TF does not support complex types (optional map args, maps
+  # with different types, ...).
+  default_exporter_settings = {
+    project_id                 = null
+    app_key                    = null
+    api_key                    = null
+    api_token                  = null
+    api_url                    = null
+    dataset_id                 = null
+    table_id                   = null
+    topic_name                 = null
+    location                   = null
+    delete_contents_on_destroy = false
+    metrics                    = []
+  }
+
   // Load error budget policy
   error_budget_policy = yamldecode(file("templates/error_budget_policy.yaml"))
 
@@ -43,10 +59,16 @@ locals {
         stackdriver_host_project_id = var.stackdriver_host_project_id,
         project_id                  = var.project_id,
       })), {
-      exporters = local.exporters.slo
+      exporters = [
+        for exporter in local.exporters.slo:
+        merge(local.default_exporter_settings, exporter)
     })
   ]
   slo_config_map = { for config in local.slo_configs : "${config.service_name}-${config.feature_name}-${config.slo_name}" => config }
+  exporters_pipeline = [
+    for exporter in local.exporters.pipeline:
+    merge(local.default_exporter_settings, exporter)
+  ]
 }
 
 resource "google_service_account" "slo-generator" {
