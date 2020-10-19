@@ -26,8 +26,8 @@ locals {
   )
   main_py = templatefile(
     "${path.module}/code/main.py.tpl", {
-      slo_config_gcs_filepath          = local.slo_config_url
-      error_budget_policy_gcs_filepath = local.error_budget_policy_url
+      slo_config_url          = local.slo_config_url
+      error_budget_policy_url = local.error_budget_policy_url
     }
   )
   default_files = [
@@ -67,7 +67,7 @@ data "archive_file" "gcf_code" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = "gcf/code-${random_uuid.this.result}.zip"
+  name   = "gcf/${local.full_name}-${data.archive_file.gcf_code.output_md5}.zip"
   bucket = local.slo_bucket_name
   source = data.archive_file.gcf_code.output_path
 }
