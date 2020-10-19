@@ -23,30 +23,19 @@ provider "google-beta" {
 }
 
 locals {
-  // Load error budget policy
-  error_budget_policy = yamldecode(file("templates/error_budget_policy.yaml"))
-
-  // Load exporters for pipeline and SLOs
-  exporters = yamldecode(templatefile("templates/exporters.yaml",
-    {
-      stackdriver_host_project_id = var.stackdriver_host_project_id,
-      project_id                  = var.project_id,
-      pubsub_topic_name           = module.slo-pipeline.pubsub_topic_name
-  }))
-
-  // Load all SLO configs in the templates/ folder, replace template variables
-  // and merge with SLO exporter config in exporters.yaml.
-  slo_configs = [
-    for file in fileset(path.module, "/templates/slo_*.yaml") :
-    merge(yamldecode(templatefile(file,
-      {
-        stackdriver_host_project_id = var.stackdriver_host_project_id,
-        project_id                  = var.project_id,
-      })), {
-      exporters = local.exporters.slo
-    })
-  ]
-  slo_config_map = { for config in local.slo_configs : "${config.service_name}-${config.feature_name}-${config.slo_name}" => config }
+  error_budget_policy     = "${path.root}/templates/error_budget_policy.yaml"
+  exporters_path_pipeline = "${path.root}/templates/exporters_pipeline.yaml"
+  exporters_path_slo      = "${path.root}/templates/exporters_slo.yaml"
+  exporters_vars = {
+    stackdriver_host_project_id = var.stackdriver_host_project_id,
+    project_id                  = var.project_id,
+    pubsub_topic_name           = module.slo-pipeline.pubsub_topic_name
+  }
+  slo_configs             = fileset(path.root, "/templates/slo_*.yaml")
+  slo_configs_vars = {
+    stackdriver_host_project_id = var.stackdriver_host_project_id,
+    project_id                  = var.project_id,
+  }
 }
 
 resource "google_service_account" "slo-generator" {
@@ -65,7 +54,8 @@ module "slo-pipeline" {
   source         = "../../../modules/slo-pipeline"
   project_id     = var.project_id
   region         = var.region
-  exporters      = local.exporters.pipeline
+  exporters_path = local.exporters_pipeline
+  exporters_vars = local.exporters_vars
   dataset_create = false
 }
 
@@ -75,11 +65,12 @@ module "slo-generator-bq-latency" {
   region                     = var.region
   project_id                 = var.project_id
   labels                     = var.labels
-  config                     = local.slo_config_map["generator-bq-latency"]
-  error_budget_policy        = local.error_budget_policy
-  config_bucket              = google_storage_bucket.slos.name
   use_custom_service_account = true
   service_account_email      = google_service_account.slo-generator.email
+  config_bucket              = google_storage_bucket.slos.name
+  config_path                = local.slo_configs[0]
+  config_vars                = local.slo_configs_vars
+  error_budget_policy_path   = local.error_budget_policy_path
 }
 
 module "slo-generator-gcf-errors" {
@@ -88,11 +79,12 @@ module "slo-generator-gcf-errors" {
   region                     = var.region
   project_id                 = var.project_id
   labels                     = var.labels
-  config                     = local.slo_config_map["generator-gcf-errors"]
-  error_budget_policy        = local.error_budget_policy
-  config_bucket              = google_storage_bucket.slos.name
   use_custom_service_account = true
   service_account_email      = google_service_account.slo-generator.email
+  config_bucket              = google_storage_bucket.slos.name
+  config_path                = local.slo_configs[1]
+  config_vars                = local.slo_configs_vars
+  error_budget_policy_path   = local.error_budget_policy_path
 }
 
 module "slo-generator-pubsub-ack" {
@@ -101,9 +93,10 @@ module "slo-generator-pubsub-ack" {
   region                     = var.region
   project_id                 = var.project_id
   labels                     = var.labels
-  config                     = local.slo_config_map["generator-pubsub-ack"]
-  error_budget_policy        = local.error_budget_policy
-  config_bucket              = google_storage_bucket.slos.name
   use_custom_service_account = true
   service_account_email      = google_service_account.slo-generator.email
+  config_bucket              = google_storage_bucket.slos.name
+  config_path                = local.slo_configs[2]
+  config_vars                = local.slo_configs_vars
+  error_budget_policy_path   = local.error_budget_policy_path
 }

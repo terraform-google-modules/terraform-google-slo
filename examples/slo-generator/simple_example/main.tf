@@ -22,53 +22,35 @@ provider "google-beta" {
   version = "~> 3.19"
 }
 
+locals {
+  vars_slo = {
+    stackdriver_host_project_id = var.stackdriver_host_project_id
+    project_id                  = module.slo-pipeline.project_id
+    pubsub_topic_name           = module.slo-pipeline.pubsub_topic_name
+  }
+  vars_pipeline = {
+    project_id                  = var.project_id
+    stackdriver_host_project_id = var.stackdriver_host_project_id 
+  }
+}
+
 module "slo-pipeline" {
-  source     = "../../../modules/slo-pipeline"
-  project_id = var.project_id
-  region     = var.region
-  exporters = [
-    {
-      class      = "Stackdriver"
-      project_id = var.stackdriver_host_project_id
-    },
-    {
-      class                      = "Bigquery"
-      project_id                 = var.project_id
-      dataset_id                 = "slo"
-      table_id                   = "reports"
-      location                   = "EU"
-      delete_contents_on_destroy = true
-    }
-  ]
+  source         = "../../../modules/slo-pipeline"
+  project_id     = var.project_id
+  region         = var.region
+  exporters_path = "${path.module}/templates/exporters_pipeline.yaml"
+  exporters_vars = local.vars_pipeline
 }
 
 module "slo" {
-  source     = "../../../modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
-  config = {
-    slo_name        = "pubsub-ack"
-    slo_target      = "0.9"
-    slo_description = "Acked Pub/Sub messages over total number of Pub/Sub messages"
-    service_name    = "svc"
-    feature_name    = "pubsub"
-    backend = {
-      class      = "Stackdriver"
-      method     = "good_bad_ratio"
-      project_id = var.stackdriver_host_project_id
-      measurement = {
-        filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
-        filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""
-      }
-    }
-    exporters = [
-      {
-        class      = "Pubsub"
-        project_id = module.slo-pipeline.project_id
-        topic_name = module.slo-pipeline.pubsub_topic_name
-      }
-    ]
-  }
+  source                   = "../../../modules/slo"
+  schedule                 = var.schedule
+  region                   = var.region
+  project_id               = var.project_id
+  labels                   = var.labels
+  config_path              = "${path.module}/templates/slo_pubsub_ack.yaml"
+  exporters_path           = "${path.module}/templates/exporters_slo.yaml"
+  config_vars              = local.vars_slo
+  exporters_vars           = local.vars_slo
+  error_budget_policy_path = "${path.module}/templates/error_budget_policy.yaml"
 }

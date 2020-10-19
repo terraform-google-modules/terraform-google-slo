@@ -12,16 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-pipeline:
-  - class: Bigquery
-    project_id: ${project_id}
-    dataset_id: slo_reports
-    table_id: report
+- class: Bigquery
+  project_id: ${project_id}
+  dataset_id: slo_reports
+  table_id: report
 
-  - class: Stackdriver
-    project_id: ${stackdriver_host_project_id}
-
-slo:
-  - class: Pubsub
-    project_id: ${project_id}
-    topic_name: ${pubsub_topic_name}
+- class: Stackdriver
+  project_id: ${stackdriver_host_project_id}
