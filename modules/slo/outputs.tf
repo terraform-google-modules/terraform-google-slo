@@ -41,10 +41,10 @@ output "function_zip_output_path" {
 
 output "slo_config_url" {
   description = "SLO Config GCS URL"
-  value = local.slo_config_url
+  value       = local.slo_config_url
 }
 
 output "error_budget_policy_url" {
   description = "Error budget policy GCS URL"
-  value = local.error_budget_policy_url
+  value       = local.error_budget_policy_url
 }
