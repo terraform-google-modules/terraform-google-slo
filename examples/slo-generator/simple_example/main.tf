@@ -30,7 +30,7 @@ locals {
   }
   vars_pipeline = {
     project_id                  = var.project_id
-    stackdriver_host_project_id = var.stackdriver_host_project_id 
+    stackdriver_host_project_id = var.stackdriver_host_project_id
   }
 }
 

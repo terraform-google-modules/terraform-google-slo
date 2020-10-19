@@ -23,10 +23,10 @@ provider "google-beta" {
 }
 
 locals {
-  error_budget_policy_path  = "${path.root}/templates/error_budget_policy.yaml"
-  exporters_path_pipeline   = "${path.root}/templates/exporters_pipeline.yaml"
-  exporters_path_slo        = "${path.root}/templates/exporters_slo.yaml"
-  slo_configs_paths         = tolist(fileset(path.root, "/templates/slo_*.yaml"))
+  error_budget_policy_path = "${path.root}/templates/error_budget_policy.yaml"
+  exporters_path_pipeline  = "${path.root}/templates/exporters_pipeline.yaml"
+  exporters_path_slo       = "${path.root}/templates/exporters_slo.yaml"
+  slo_configs_paths        = tolist(fileset(path.root, "/templates/slo_*.yaml"))
   exporters_vars_pipeline = {
     stackdriver_host_project_id = var.stackdriver_host_project_id
     project_id                  = var.project_id
