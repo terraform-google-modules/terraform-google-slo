@@ -22,14 +22,17 @@ locals {
 
   # SLO config
   config_tpl = templatefile(var.config_path, var.config_vars)
-  config     = local.is_yaml_config ? yamldecode(local.config_tpl) : jsondecode(local.config_tpl)
+  config_map = local.is_yaml_config ? yamldecode(local.config_tpl) : jsondecode(local.config_tpl)
 
   # EBP config
   error_budget_policy_tpl = file(var.error_budget_policy_path)
   error_budget_policy     = local.is_yaml_ebp ? yamldecode(local.error_budget_policy_tpl) : jsondecode(local.error_budget_policy_tpl)
 
   # Exporters configs
-  exporters_tpl = templatefile(var.exporters_path, var.exporters_vars)
-  exporters_map = local.is_yaml_exporters ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
-  exporters     = local.exporters_map
+  exporters_tpl  = templatefile(var.exporters_path, var.exporters_vars)
+  exporters_list = local.is_yaml_exporters ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
+  exporters      = concat(tolist(lookup(local.config_map, "exporters", [])), local.exporters_list)
+
+  # Merge exporter in file with exporters in config
+  config = merge(local.config_map, {exporters=local.exporters})
 }

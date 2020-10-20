@@ -18,7 +18,6 @@ locals {
   slo_bucket_name         = var.config_bucket == "" ? google_storage_bucket.slos[0].name : var.config_bucket
   slo_config_url          = "gs://${local.slo_bucket_name}/${google_storage_bucket_object.slo_config.output_name}"
   error_budget_policy_url = "gs://${local.slo_bucket_name}/${google_storage_bucket_object.error_budget_policy.output_name}"
-  config_full             = merge(local.config, { exporters = local.exporters })
 }
 
 resource "google_storage_bucket" "slos" {
@@ -30,7 +29,7 @@ resource "google_storage_bucket" "slos" {
 
 resource "google_storage_bucket_object" "slo_config" {
   name    = "slos/${local.full_name}/slo_config.json"
-  content = jsonencode(local.config_full)
+  content = jsonencode(local.config)
   bucket  = local.slo_bucket_name
 }
 
