@@ -34,5 +34,5 @@ locals {
   exporters      = concat(tolist(lookup(local.config_map, "exporters", [])), local.exporters_list)
 
   # Merge exporter in file with exporters in config
-  config = merge(local.config_map, {exporters=local.exporters})
+  config = merge(local.config_map, { exporters = local.exporters })
 }
