@@ -76,9 +76,11 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | Name | Description |
 |------|-------------|
 | config | SLO Config |
+| error\_budget\_policy\_url | Error budget policy GCS URL |
 | function\_zip\_output\_path | Cloud Function zip output path |
 | project\_id | Project id |
 | scheduler\_job\_name | Cloud Scheduler job name |
 | service\_account\_email | Service account email used to run the Cloud Function |
+| slo\_config\_url | SLO Config GCS URL |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
