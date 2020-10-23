@@ -7,6 +7,14 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [0.3.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.1...v0.3.2) (2020-10-23)
+
+
+### Bug Fixes
+
+* Add GCF timeout + memory ([495a2ca](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/495a2ca9200aaa095b3a89cff182619c31163d96))
+* update slo-generator to v1.3.2 ([d50b09e](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/d50b09e9119749c7fa06ab36516c7fd0573343f0))
+
 ### [0.3.1](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.0...v0.3.1) (2020-10-23)
 
 
