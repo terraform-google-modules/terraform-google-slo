@@ -51,13 +51,14 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name | string | `"slo-pipeline"` | no |
 | function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
+| function\_timeout | Timeout (in seconds) | string | `"60"` | no |
 | grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
 | project\_id | Project id to create SLO infrastructure | string | n/a | yes |
 | pubsub\_topic\_name | Pub/Sub topic name | string | `"slo-export-topic"` | no |
 | region | Region for the App Engine app | string | `"us-east1"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | service\_account\_name | Name of the service account to create | string | `"slo-pipeline"` | no |
-| slo\_generator\_version | SLO generator library version | string | `"1.3.1"` | no |
+| slo\_generator\_version | SLO generator library version | string | `"1.3.2"` | no |
 | storage\_bucket\_location | The GCS location | string | `"US"` | no |
 | storage\_bucket\_storage\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 | use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |

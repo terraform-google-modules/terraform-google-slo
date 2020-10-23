@@ -99,10 +99,11 @@ resource "google_cloudfunctions_function" "function" {
   name                  = local.full_name
   description           = local.config.slo_description
   runtime               = "python37"
-  available_memory_mb   = 128
+  available_memory_mb   = var.function_memory
   source_archive_bucket = local.slo_bucket_name
   source_archive_object = google_storage_bucket_object.archive.name
   entry_point           = "main"
+  timeout               = var.function_timeout
   labels                = var.labels
   event_trigger {
     event_type = "google.pubsub.topic.publish"

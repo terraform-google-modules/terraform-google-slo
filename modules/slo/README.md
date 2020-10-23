@@ -57,9 +57,10 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
 | function\_environment\_variables | A set of key/value environment variable pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
+| function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_source\_archive\_bucket\_labels | A set of key/value label pairs to assign to the function source archive bucket. | map(string) | `<map>` | no |
 | function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
-| function\_timeout\_s | The amount of time in seconds allotted for the execution of the function. | number | `"60"` | no |
+| function\_timeout | The amount of time in seconds allotted for the execution of the function. | number | `"60"` | no |
 | grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
 | labels | Labels to apply to all resources created | map | `<map>` | no |
 | message\_data | The data to send in the topic message. | string | `"dGVzdA=="` | no |
@@ -68,7 +69,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | service\_account\_name | Service account name (in case the generated one is too long) | string | `""` | no |
-| slo\_generator\_version | SLO generator library version | string | `"1.3.1"` | no |
+| slo\_generator\_version | SLO generator library version | string | `"1.3.2"` | no |
 | time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
 | use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
 | vpc\_connector | VPC Connector URI | string | `"null"` | no |

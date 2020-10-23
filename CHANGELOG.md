@@ -7,6 +7,36 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [0.3.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.1...v0.3.2) (2020-10-23)
+
+
+### Bug Fixes
+
+* Add GCF timeout + memory ([495a2ca](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/495a2ca9200aaa095b3a89cff182619c31163d96))
+* update slo-generator to v1.3.2 ([d50b09e](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/d50b09e9119749c7fa06ab36516c7fd0573343f0))
+
+### [0.3.1](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.0...v0.3.1) (2020-10-23)
+
+
+### Bug Fixes
+
+* Update slo-generator to v1.3.1 ([e602495](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/e6024958ed629598b809f575b86e73c0d7654143))
+
+## [0.3.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.2.2...v0.3.0) (2020-10-21)
+
+
+### Features
+
+* upgrade slo-generator to version 1.2.0 ([5796e77](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/5796e7799d2057db0befa990d0aa8ce16e8107f5))
+* upload SLO configs to GCS, support VPC connector ([e35ab7a](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/e35ab7af17ec67521a9a2ce77b0e33941aa9e90e))
+
+
+### Bug Fixes
+
+* GCS links in GCF ([37ce07f](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/37ce07ff846f81563e6a4f8d5df672e9ceed804c))
+* GCS object path ([f06f041](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/f06f041ba5b076d5d6b99ca682bd8078e5637d86))
+* Revert [#24](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/24) as it triggers duplicate logs in Cloud Logging ([05296bc](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/05296bcb181d0f6fc2e28d8438b76d0aab01bc57))
+
 ### [0.2.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.2.1...v0.2.2) (2020-10-08)
 
 

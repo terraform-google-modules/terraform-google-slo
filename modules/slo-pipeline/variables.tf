@@ -49,6 +49,11 @@ variable "function_memory" {
   default     = 128
 }
 
+variable "function_timeout" {
+  description = "Timeout (in seconds)"
+  default     = "60"
+}
+
 variable "region" {
   description = "Region for the App Engine app"
   default     = "us-east1"
@@ -105,5 +110,5 @@ variable "dataset_create" {
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "1.3.1"
+  default     = "1.3.2"
 }
