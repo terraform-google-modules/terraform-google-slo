@@ -182,7 +182,12 @@ variable "bucket_force_destroy" {
   description = "When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first."
 }
 
-variable "function_timeout_s" {
+variable "function_memory" {
+  description = "Memory in MB for the Cloud Function (increases with no. of SLOs)"
+  default     = 128
+}
+
+variable "function_timeout" {
   type        = number
   default     = 60
   description = "The amount of time in seconds allotted for the execution of the function."
