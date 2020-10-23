@@ -52,6 +52,11 @@ variable "function_memory" {
   default     = 128
 }
 
+variable "function_timeout" {
+  description = "Timeout (in seconds)"
+  default     = "60"
+}
+
 variable "region" {
   description = "Region for the App Engine app"
   default     = "us-east1"

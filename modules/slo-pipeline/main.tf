@@ -73,7 +73,7 @@ module "event_function" {
   ]
   bucket_name = local.bucket_name
   runtime     = "python37"
-  timeout_s   = "60"
+  timeout_s   = var.function_timeout
   entry_point = "main"
 
   event_trigger = {
