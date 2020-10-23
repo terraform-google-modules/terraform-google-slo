@@ -50,6 +50,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name | string | `"slo-pipeline"` | no |
 | function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
+| function\_timeout | Timeout (in seconds) | string | `"60"` | no |
 | grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
 | project\_id | Project id to create SLO infrastructure | string | n/a | yes |
 | pubsub\_topic\_name | Pub/Sub topic name | string | `"slo-export-topic"` | no |
