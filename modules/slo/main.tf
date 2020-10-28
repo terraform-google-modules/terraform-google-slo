@@ -47,15 +47,8 @@ resource "random_id" "suffix" {
   byte_length = 6
 }
 
-resource "random_uuid" "this" {
-  keepers = {
-    for filename in fileset(local.function_source_directory, "**/*") :
-    filename => filemd5("${local.function_source_directory}/${filename}")
-  }
-}
-
 data "archive_file" "gcf_code" {
-  output_path = "${path.root}/.terraform/code-${random_uuid.this.result}.zip"
+  output_path = "${path.root}/.terraform/code-${local.full_name}.zip"
   type        = "zip"
   dynamic "source" {
     for_each = local.files
@@ -67,14 +60,14 @@ data "archive_file" "gcf_code" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = "gcf/${local.full_name}-${data.archive_file.gcf_code.output_md5}.zip"
+  name   = "gcf/code-${local.full_name}.zip"
   bucket = local.slo_bucket_name
   source = data.archive_file.gcf_code.output_path
 }
 
 resource "google_pubsub_topic" "scheduler_topic" {
   project = var.project_id
-  name    = "scheduler-topic-${random_uuid.this.result}"
+  name    = "scheduler-topic-${local.full_name}"
   message_storage_policy {
     allowed_persistence_regions = [
       var.region
@@ -85,7 +78,7 @@ resource "google_pubsub_topic" "scheduler_topic" {
 resource "google_cloud_scheduler_job" "scheduler" {
   project  = var.project_id
   region   = var.region
-  name     = "scheduler-job-${random_uuid.this.result}"
+  name     = "scheduler-job-${local.full_name}"
   schedule = var.schedule
   pubsub_target {
     topic_name = google_pubsub_topic.scheduler_topic.id
