@@ -16,7 +16,7 @@
 
 locals {
   full_name                 = "slo-${local.config.service_name}-${local.config.feature_name}-${local.config.slo_name}"
-  pubsub_configs            = [for e in local.exporters : e if lower(e.class) == "pubsub"]
+  pubsub_configs            = [for e in local.config.exporters : e if lower(e.class) == "pubsub"]
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
   suffix                    = random_id.suffix.hex
   requirements_txt = templatefile(

@@ -30,9 +30,8 @@ locals {
 
   # Exporters configs
   exporters_tpl  = templatefile(var.exporters_path, var.exporters_vars)
-  exporters_list = local.is_yaml_exporters ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
-  exporters      = concat(tolist(lookup(local.config_map, "exporters", [])), local.exporters_list)
+  exporters_map = local.is_yaml_exporters ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
 
   # Merge exporter in file with exporters in config
-  config = merge(local.config_map, { exporters = local.exporters })
+  config = merge(local.config_map, local.exporters_map)
 }
