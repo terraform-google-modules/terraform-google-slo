@@ -17,8 +17,7 @@
 locals {
   is_yaml          = length(regexall(".*yaml", var.exporters_path)) > 0
   exporters_tpl    = templatefile(var.exporters_path, var.exporters_vars)
-  config_map       = local.is_yaml ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
-  exporters        = local.config_map.exporters
+  exporters        = local.is_yaml ? yamldecode(local.exporters_tpl) : jsondecode(local.exporters_tpl)
   bigquery_configs = [for e in local.exporters : e if lower(e.class) == "bigquery"]
   sd_configs       = [for e in local.exporters : e if lower(e.class) == "stackdriver"]
 }

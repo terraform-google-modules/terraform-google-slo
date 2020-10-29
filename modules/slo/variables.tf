@@ -78,17 +78,6 @@ variable "config_vars" {
   default     = {}
 }
 
-variable "exporters_path" {
-  description = "Path to SLO exporters"
-  type        = string
-}
-
-variable "exporters_vars" {
-  description = "variables to dynamically replace in SLO exporters config"
-  type        = map
-  default     = {}
-}
-
 variable "error_budget_policy_path" {
   description = "Error budget policy path"
   type        = string
