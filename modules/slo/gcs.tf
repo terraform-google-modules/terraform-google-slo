@@ -21,10 +21,12 @@ locals {
 }
 
 resource "google_storage_bucket" "slos" {
-  count    = var.config_bucket == "" ? 1 : 0
-  project  = var.project_id
-  name     = "${local.full_name}-conf"
-  location = "EU"
+  count         = var.config_bucket == "" ? 1 : 0
+  project       = var.project_id
+  name          = "${local.full_name}-${local.suffix}-conf"
+  location      = var.config_bucket_region
+  force_destroy = true
+  labels        = var.labels
 }
 
 resource "google_storage_bucket_object" "slo_config" {
