@@ -52,8 +52,6 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | config\_vars | Variables to dynamically replace in SLO config | map | `<map>` | no |
 | environment\_variables | SLO generator env variables | map | `<map>` | no |
 | error\_budget\_policy\_path | Error budget policy path | string | n/a | yes |
-| exporters\_path | Path to SLO exporters | string | n/a | yes |
-| exporters\_vars | variables to dynamically replace in SLO exporters config | map | `<map>` | no |
 | extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
 | function\_environment\_variables | A set of key/value environment variable pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
