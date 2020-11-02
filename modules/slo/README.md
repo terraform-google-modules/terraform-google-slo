@@ -48,7 +48,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 |------|-------------|:----:|:-----:|:-----:|
 | bucket\_force\_destroy | When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first. | string | `"true"` | no |
 | config | SLO Configuration | object | n/a | yes |
-| config\_bucket | SLO generator GCS bucket to store configs. Create one if empty. | string | `""` | no |
+| config\_bucket | SLO generator GCS bucket to store configs and GCF code. | string | `""` | no |
+| config\_bucket\_region | Config bucket region | string | `"EU"` | no |
 | environment\_variables | SLO generator env variables | map | `<map>` | no |
 | error\_budget\_policy | Error budget policy config | object | `<list>` | no |
 | extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |

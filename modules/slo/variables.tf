@@ -48,8 +48,13 @@ variable "extra_files" {
 }
 
 variable "config_bucket" {
-  description = "SLO generator GCS bucket to store configs. Create one if empty."
-  default     = ""
+  description = "SLO generator GCS bucket to store configs and GCF code."
+  default     = "" # create one
+}
+
+variable "config_bucket_region" {
+  description = "Config bucket region"
+  default     = "EU"
 }
 
 variable "vpc_connector" {
