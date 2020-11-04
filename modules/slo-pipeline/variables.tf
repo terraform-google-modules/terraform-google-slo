@@ -20,16 +20,7 @@ variable "project_id" {
 
 variable "exporters" {
   description = "SLO export destinations config"
-  type        = list(any)
-
-  # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
-  # type = list(object({
-  #   class = string
-  #   project_id = string
-  #   dataset_id = string
-  #   table_id = string
-  #   topic_name = string
-  # }))
+  type        = any
 }
 
 variable "pubsub_topic_name" {
