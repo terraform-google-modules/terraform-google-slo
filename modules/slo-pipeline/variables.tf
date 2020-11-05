@@ -115,3 +115,17 @@ variable "slo_generator_version" {
   description = "SLO generator library version"
   default     = "1.3.2"
 }
+
+variable "extra_files" {
+  description = "Extra files to add to the Google Cloud Function code"
+  default     = []
+  type = list(object({
+    content  = string,
+    filename = string
+  }))
+}
+
+variable "labels" {
+  description = "Labels to apply to all resources created"
+  default     = {}
+}

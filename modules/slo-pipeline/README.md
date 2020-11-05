@@ -46,12 +46,14 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | dataset\_create | Whether to create the BigQuery dataset | bool | `"true"` | no |
 | dataset\_default\_table\_expiration\_ms | The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended) | number | `"-1"` | no |
 | exporters | SLO export destinations config | list(any) | n/a | yes |
+| extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
 | function\_bucket\_name | Name of the bucket to create to store the Cloud Function code | string | `"slo-pipeline"` | no |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name | string | `"slo-pipeline"` | no |
 | function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
 | function\_timeout | Timeout (in seconds) | string | `"60"` | no |
 | grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
+| labels | Labels to apply to all resources created | map | `<map>` | no |
 | project\_id | Project id to create SLO infrastructure | string | n/a | yes |
 | pubsub\_topic\_name | Pub/Sub topic name | string | `"slo-export-topic"` | no |
 | region | Region for the App Engine app | string | `"us-east1"` | no |
