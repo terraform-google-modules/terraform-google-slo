@@ -28,6 +28,11 @@ variable "pubsub_topic_name" {
   default     = "slo-export-topic"
 }
 
+variable "storage_bucket_class" {
+  description = "Cloud Storage bucket class"
+  default     = "REGIONAL"
+}
+
 variable "function_bucket_name" {
   description = "Name of the bucket to create to store the Cloud Function code"
   default     = "slo-pipeline"
@@ -45,7 +50,22 @@ variable "function_memory" {
 
 variable "function_timeout" {
   description = "Timeout (in seconds)"
-  default     = "60"
+  default     = "90"
+}
+
+variable "function_environment_variables" {
+  description = "Cloud Function environment variables"
+  default     = {}
+}
+
+variable "vpc_connector" {
+  description = "VPC Connector. The format of this field is projects/*/locations/*/connectors/*."
+  default     = null
+}
+
+variable "vpc_connector_egress_settings" {
+  description = "VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY."
+  default     = null
 }
 
 variable "region" {

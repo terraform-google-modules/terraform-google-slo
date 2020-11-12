@@ -89,7 +89,7 @@ resource "google_cloudfunctions_function" "function" {
     }
   }
   service_account_email         = local.service_account_email
-  environment_variables         = var.environment_variables
+  environment_variables         = var.function_environment_variables
   vpc_connector                 = var.vpc_connector
   vpc_connector_egress_settings = var.vpc_connector_egress_settings
 }
