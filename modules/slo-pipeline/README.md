@@ -61,8 +61,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | service\_account\_email | Service account email (optional) | string | `""` | no |
 | service\_account\_name | Name of the service account to create | string | `"slo-pipeline"` | no |
 | slo\_generator\_version | SLO generator library version | string | `"1.3.2"` | no |
+| storage\_bucket\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 | storage\_bucket\_location | The GCS location | string | `"US"` | no |
-| storage\_bucket\_storage\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
 | use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
 | vpc\_connector | VPC Connector. The format of this field is projects/*/locations/*/connectors/*. | string | `"null"` | no |
 | vpc\_connector\_egress\_settings | VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY. | string | `"null"` | no |

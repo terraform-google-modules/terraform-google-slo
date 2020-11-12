@@ -73,7 +73,7 @@ variable "storage_bucket_location" {
   default     = "US"
 }
 
-variable "storage_bucket_storage_class" {
+variable "storage_bucket_class" {
   description = "The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
   default     = "STANDARD"
 }
