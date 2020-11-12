@@ -28,13 +28,7 @@ resource "google_storage_bucket" "slos" {
 }
 
 resource "google_storage_bucket_object" "exporters" {
-  name    = "exporters/${local.full_name}/exporters.json"
+  name    = "config/exporters.json"
   content = jsonencode(var.exporters)
-  bucket  = local.slo_bucket_name
-}
-
-resource "google_storage_bucket_object" "error_budget_policy" {
-  name    = "slos/${local.full_name}/error_budget_policy.json"
-  content = jsonencode(var.error_budget_policy)
-  bucket  = local.slo_bucket_name
+  bucket  = local.bucket_name
 }
