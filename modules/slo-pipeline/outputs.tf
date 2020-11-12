@@ -26,7 +26,7 @@ output "exporters" {
 
 output "function_name" {
   description = "Cloud Function name"
-  value       = module.event_function.name
+  value       = google_cloudfunctions_function.function.name
 }
 
 output "function_bucket_name" {
