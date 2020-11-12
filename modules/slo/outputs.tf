@@ -34,6 +34,16 @@ output "scheduler_job_name" {
   value       = google_cloud_scheduler_job.scheduler.name
 }
 
+output "function_name" {
+  description = "Cloud Function name"
+  value       = google_cloudfunctions_function.function.name
+}
+
+output "function_bucket_name" {
+  description = "Cloud Function bucket name"
+  value       = local.slo_bucket_name
+}
+
 output "function_zip_output_path" {
   description = "Cloud Function zip output path"
   value       = "${local.function_source_directory}.zip"
