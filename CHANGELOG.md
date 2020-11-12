@@ -7,6 +7,16 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [0.3.3](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.2...v0.3.3) (2020-11-12)
+
+
+### Bug Fixes
+
+* GCS improvements ([#65](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/65)) ([0691d79](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/0691d7950b9ff3fca49f748c33b10acde32fb208))
+* prevent updating / recreating GCF when SLO configs change ([161dbe4](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/161dbe4fe7079214bec7543a670df6859567b636))
+* SLO pipeline updating constantly (local files) ([524909c](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/524909c7b7876e3be5fe836ce306159872d6b14b))
+* Terraform variable validation ([f5e6c00](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/f5e6c003527fe80fdbcb0cabfba07e9601e65f2b))
+
 ### [0.3.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.1...v0.3.2) (2020-10-23)
 
 
