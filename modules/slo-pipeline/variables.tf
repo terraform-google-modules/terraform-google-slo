@@ -28,11 +28,6 @@ variable "pubsub_topic_name" {
   default     = "slo-export-topic"
 }
 
-variable "storage_bucket_class" {
-  description = "Cloud Storage bucket class"
-  default     = "REGIONAL"
-}
-
 variable "function_bucket_name" {
   description = "Name of the bucket to create to store the Cloud Function code"
   default     = "slo-pipeline"
