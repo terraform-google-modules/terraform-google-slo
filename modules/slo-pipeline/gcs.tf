@@ -30,5 +30,5 @@ resource "google_storage_bucket" "slos" {
 resource "google_storage_bucket_object" "exporters" {
   name    = "config/exporters.json"
   content = jsonencode(var.exporters)
-  bucket  = local.bucket_name
+  bucket  = google_storage_bucket.slos.name
 }
