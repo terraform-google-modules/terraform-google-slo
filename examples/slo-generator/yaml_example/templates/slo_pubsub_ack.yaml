@@ -17,6 +17,8 @@ feature_name:    pubsub
 slo_description: 99% of outstanding PubSub messages are acknowledged
 slo_name:        ack
 slo_target:      0.99
+metadata:
+  env:           test
 backend:
   class:         Stackdriver
   project_id:    "${stackdriver_host_project_id}"

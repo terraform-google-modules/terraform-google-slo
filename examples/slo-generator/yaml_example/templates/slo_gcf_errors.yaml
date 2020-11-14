@@ -17,6 +17,8 @@ feature_name:    gcf
 slo_description: Less than 0.01% of errors in Cloud Functions logs
 slo_name:        errors
 slo_target:      0.99
+metadata:
+  env:           test
 backend:
   class:         Stackdriver
   project_id:    "${stackdriver_host_project_id}"

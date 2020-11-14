@@ -18,6 +18,8 @@ slo_description: >
   99% of BigQuery API HTTP response latencies < 400ms
 slo_name:        latency
 slo_target:      0.99
+metadata:
+  env:           test
 backend:
   class:         Stackdriver
   project_id:    "${stackdriver_host_project_id}"
