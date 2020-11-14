@@ -23,11 +23,27 @@ locals {
       slo_generator_version = var.slo_generator_version
     }
   )
+  main_py = templatefile(
+    "${path.module}/code/main.py.tpl", {
+      exporters_url = local.exporters_url
+    }
+  )
   dataset_expiration = var.dataset_default_table_expiration_ms == -1 ? null : var.dataset_default_table_expiration_ms
+  default_files = [
+    {
+      content  = local.requirements_txt
+      filename = "requirements.txt"
+    },
+    {
+      content  = local.main_py
+      filename = "main.py"
+    }
+  ]
+  files = concat(local.default_files, var.extra_files)
 }
 
 resource "random_id" "suffix" {
-  byte_length = 2
+  byte_length = 6
 }
 
 resource "google_pubsub_topic" "stream" {
@@ -35,49 +51,45 @@ resource "google_pubsub_topic" "stream" {
   name    = var.pubsub_topic_name
 }
 
-resource "local_file" "requirements_txt" {
-  content  = local.requirements_txt
-  filename = "${path.module}/code/requirements.txt"
-}
-
-resource "local_file" "exporters" {
-  content  = jsonencode(var.exporters)
-  filename = "${path.module}/code/exporters.json"
-}
-
-resource "google_bigquery_dataset" "main" {
-  count                       = var.dataset_create == false ? 0 : length(local.bigquery_configs)
-  project                     = local.bigquery_configs[count.index].project_id
-  dataset_id                  = local.bigquery_configs[count.index].dataset_id
-  delete_contents_on_destroy  = lookup(local.bigquery_configs[count.index], "delete_contents_on_destroy", false)
-  location                    = lookup(local.bigquery_configs[count.index], "location", "EU")
-  friendly_name               = "SLO Reports"
-  description                 = "Table storing SLO reports from SLO reporting pipeline"
-  default_table_expiration_ms = local.dataset_expiration
-}
-
-module "event_function" {
-  source  = "terraform-google-modules/event-function/google"
-  version = "~> 1.2"
-
-  description           = "SLO Exporter to BigQuery or Stackdriver Monitoring"
-  name                  = var.function_name
-  available_memory_mb   = var.function_memory
-  project_id            = var.project_id
-  region                = var.region
-  service_account_email = local.service_account_email
-  source_directory      = local.function_source_directory
-  source_dependent_files = [
-    local_file.exporters,
-    local_file.requirements_txt
-  ]
-  bucket_name = local.bucket_name
-  runtime     = "python37"
-  timeout_s   = var.function_timeout
-  entry_point = "main"
-
-  event_trigger = {
-    event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
-    resource   = "projects/${var.project_id}/topics/${google_pubsub_topic.stream.name}"
+data "archive_file" "gcf_code" {
+  output_path = "${path.root}/.terraform/code-pipeline.zip"
+  type        = "zip"
+  dynamic "source" {
+    for_each = local.files
+    content {
+      content  = source.value["content"]
+      filename = source.value["filename"]
+    }
   }
+}
+
+resource "google_storage_bucket_object" "archive" {
+  name   = "gcf/code-pipeline.zip"
+  bucket = local.bucket_name
+  source = data.archive_file.gcf_code.output_path
+}
+
+resource "google_cloudfunctions_function" "function" {
+  project               = var.project_id
+  region                = var.region
+  name                  = var.function_name
+  description           = "SLO Exporter Pipeline"
+  runtime               = "python37"
+  available_memory_mb   = var.function_memory
+  source_archive_bucket = local.bucket_name
+  source_archive_object = google_storage_bucket_object.archive.name
+  entry_point           = "main"
+  timeout               = var.function_timeout
+  labels                = var.labels
+  event_trigger {
+    event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
+    resource   = google_pubsub_topic.stream.id
+    failure_policy {
+      retry = false
+    }
+  }
+  service_account_email         = local.service_account_email
+  environment_variables         = var.function_environment_variables
+  vpc_connector                 = var.vpc_connector
+  vpc_connector_egress_settings = var.vpc_connector_egress_settings
 }

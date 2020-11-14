@@ -58,18 +58,13 @@ variable "config_bucket_region" {
 }
 
 variable "vpc_connector" {
-  description = "VPC Connector URI"
+  description = "VPC Connector. The format of this field is projects/*/locations/*/connectors/*."
   default     = null
 }
 
 variable "vpc_connector_egress_settings" {
-  description = "VPC Connector Egress Settings"
+  description = "VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY."
   default     = null
-}
-
-variable "environment_variables" {
-  description = "SLO generator env variables"
-  default     = {}
 }
 
 variable "config" {
@@ -204,5 +199,5 @@ variable "function_labels" {
 variable "function_environment_variables" {
   type        = map(string)
   default     = {}
-  description = "A set of key/value environment variable pairs to assign to the function."
+  description = "Cloud Function environment variables."
 }
