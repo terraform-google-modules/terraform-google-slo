@@ -119,7 +119,7 @@ variable "dataset_create" {
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "1.3.2"
+  default     = "1.4.0"
 }
 
 variable "extra_files" {
