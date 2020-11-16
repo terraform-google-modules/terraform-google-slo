@@ -55,6 +55,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | function\_environment\_variables | Cloud Function environment variables. | map(string) | `<map>` | no |
 | function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
+| function\_name | Cloud Function name. Defaults to slo-{service}-{feature}-{slo} | string | `""` | no |
 | function\_source\_archive\_bucket\_labels | A set of key/value label pairs to assign to the function source archive bucket. | map(string) | `<map>` | no |
 | function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
 | function\_timeout | The amount of time in seconds allotted for the execution of the function. | number | `"60"` | no |

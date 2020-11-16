@@ -168,6 +168,11 @@ variable "bucket_force_destroy" {
   description = "When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first."
 }
 
+variable "function_name" {
+  description = "Cloud Function name. Defaults to slo-{service}-{feature}-{slo}"
+  default     = ""
+}
+
 variable "function_memory" {
   description = "Memory in MB for the Cloud Function (increases with no. of SLOs)"
   default     = 128
