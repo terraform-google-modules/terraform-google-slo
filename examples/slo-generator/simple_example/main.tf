@@ -54,6 +54,7 @@ module "slo" {
     slo_description = "Acked Pub/Sub messages over total number of Pub/Sub messages"
     service_name    = "svc"
     feature_name    = "pubsub"
+    metadata        = {}
     backend = {
       class      = "Stackdriver"
       method     = "good_bad_ratio"

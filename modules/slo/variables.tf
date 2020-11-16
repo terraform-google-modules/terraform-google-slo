@@ -75,6 +75,7 @@ variable "config" {
     slo_description = string
     service_name    = string
     feature_name    = string
+    metadata        = map(string)
     backend         = any
     exporters       = any
   })
