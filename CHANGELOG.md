@@ -7,6 +7,27 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.2...v1.0.0) (2020-11-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* Add metadata labels
+
+### Features
+
+* Add metadata labels ([db432a0](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/db432a0339e8957f687b70d356c29c6eb3e42d61))
+* custom GCF name for SLO module ([b2aa6bf](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/b2aa6bf4bd5227765d37ac2b2a3b3e0a93391196))
+* update slo-generator to 1.4.0 ([afdc43b](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/afdc43b269fba7ac681ace7bec9b349c3e90c0b3))
+
+
+### Bug Fixes
+
+* GCS improvements ([#65](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/65)) ([0691d79](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/0691d7950b9ff3fca49f748c33b10acde32fb208))
+* prevent updating / recreating GCF when SLO configs change ([161dbe4](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/161dbe4fe7079214bec7543a670df6859567b636))
+* SLO pipeline updating constantly (local files) ([524909c](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/524909c7b7876e3be5fe836ce306159872d6b14b))
+* Terraform variable validation ([f5e6c00](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/f5e6c003527fe80fdbcb0cabfba07e9601e65f2b))
+
 ### [0.3.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.1...v0.3.2) (2020-10-23)
 
 
