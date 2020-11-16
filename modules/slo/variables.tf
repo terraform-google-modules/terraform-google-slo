@@ -169,7 +169,7 @@ variable "bucket_force_destroy" {
 
 variable "function_name" {
   description = "Cloud Function name. Defaults to slo-{service}-{feature}-{slo}"
-  default = ""
+  default     = ""
 }
 
 variable "function_memory" {
