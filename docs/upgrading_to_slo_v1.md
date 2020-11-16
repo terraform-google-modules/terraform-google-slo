@@ -1,7 +1,7 @@
 # Upgrading to terraform-google-slo v1.0
 
 The v1.0 release is a backward incompatible release of the `slo` module:
-`slo-generator` upgrade to version `1.4.0` adds a field `metadata` to specify 
+`slo-generator` upgrade to version `1.4.0` adds a field `metadata` to specify
 additional metadata for metrics labels and exporters.
 
 Since Terraform does not support optional variables, the `metadata` field is now
