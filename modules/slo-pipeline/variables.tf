@@ -45,7 +45,22 @@ variable "function_memory" {
 
 variable "function_timeout" {
   description = "Timeout (in seconds)"
-  default     = "60"
+  default     = "90"
+}
+
+variable "function_environment_variables" {
+  description = "Cloud Function environment variables"
+  default     = {}
+}
+
+variable "vpc_connector" {
+  description = "VPC Connector. The format of this field is projects/*/locations/*/connectors/*."
+  default     = null
+}
+
+variable "vpc_connector_egress_settings" {
+  description = "VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY."
+  default     = null
 }
 
 variable "region" {
@@ -58,7 +73,7 @@ variable "storage_bucket_location" {
   default     = "US"
 }
 
-variable "storage_bucket_storage_class" {
+variable "storage_bucket_class" {
   description = "The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE"
   default     = "STANDARD"
 }
@@ -105,4 +120,18 @@ variable "dataset_create" {
 variable "slo_generator_version" {
   description = "SLO generator library version"
   default     = "1.3.2"
+}
+
+variable "extra_files" {
+  description = "Extra files to add to the Google Cloud Function code"
+  default     = []
+  type = list(object({
+    content  = string,
+    filename = string
+  }))
+}
+
+variable "labels" {
+  description = "Labels to apply to all resources created"
+  default     = {}
 }

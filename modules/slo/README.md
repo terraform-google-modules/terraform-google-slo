@@ -50,10 +50,9 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | config | SLO Configuration | object | n/a | yes |
 | config\_bucket | SLO generator GCS bucket to store configs and GCF code. | string | `""` | no |
 | config\_bucket\_region | Config bucket region | string | `"EU"` | no |
-| environment\_variables | SLO generator env variables | map | `<map>` | no |
 | error\_budget\_policy | Error budget policy config | object | `<list>` | no |
 | extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
-| function\_environment\_variables | A set of key/value environment variable pairs to assign to the function. | map(string) | `<map>` | no |
+| function\_environment\_variables | Cloud Function environment variables. | map(string) | `<map>` | no |
 | function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
 | function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
 | function\_name | Cloud Function name. Defaults to slo-{service}-{feature}-{slo} | string | `""` | no |
@@ -71,8 +70,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | slo\_generator\_version | SLO generator library version | string | `"1.3.2"` | no |
 | time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
 | use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
-| vpc\_connector | VPC Connector URI | string | `"null"` | no |
-| vpc\_connector\_egress\_settings | VPC Connector Egress Settings | string | `"null"` | no |
+| vpc\_connector | VPC Connector. The format of this field is projects/*/locations/*/connectors/*. | string | `"null"` | no |
+| vpc\_connector\_egress\_settings | VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY. | string | `"null"` | no |
 
 ## Outputs
 
@@ -80,6 +79,8 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 |------|-------------|
 | config | SLO Config |
 | error\_budget\_policy\_url | Error budget policy GCS URL |
+| function\_bucket\_name | Cloud Function bucket name |
+| function\_name | Cloud Function name |
 | function\_zip\_output\_path | Cloud Function zip output path |
 | project\_id | Project id |
 | scheduler\_job\_name | Cloud Scheduler job name |
