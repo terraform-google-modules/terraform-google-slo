@@ -38,3 +38,17 @@ resource "google_project_iam_member" "stackdriver" {
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${local.service_account_email}"
 }
+
+resource "google_storage_bucket_iam_member" "object-viewer" {
+  count  = var.grant_iam_roles ? 1 : 0
+  bucket = local.bucket_name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${local.service_account_email}"
+}
+
+resource "google_storage_bucket_iam_member" "object-viewer-legacy" {
+  count  = var.grant_iam_roles ? 1 : 0
+  bucket = local.bucket_name
+  role   = "roles/storage.legacyBucketReader"
+  member = "serviceAccount:${local.service_account_email}"
+}
