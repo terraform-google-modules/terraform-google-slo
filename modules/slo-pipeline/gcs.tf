@@ -14,29 +14,21 @@
  * limitations under the License.
  */
 
-variable "project_id" {
-  description = "Project id"
+locals {
+  exporters_url = "gs://${local.bucket_name}/${google_storage_bucket_object.exporters.output_name}"
 }
 
-variable "bucket_name" {
-  description = "Bucket name for SLO configs and GCF code zips"
+resource "google_storage_bucket" "slos" {
+  project       = var.project_id
+  name          = local.bucket_name
+  location      = var.storage_bucket_location
+  force_destroy = true
+  storage_class = var.storage_bucket_class
+  labels        = var.labels
 }
 
-variable "stackdriver_host_project_id" {
-  description = "Stackdriver host project id"
-}
-
-variable "schedule" {
-  description = "Cron-like Cloud Scheduler schedule"
-  default     = "* * * * */1"
-}
-
-variable "region" {
-  description = "Region"
-  default     = "us-east1"
-}
-
-variable "labels" {
-  description = "Project labels"
-  default     = {}
+resource "google_storage_bucket_object" "exporters" {
+  name    = "config/exporters.json"
+  content = jsonencode(var.exporters)
+  bucket  = google_storage_bucket.slos.name
 }

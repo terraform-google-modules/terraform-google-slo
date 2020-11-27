@@ -31,10 +31,30 @@ output "service_account_email" {
 
 output "scheduler_job_name" {
   description = "Cloud Scheduler job name"
-  value       = module.slo_cloud_function.name
+  value       = google_cloud_scheduler_job.scheduler.name
+}
+
+output "function_name" {
+  description = "Cloud Function name"
+  value       = google_cloudfunctions_function.function.name
+}
+
+output "function_bucket_name" {
+  description = "Cloud Function bucket name"
+  value       = local.slo_bucket_name
 }
 
 output "function_zip_output_path" {
   description = "Cloud Function zip output path"
   value       = "${local.function_source_directory}.zip"
+}
+
+output "slo_config_url" {
+  description = "SLO Config GCS URL"
+  value       = local.slo_config_url
+}
+
+output "error_budget_policy_url" {
+  description = "Error budget policy GCS URL"
+  value       = local.error_budget_policy_url
 }

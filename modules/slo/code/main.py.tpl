@@ -14,29 +14,24 @@
 
 import base64
 import json
+import logging
 import pprint
 import time
-import logging
 from datetime import datetime
+from urllib.parse import urlparse
+
+import google.cloud.storage
 from slo_generator import compute
-import google.cloud.logging
 
-with open("error_budget_policy.json") as f:
-    error_budget_policy = json.load(f)
-
-with open("slo_config.json") as f:
-    slo_config = json.load(f)
-
-
-log_client = google.cloud.logging.Client()
-log_client.get_default_handler()
-log_client.setup_logging()
-
+LOGGER = logging.getLogger(__name__)
 
 def main(data, context):
-    logging.info("Running SLO computations:")
-    logging.info("SLO Config: %s", pprint.pformat(slo_config))
-    logging.info("Error Budget Policy: %s",
+    LOGGER.info("Downloading configs from GCS")
+    error_budget_policy = download_gcs("${error_budget_policy_url}")
+    slo_config = download_gcs("${slo_config_url}")
+    LOGGER.info("Running SLO computations:")
+    LOGGER.info("SLO Config: %s", pprint.pformat(slo_config))
+    LOGGER.info("Error Budget Policy: %s",
                  pprint.pformat(error_budget_policy))
     timestamp = fetch_timestamp(data, context)
     compute.compute(slo_config,
@@ -85,3 +80,34 @@ def convert_timestamp_iso6801_to_unix(timestamp_iso6801):
     timestamp_unix = (timestamp_datetime -
                       datetime(1970, 1, 1)).total_seconds()
     return timestamp_unix
+
+
+def decode_gcs_url(url):
+    """Decode GCS URL.
+
+    Args:
+        url (str): GCS URL.
+
+    Returns:
+        tuple: (bucket_name, file_path)
+    """
+    split_url = url.split('/')
+    bucket_name = split_url[2]
+    file_path = '/'.join(split_url[3:])
+    return (bucket_name, file_path)
+
+def download_gcs(url):
+    """Download config from GCS and load it with json module.
+
+    Args:
+        url: Config URL.
+
+    Returns:
+        dict: Loaded configuration.
+    """
+    storage_client = google.cloud.storage.Client()
+    bucket, filepath = decode_gcs_url(url)
+    bucket = storage_client.get_bucket(bucket)
+    blob = bucket.blob(filepath)
+    data = json.loads(blob.download_as_string(client=None))
+    return data

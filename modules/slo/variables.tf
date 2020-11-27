@@ -35,7 +35,36 @@ variable "labels" {
 
 variable "slo_generator_version" {
   description = "SLO generator library version"
-  default     = "1.1.2"
+  default     = "1.4.0"
+}
+
+variable "extra_files" {
+  description = "Extra files to add to the Google Cloud Function code"
+  default     = []
+  type = list(object({
+    content  = string,
+    filename = string
+  }))
+}
+
+variable "config_bucket" {
+  description = "SLO generator GCS bucket to store configs and GCF code."
+  default     = "" # create one
+}
+
+variable "config_bucket_region" {
+  description = "Config bucket region"
+  default     = "EU"
+}
+
+variable "vpc_connector" {
+  description = "VPC Connector. The format of this field is projects/*/locations/*/connectors/*."
+  default     = null
+}
+
+variable "vpc_connector_egress_settings" {
+  description = "VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY."
+  default     = null
 }
 
 variable "config" {
@@ -46,23 +75,9 @@ variable "config" {
     slo_description = string
     service_name    = string
     feature_name    = string
+    metadata        = map(string)
     backend         = any
-    # wait on https://github.com/hashicorp/terraform/issues/19898 to get a
-    # resolution
-    # backend = object({
-    #   class       = string
-    #   method      = string
-    #   measurement = map(any)
-    # })
-    exporters = list(any)
-    # wait on https://github.com/hashicorp/terraform/issues/22449 to be merged
-    # type = list(object({
-    #   class = string
-    #   project_id = string
-    #   dataset_id = string
-    #   table_id = string
-    #   topic_name = string
-    # }))
+    exporters       = any
   })
 }
 
@@ -153,7 +168,17 @@ variable "bucket_force_destroy" {
   description = "When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first."
 }
 
-variable "function_timeout_s" {
+variable "function_name" {
+  description = "Cloud Function name. Defaults to slo-{service}-{feature}-{slo}"
+  default     = ""
+}
+
+variable "function_memory" {
+  description = "Memory in MB for the Cloud Function (increases with no. of SLOs)"
+  default     = 128
+}
+
+variable "function_timeout" {
   type        = number
   default     = 60
   description = "The amount of time in seconds allotted for the execution of the function."
@@ -180,5 +205,5 @@ variable "function_labels" {
 variable "function_environment_variables" {
   type        = map(string)
   default     = {}
-  description = "A set of key/value environment variable pairs to assign to the function."
+  description = "Cloud Function environment variables."
 }

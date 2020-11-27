@@ -18,6 +18,7 @@ locals {
   sa_name            = var.service_account_name != "" ? var.service_account_name : local.full_name
   sa_email           = length(google_service_account.main) > 0 ? google_service_account.main[0].email : var.service_account_email
   ssm_class          = var.config.backend.class == "StackdriverServiceMonitoring"
+  ssm_project_id     = lookup(lookup(lookup(var.config.backend, "measurement", {}), "cluster_istio", {}), "project_id", "")
   sd_class           = var.config.backend.class == "Stackdriver"
   backend_project_id = lookup(var.config.backend, "project_id", null)
 }
@@ -43,6 +44,13 @@ resource "google_project_iam_member" "stackdriver-ssm-svc-editor" {
   member  = "serviceAccount:${local.sa_email}"
 }
 
+resource "google_project_iam_member" "stackdriver-ssm-svc-viewer" {
+  count   = var.grant_iam_roles && local.ssm_class && local.ssm_project_id != "" ? 1 : 0
+  project = local.ssm_project_id
+  role    = "roles/monitoring.servicesViewer"
+  member  = "serviceAccount:${local.sa_email}"
+}
+
 resource "google_project_iam_member" "logs-writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
@@ -55,4 +63,18 @@ resource "google_pubsub_topic_iam_member" "pubsub" {
   project = local.pubsub_configs[count.index].project_id
   role    = "roles/pubsub.publisher"
   member  = "serviceAccount:${local.sa_email}"
+}
+
+resource "google_storage_bucket_iam_member" "object-viewer" {
+  count  = var.grant_iam_roles ? 1 : 0
+  bucket = local.slo_bucket_name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${local.sa_email}"
+}
+
+resource "google_storage_bucket_iam_member" "object-viewer-legacy" {
+  count  = var.grant_iam_roles ? 1 : 0
+  bucket = local.slo_bucket_name
+  role   = "roles/storage.legacyBucketReader"
+  member = "serviceAccount:${local.sa_email}"
 }

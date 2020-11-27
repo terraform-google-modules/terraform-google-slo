@@ -49,11 +49,24 @@ locals {
   slo_config_map = { for config in local.slo_configs : "${config.service_name}-${config.feature_name}-${config.slo_name}" => config }
 }
 
+resource "google_service_account" "slo-generator" {
+  project      = var.project_id
+  display_name = "SLO Generator Service Account"
+  account_id   = "slo-generator"
+}
+
+resource "google_storage_bucket" "slos" {
+  project  = var.project_id
+  location = "EU"
+  name     = var.bucket_name
+}
+
 module "slo-pipeline" {
-  source     = "../../../modules/slo-pipeline"
-  project_id = var.project_id
-  region     = var.region
-  exporters  = local.exporters.pipeline
+  source         = "../../../modules/slo-pipeline"
+  project_id     = var.project_id
+  region         = var.region
+  exporters      = local.exporters.pipeline
+  dataset_create = false
 }
 
 resource "google_service_account" "slo-generator" {

@@ -15,7 +15,7 @@
  */
 
 locals {
-  full_name                 = "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
+  full_name                 = var.function_name != "" ? var.function_name : "slo-${var.config.service_name}-${var.config.feature_name}-${var.config.slo_name}"
   pubsub_configs            = [for e in var.config.exporters : e if lower(e.class) == "pubsub"]
   suffix                    = random_id.suffix.hex
   function_source_directory = var.function_source_directory != "" ? var.function_source_directory : "${path.module}/code"
@@ -25,56 +25,89 @@ locals {
       slo_generator_version = var.slo_generator_version
     }
   )
+  main_py = templatefile(
+    "${path.module}/code/main.py.tpl", {
+      slo_config_url          = local.slo_config_url
+      error_budget_policy_url = local.error_budget_policy_url
+    }
+  )
+  default_files = [
+    {
+      content  = local.requirements_txt
+      filename = "requirements.txt"
+    },
+    {
+      content  = local.main_py
+      filename = "main.py"
+    }
+  ]
+  files = concat(local.default_files, var.extra_files)
 }
 
 resource "random_id" "suffix" {
   byte_length = 6
 }
 
-resource "local_file" "main" {
-  content  = file("${local.function_source_directory}/main.py")
-  filename = "${local.function_target_directory}/main.py"
+data "archive_file" "gcf_code" {
+  output_path = "${path.root}/.terraform/code-${local.full_name}.zip"
+  type        = "zip"
+  dynamic "source" {
+    for_each = local.files
+    content {
+      content  = source.value["content"]
+      filename = source.value["filename"]
+    }
+  }
 }
 
-resource "local_file" "requirements_txt" {
-  content  = local.requirements_txt
-  filename = "${local.function_target_directory}/requirements.txt"
+resource "google_storage_bucket_object" "archive" {
+  name   = "gcf/code-${local.full_name}.zip"
+  bucket = local.slo_bucket_name
+  source = data.archive_file.gcf_code.output_path
 }
 
-resource "local_file" "slo" {
-  content  = jsonencode(var.config)
-  filename = "${local.function_target_directory}/slo_config.json"
+resource "google_pubsub_topic" "scheduler_topic" {
+  project = var.project_id
+  name    = "scheduler-topic-${local.full_name}"
+  message_storage_policy {
+    allowed_persistence_regions = [
+      var.region
+    ]
+  }
 }
 
-resource "local_file" "error_budget_policy" {
-  content  = jsonencode(var.error_budget_policy)
-  filename = "${local.function_target_directory}/error_budget_policy.json"
+resource "google_cloud_scheduler_job" "scheduler" {
+  project  = var.project_id
+  region   = var.region
+  name     = "scheduler-job-${local.full_name}"
+  schedule = var.schedule
+  pubsub_target {
+    topic_name = google_pubsub_topic.scheduler_topic.id
+    data       = base64encode("test")
+  }
 }
 
-module "slo_cloud_function" {
-  source  = "terraform-google-modules/scheduled-function/google"
-  version = "~> 1.3"
-
-  project_id                = var.project_id
-  region                    = var.region
-  job_schedule              = var.schedule
-  job_name                  = local.full_name
-  topic_name                = local.full_name
-  bucket_name               = "${local.full_name}-${local.suffix}"
-  bucket_force_destroy      = "true"
-  function_name             = "${local.full_name}-${local.suffix}"
-  function_description      = var.config.slo_description
-  function_entry_point      = "main"
-  function_source_directory = local.function_target_directory
-  function_source_dependent_files = [
-    local_file.main,
-    local_file.error_budget_policy,
-    local_file.slo,
-    local_file.requirements_txt,
-  ]
-  function_available_memory_mb          = 128
-  function_runtime                      = "python37"
-  function_source_archive_bucket_labels = var.labels
-  function_service_account_email        = local.sa_email
-  function_labels                       = var.labels
+resource "google_cloudfunctions_function" "function" {
+  project               = var.project_id
+  region                = var.region
+  name                  = local.full_name
+  description           = var.config.slo_description
+  runtime               = "python37"
+  available_memory_mb   = var.function_memory
+  source_archive_bucket = local.slo_bucket_name
+  source_archive_object = google_storage_bucket_object.archive.name
+  entry_point           = "main"
+  timeout               = var.function_timeout
+  labels                = var.labels
+  event_trigger {
+    event_type = "google.pubsub.topic.publish"
+    resource   = google_pubsub_topic.scheduler_topic.name
+    failure_policy {
+      retry = false
+    }
+  }
+  service_account_email         = local.sa_email
+  environment_variables         = var.function_environment_variables
+  vpc_connector                 = var.vpc_connector
+  vpc_connector_egress_settings = var.vpc_connector_egress_settings
 }

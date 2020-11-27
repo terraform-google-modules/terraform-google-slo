@@ -42,7 +42,7 @@ module "slo_basic" {
   config = local.config
 }
 ```
-A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/slo-generator/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
+A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/native/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
 
 ## SLO generator (any monitoring backend)
 The [`slo-pipeline`](./modules/slo-pipeline) and [`slo`] modules deploy the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
@@ -53,7 +53,7 @@ in Cloud Functions in order to compute and export SLOs on a schedule.
 
 - You want to have custom reporting and exporting for your SLO data, along with historical data (e.g: BigQuery, DataStudio, custom metrics).
 
-- You want to have a common configuration format for all SLOs (see [documentation](https://github.com/GoogleCloudPlatform/professional-services/blob/master/tools/slo-generator/README.md#configuration)).
+- You want to have a common configuration format for all SLOs (see [documentation](https://github.com/google/slo-generator/README.md#configuration)).
 
 ### Architecture
 
