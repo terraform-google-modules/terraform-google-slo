@@ -7,6 +7,13 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [1.0.1](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v1.0.0...v1.0.1) (2020-11-27)
+
+
+### Bug Fixes
+
+* SLO Pipeline IAM roles ([07890d9](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/07890d9731212f3b436dc5f90b55c2e7a514af96))
+
 ## [1.0.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v0.3.2...v1.0.0) (2020-11-16)
 
 
