@@ -52,6 +52,7 @@ resource "google_project_iam_member" "stackdriver-ssm-svc-viewer" {
 }
 
 resource "google_project_iam_member" "logs-writer" {
+  count   = var.grant_iam_roles ? 1 : 0
   project = var.project_id
   role    = "roles/logging.logWriter"
   member  = "serviceAccount:${local.sa_email}"
