@@ -78,6 +78,7 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 | Name | Description |
 |------|-------------|
 | config | SLO Config |
+| error\_budget\_policy | Error budget policy config |
 | error\_budget\_policy\_url | Error budget policy GCS URL |
 | function\_bucket\_name | Cloud Function bucket name |
 | function\_name | Cloud Function name |
