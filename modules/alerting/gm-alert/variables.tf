@@ -29,13 +29,13 @@ variable "config" {
   })
 }
 
-variable "urgent_notification_channel" {
+variable "urgent_nc" {
   description = "urgent notification channel for alerting burn rate is gt threshold"
   type        = list(string)
   default     = null
 }
 
-variable "non_urgent_notification_channel" {
+variable "non_urgent_nc" {
   description = "non urgent notification channel for alerting burn rate is gt threshold"
   type        = list(string)
   default     = null
