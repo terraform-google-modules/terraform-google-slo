@@ -30,13 +30,13 @@ variable "config" {
 }
 
 variable "urgent_nc" {
-  description = "urgent notification channel for alerting burn rate is gt threshold"
+  description = "google_monitoring_notification_channel ID for URGENT/DUTY alerting burn rate is gt threshold"
   type        = list(string)
   default     = null
 }
 
 variable "non_urgent_nc" {
-  description = "non urgent notification channel for alerting burn rate is gt threshold"
+  description = "google_monitoring_notification_channel ID for NON-URGENT alerting burn rate is gt threshold"
   type        = list(string)
   default     = null
 }

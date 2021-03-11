@@ -29,9 +29,9 @@ To use this module, you will need:
 | error\_budget\_policy | Error budget policy config | <pre>list(object({<br>    error_budget_policy_step_name  = string<br>    measurement_window_seconds     = number<br>    alerting_burn_rate_threshold   = number<br>    urgent_notification            = bool<br>    overburned_consequence_message = string<br>    achieved_consequence_message   = string<br>  }))</pre> | n/a | yes |
 | no\_data\_alert\_enabled | Enable NO\_DATA alerts | `bool` | `true` | no |
 | no\_data\_threshold\_duration\_time | The amount of time that no data are compute by SLO-Generator to be considered failing. Currently, only values that are a multiple of a minute--e.g. 60s, 120s, or 300s --are supported. | `string` | `"600s"` | no |
-| non\_urgent\_nc | non urgent notification channel for alerting burn rate is gt threshold | `list(string)` | `null` | no |
+| non\_urgent\_nc | google\_monitoring\_notification\_channel ID for NON-URGENT alerting burn rate is gt threshold | `list(string)` | `null` | no |
 | project\_id | Project id | `string` | n/a | yes |
-| urgent\_nc | urgent notification channel for alerting burn rate is gt threshold | `list(string)` | `null` | no |
+| urgent\_nc | google\_monitoring\_notification\_channel ID for URGENT/DUTY alerting burn rate is gt threshold | `list(string)` | `null` | no |
 
 ## Outputs
 
