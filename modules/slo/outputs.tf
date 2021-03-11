@@ -23,7 +23,7 @@ output "config" {
   description = "SLO Config"
   value       = var.config
 }
-   
+
 output "error_budget_policy" {
   description = "Error budget policy config"
   value       = var.error_budget_policy
