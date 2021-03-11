@@ -33,7 +33,7 @@ resource "google_monitoring_alert_policy" "alert_policy_no_data" {
   conditions {
     display_name = "No data seen over the last 10 min for ${local.alert_policy_name}"
     condition_absent {
-      filter   = "${local.filter_common_part}"
+      filter   = local.filter_common_part
       duration = var.no_data_threshold_duration_time
       aggregations {
         alignment_period     = "60s"
