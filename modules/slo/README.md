@@ -45,33 +45,33 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| bucket\_force\_destroy | When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first. | string | `"true"` | no |
-| config | SLO Configuration | object | n/a | yes |
-| config\_bucket | SLO generator GCS bucket to store configs and GCF code. | string | `""` | no |
-| config\_bucket\_region | Config bucket region | string | `"EU"` | no |
-| error\_budget\_policy | Error budget policy config | object | `<list>` | no |
-| extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
-| function\_environment\_variables | Cloud Function environment variables. | map(string) | `<map>` | no |
-| function\_labels | A set of key/value label pairs to assign to the function. | map(string) | `<map>` | no |
-| function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
-| function\_name | Cloud Function name. Defaults to slo-{service}-{feature}-{slo} | string | `""` | no |
-| function\_source\_archive\_bucket\_labels | A set of key/value label pairs to assign to the function source archive bucket. | map(string) | `<map>` | no |
-| function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
-| function\_timeout | The amount of time in seconds allotted for the execution of the function. | number | `"60"` | no |
-| grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
-| labels | Labels to apply to all resources created | map | `<map>` | no |
-| message\_data | The data to send in the topic message. | string | `"dGVzdA=="` | no |
-| project\_id | SLO project id | string | n/a | yes |
-| region | Region to deploy the Cloud Function in | string | `"us-east1"` | no |
-| schedule | Cron-like schedule for Cloud Scheduler | string | `"* * * * */1"` | no |
-| service\_account\_email | Service account email (optional) | string | `""` | no |
-| service\_account\_name | Service account name (in case the generated one is too long) | string | `""` | no |
-| slo\_generator\_version | SLO generator library version | string | `"1.4.0"` | no |
-| time\_zone | The timezone to use in scheduler | string | `"Etc/UTC"` | no |
-| use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
-| vpc\_connector | VPC Connector. The format of this field is projects/*/locations/*/connectors/*. | string | `"null"` | no |
-| vpc\_connector\_egress\_settings | VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY. | string | `"null"` | no |
+|------|-------------|------|---------|:--------:|
+| bucket\_force\_destroy | When deleting the GCS bucket containing the cloud function, delete all objects in the bucket first. | `string` | `"true"` | no |
+| config | SLO Configuration | <pre>object({<br>    slo_name        = string<br>    slo_target      = number<br>    slo_description = string<br>    service_name    = string<br>    feature_name    = string<br>    metadata        = map(string)<br>    backend         = any<br>    exporters       = any<br>  })</pre> | n/a | yes |
+| config\_bucket | SLO generator GCS bucket to store configs and GCF code. | `string` | `""` | no |
+| config\_bucket\_region | Config bucket region | `string` | `"EU"` | no |
+| error\_budget\_policy | Error budget policy config | <pre>list(object({<br>    error_budget_policy_step_name  = string<br>    measurement_window_seconds     = number<br>    alerting_burn_rate_threshold   = number<br>    urgent_notification            = bool<br>    overburned_consequence_message = string<br>    achieved_consequence_message   = string<br>  }))</pre> | <pre>[<br>  {<br>    "achieved_consequence_message": "Last hour on track",<br>    "alerting_burn_rate_threshold": 9,<br>    "error_budget_policy_step_name": "a.Last 1 hour",<br>    "measurement_window_seconds": 3600,<br>    "overburned_consequence_message": "Page the SRE team to defend the SLO",<br>    "urgent_notification": true<br>  },<br>  {<br>    "achieved_consequence_message": "Last 12 hours on track",<br>    "alerting_burn_rate_threshold": 3,<br>    "error_budget_policy_step_name": "b.Last 12 hours",<br>    "measurement_window_seconds": 43200,<br>    "overburned_consequence_message": "Page the SRE team to defend the SLO",<br>    "urgent_notification": true<br>  },<br>  {<br>    "achieved_consequence_message": "Last week on track",<br>    "alerting_burn_rate_threshold": 1.5,<br>    "error_budget_policy_step_name": "c.Last 7 days",<br>    "measurement_window_seconds": 604800,<br>    "overburned_consequence_message": "Dev team dedicates two Engineers to the action items of the post-mortem",<br>    "urgent_notification": false<br>  },<br>  {<br>    "achieved_consequence_message": "Unfreeze release, per the agreed roll-out policy",<br>    "alerting_burn_rate_threshold": 1,<br>    "error_budget_policy_step_name": "d.Last 28 days",<br>    "measurement_window_seconds": 2419200,<br>    "overburned_consequence_message": "Freeze release, unless related to reliability or security",<br>    "urgent_notification": false<br>  }<br>]</pre> | no |
+| extra\_files | Extra files to add to the Google Cloud Function code | <pre>list(object({<br>    content  = string,<br>    filename = string<br>  }))</pre> | `[]` | no |
+| function\_environment\_variables | Cloud Function environment variables. | `map(string)` | `{}` | no |
+| function\_labels | A set of key/value label pairs to assign to the function. | `map(string)` | `{}` | no |
+| function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | `number` | `128` | no |
+| function\_name | Cloud Function name. Defaults to slo-{service}-{feature}-{slo} | `string` | `""` | no |
+| function\_source\_archive\_bucket\_labels | A set of key/value label pairs to assign to the function source archive bucket. | `map(string)` | `{}` | no |
+| function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | `string` | `""` | no |
+| function\_timeout | The amount of time in seconds allotted for the execution of the function. | `number` | `60` | no |
+| grant\_iam\_roles | Grant IAM roles to created service accounts | `bool` | `true` | no |
+| labels | Labels to apply to all resources created | `map` | `{}` | no |
+| message\_data | The data to send in the topic message. | `string` | `"dGVzdA=="` | no |
+| project\_id | SLO project id | `any` | n/a | yes |
+| region | Region to deploy the Cloud Function in | `string` | `"us-east1"` | no |
+| schedule | Cron-like schedule for Cloud Scheduler | `string` | `"* * * * */1"` | no |
+| service\_account\_email | Service account email (optional) | `string` | `""` | no |
+| service\_account\_name | Service account name (in case the generated one is too long) | `string` | `""` | no |
+| slo\_generator\_version | SLO generator library version | `string` | `"1.4.0"` | no |
+| time\_zone | The timezone to use in scheduler | `string` | `"Etc/UTC"` | no |
+| use\_custom\_service\_account | Use a custom service account (pass service\_account\_email if true) | `bool` | `false` | no |
+| vpc\_connector | VPC Connector. The format of this field is projects/\*/locations/\*/connectors/\*. | `any` | `null` | no |
+| vpc\_connector\_egress\_settings | VPC Connector Egress Settings. Allowed values are ALL\_TRAFFIC and PRIVATE\_RANGES\_ONLY. | `any` | `null` | no |
 
 ## Outputs
 
