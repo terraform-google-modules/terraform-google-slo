@@ -42,30 +42,30 @@ See the [fixture project](../../test/setup/main.tf) for an example to create thi
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| dataset\_create | Whether to create the BigQuery dataset | bool | `"true"` | no |
-| dataset\_default\_table\_expiration\_ms | The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended) | number | `"-1"` | no |
-| exporters | SLO export destinations config | any | n/a | yes |
-| extra\_files | Extra files to add to the Google Cloud Function code | object | `<list>` | no |
-| function\_bucket\_name | Name of the bucket to create to store the Cloud Function code | string | `"slo-pipeline"` | no |
-| function\_environment\_variables | Cloud Function environment variables | map | `<map>` | no |
-| function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | string | `"128"` | no |
-| function\_name | Cloud Function name | string | `"slo-pipeline"` | no |
-| function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | string | `""` | no |
-| function\_timeout | Timeout (in seconds) | string | `"90"` | no |
-| grant\_iam\_roles | Grant IAM roles to created service accounts | string | `"true"` | no |
-| labels | Labels to apply to all resources created | map | `<map>` | no |
-| project\_id | Project id to create SLO infrastructure | string | n/a | yes |
-| pubsub\_topic\_name | Pub/Sub topic name | string | `"slo-export-topic"` | no |
-| region | Region for the App Engine app | string | `"us-east1"` | no |
-| service\_account\_email | Service account email (optional) | string | `""` | no |
-| service\_account\_name | Name of the service account to create | string | `"slo-pipeline"` | no |
-| slo\_generator\_version | SLO generator library version | string | `"1.4.0"` | no |
-| storage\_bucket\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE | string | `"STANDARD"` | no |
-| storage\_bucket\_location | The GCS location | string | `"US"` | no |
-| use\_custom\_service\_account | Use a custom service account (pass service_account_email if true) | bool | `"false"` | no |
-| vpc\_connector | VPC Connector. The format of this field is projects/*/locations/*/connectors/*. | string | `"null"` | no |
-| vpc\_connector\_egress\_settings | VPC Connector Egress Settings. Allowed values are ALL_TRAFFIC and PRIVATE_RANGES_ONLY. | string | `"null"` | no |
+|------|-------------|------|---------|:--------:|
+| dataset\_create | Whether to create the BigQuery dataset | `bool` | `true` | no |
+| dataset\_default\_table\_expiration\_ms | The default lifetime of the slo table in the dataset, in milliseconds. Default is never (Recommended) | `number` | `-1` | no |
+| exporters | SLO export destinations config | `any` | n/a | yes |
+| extra\_files | Extra files to add to the Google Cloud Function code | <pre>list(object({<br>    content  = string,<br>    filename = string<br>  }))</pre> | `[]` | no |
+| function\_bucket\_name | Name of the bucket to create to store the Cloud Function code | `string` | `"slo-pipeline"` | no |
+| function\_environment\_variables | Cloud Function environment variables | `map` | `{}` | no |
+| function\_memory | Memory in MB for the Cloud Function (increases with no. of SLOs) | `number` | `128` | no |
+| function\_name | Cloud Function name | `string` | `"slo-pipeline"` | no |
+| function\_source\_directory | The contents of this directory will be archived and used as the function source. (defaults to standard SLO generator code) | `string` | `""` | no |
+| function\_timeout | Timeout (in seconds) | `string` | `"90"` | no |
+| grant\_iam\_roles | Grant IAM roles to created service accounts | `bool` | `true` | no |
+| labels | Labels to apply to all resources created | `map` | `{}` | no |
+| project\_id | Project id to create SLO infrastructure | `any` | n/a | yes |
+| pubsub\_topic\_name | Pub/Sub topic name | `string` | `"slo-export-topic"` | no |
+| region | Region for the App Engine app | `string` | `"us-east1"` | no |
+| service\_account\_email | Service account email (optional) | `string` | `""` | no |
+| service\_account\_name | Name of the service account to create | `string` | `"slo-pipeline"` | no |
+| slo\_generator\_version | SLO generator library version | `string` | `"1.4.0"` | no |
+| storage\_bucket\_class | The Storage Class of the new bucket. Supported values include: STANDARD, MULTI\_REGIONAL, REGIONAL, NEARLINE, COLDLINE | `string` | `"STANDARD"` | no |
+| storage\_bucket\_location | The GCS location | `string` | `"US"` | no |
+| use\_custom\_service\_account | Use a custom service account (pass service\_account\_email if true) | `bool` | `false` | no |
+| vpc\_connector | VPC Connector. The format of this field is projects/\*/locations/\*/connectors/\*. | `any` | `null` | no |
+| vpc\_connector\_egress\_settings | VPC Connector Egress Settings. Allowed values are ALL\_TRAFFIC and PRIVATE\_RANGES\_ONLY. | `any` | `null` | no |
 
 ## Outputs
 

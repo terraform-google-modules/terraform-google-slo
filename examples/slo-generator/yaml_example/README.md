@@ -19,22 +19,22 @@ To run this example, you'll need:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| bucket\_name | Bucket name for SLO configs and GCF code zips | string | n/a | yes |
-| bucket\_location | Bucket location for SLO configs and GCF code zips | string | US | no |
-| labels | Project labels | map | `<map>` | no |
-| project\_id | Project id | string | n/a | yes |
-| region | Region | string | `"us-east1"` | no |
-| schedule | Cron-like Cloud Scheduler schedule | string | `"* * * * */1"` | no |
-| stackdriver\_host\_project\_id | Stackdriver host project id | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| bucket\_location | Bucket name for SLO configs and GCF code zips | `string` | `"US"` | no |
+| bucket\_name | Bucket name for SLO configs and GCF code zips | `any` | n/a | yes |
+| labels | Project labels | `map` | `{}` | no |
+| project\_id | Project id | `any` | n/a | yes |
+| region | Region | `string` | `"us-east1"` | no |
+| schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
+| stackdriver\_host\_project\_id | Stackdriver host project id | `any` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| slo-generator-bq-latency |  |
-| slo-generator-gcf-errors |  |
-| slo-generator-pubsub-ack |  |
+| slo-generator-bq-latency | n/a |
+| slo-generator-gcf-errors | n/a |
+| slo-generator-pubsub-ack | n/a |
 | slo\_pipeline | SLO pipeline outputs |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
