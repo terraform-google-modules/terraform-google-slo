@@ -23,6 +23,7 @@ To run this example, you'll need:
 | labels | Project labels | map | `<map>` | no |
 | project\_id | Project id | string | n/a | yes |
 | region | Region | string | `"us-east1"` | no |
+| bq\_location | Dataset location for BigQuery | string | US | no |
 | schedule | Cron-like Cloud Scheduler schedule | string | `"* * * * */1"` | no |
 | stackdriver\_host\_project\_id | Stackdriver host project id | string | n/a | yes |
 
