@@ -21,20 +21,20 @@ To run this example, you'll need:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| app\_engine\_project\_id | App Engine project id | `any` | n/a | yes |
-| project\_id | Project id | `any` | n/a | yes |
+|------|-------------|:----:|:-----:|:-----:|
+| app\_engine\_project\_id | App Engine project id | string | n/a | yes |
+| project\_id | Project id | string | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| slo-cass-latency5ms-window | n/a |
-| slo-gae-latency500ms | n/a |
-| slo-gcp-latency400ms | n/a |
-| slo-gcp-latency500ms-window | n/a |
-| slo-uptime-latency500ms | n/a |
-| slo-uptime-pass | n/a |
+| slo-cass-latency5ms-window |  |
+| slo-gae-latency500ms |  |
+| slo-gcp-latency400ms |  |
+| slo-gcp-latency500ms-window |  |
+| slo-uptime-latency500ms |  |
+| slo-uptime-pass |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
