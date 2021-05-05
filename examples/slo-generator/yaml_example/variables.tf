@@ -22,6 +22,11 @@ variable "bucket_name" {
   description = "Bucket name for SLO configs and GCF code zips"
 }
 
+variable "bucket_location" {
+  description = "Bucket name for SLO configs and GCF code zips"
+  default     = "US"
+}
+
 variable "stackdriver_host_project_id" {
   description = "Stackdriver host project id"
 }

@@ -24,6 +24,11 @@ output "config" {
   value       = var.config
 }
 
+output "error_budget_policy" {
+  description = "Error budget policy config"
+  value       = var.error_budget_policy
+}
+
 output "service_account_email" {
   description = "Service account email used to run the Cloud Function"
   value       = local.sa_email

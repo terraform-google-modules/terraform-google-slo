@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.61"
-}
-
-provider "google-beta" {
-  version = "~> 3.61"
+terraform {
+  required_providers {
+    google = {
+      version = "~> 3.19"
+    }
+    google-beta = {
+      version = "~> 3.19"
+    }
+  }
 }
 
 module "slo-pipeline" {
@@ -36,7 +39,7 @@ module "slo-pipeline" {
       project_id                 = var.project_id
       dataset_id                 = "slo"
       table_id                   = "reports"
-      location                   = "EU"
+      location                   = var.bq_location
       delete_contents_on_destroy = true
     }
   ]

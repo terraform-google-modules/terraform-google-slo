@@ -21,7 +21,7 @@ To run this example, you'll need:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | labels | Project labels | `map` | `{}` | no |
-| project\_id | Project id | `any` | n/a | yes |
+| project\_id | Project id | `string` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
 | stackdriver\_host\_project\_id | Stackdriver host project id | `any` | n/a | yes |

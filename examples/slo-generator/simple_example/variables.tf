@@ -32,6 +32,11 @@ variable "region" {
   default     = "us-east1"
 }
 
+variable "bq_location" {
+  description = "Location of BQ dataset"
+  default     = "US"
+}
+
 variable "labels" {
   description = "Project labels"
   default     = {}

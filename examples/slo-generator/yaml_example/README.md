@@ -11,7 +11,7 @@ The example will create the following resources:
 
 To run this example, you'll need:
 
-- a GCP project (see an example definition [here](../../test/setup/main.tf).
+- a GCP project (see an example definition [here](../../test/setup/main.tf)).
 - the IAM role `roles/owner` on the project for the service account running the Terraform.
 
 
@@ -22,7 +22,7 @@ To run this example, you'll need:
 |------|-------------|------|---------|:--------:|
 | bucket\_name | Bucket name for SLO configs and GCF code zips | `any` | n/a | yes |
 | labels | Project labels | `map` | `{}` | no |
-| project\_id | Project id | `any` | n/a | yes |
+| project\_id | Project id | `string` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
 | stackdriver\_host\_project\_id | Stackdriver host project id | `any` | n/a | yes |
