@@ -7,6 +7,13 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [1.0.3](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v1.0.2...v1.0.3) (2021-05-05)
+
+
+### Bug Fixes
+
+* add error_budget_policy as SLO module output ([2143534](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/2143534a1aadeff73735446bc736310b91b2b945))
+
 ### [1.0.2](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v1.0.1...v1.0.2) (2021-02-26)
 
 
