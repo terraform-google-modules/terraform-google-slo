@@ -20,6 +20,7 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| bq\_location | Location of BQ dataset | string | `"US"` | no |
 | labels | Project labels | map | `<map>` | no |
 | project\_id | Project id | string | n/a | yes |
 | region | Region | string | `"us-east1"` | no |

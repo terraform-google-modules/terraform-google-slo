@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.19"
-}
-
-provider "google-beta" {
-  version = "~> 3.19"
+terraform {
+  required_providers {
+    google = {
+      version = "~> 3.19"
+    }
+    google-beta = {
+      version = "~> 3.19"
+    }
+  }
 }
 
 locals {
@@ -57,7 +60,7 @@ resource "google_service_account" "slo-generator" {
 
 resource "google_storage_bucket" "slos" {
   project  = var.project_id
-  location = "EU"
+  location = var.bucket_location
   name     = var.bucket_name
 }
 
