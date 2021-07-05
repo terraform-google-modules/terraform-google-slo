@@ -7,6 +7,17 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v1.0.3...v2.0.0) (2021-07-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Terraform 0.13 constraint and module attribution (#85)
+
+### Features
+
+* add Terraform 0.13 constraint and module attribution ([#85](https://www.github.com/terraform-google-modules/terraform-google-slo/issues/85)) ([6de1459](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/6de14595e8292ac2be1762f7f19e4709ddeb31f2))
+
 ### [1.0.3](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v1.0.2...v1.0.3) (2021-05-05)
 
 
