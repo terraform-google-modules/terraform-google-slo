@@ -18,9 +18,13 @@ To run this example, you'll need:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| app\_engine\_project\_id | App Engine project id | string | n/a | yes |
-| project\_id | Project id | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| app\_engine\_project\_id | App Engine project id | `any` | n/a | yes |
+| project\_id | Project id | `any` | n/a | yes |
+
+## Outputs
+
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
