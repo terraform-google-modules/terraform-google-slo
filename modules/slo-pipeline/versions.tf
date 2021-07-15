@@ -25,7 +25,7 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-slo:slo-pipeline/v1.0.0"
+    module_name = "blueprints/terraform/terraform-google-slo:slo-pipeline/v2.0.0"
   }
 
 }
