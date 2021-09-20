@@ -22,8 +22,8 @@ variable "bucket_name" {
   description = "Bucket name for SLO configs and GCF code zips"
 }
 
-variable "stackdriver_host_project_id" {
-  description = "Stackdriver host project id"
+variable "secrets" {
+  description = "slo-generator secrets"
 }
 
 variable "schedule" {

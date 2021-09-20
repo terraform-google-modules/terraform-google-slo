@@ -21,14 +21,14 @@ metadata:
   env:           test
 backend:
   class:         Stackdriver
-  project_id:    "${stackdriver_host_project_id}"
+  project_id:    ${STACKDRIVER_HOST_PROJECT_ID}
   method:        good_bad_ratio
   measurement:
     filter_good: >
-      project="${project_id}"
+      project="${PROJECT_ID}"
       metric.type="pubsub.googleapis.com/subscription/ack_message_count"
       resource.type="pubsub_subscription"
     filter_bad:  >
-      project="${project_id}"
+      project="${PROJECT_ID}"
       metric.type="pubsub.googleapis.com/subscription/num_outstanding_messages"
       resource.type="pubsub_subscription"

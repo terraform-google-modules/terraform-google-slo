@@ -87,7 +87,7 @@ module "slo-pipeline" {
   exporters = [
     {
       class      = "Stackdriver"
-      project_id = var.stackdriver_host_project_id
+      project_id = var.WORKSPACE_PROJECT_ID
     },
     {
       class                      = "Bigquery"
@@ -120,9 +120,9 @@ module "slo" {
     backend = {
       class       = "Stackdriver"
       method      = "good_bad_ratio"
-      project_id  = var.stackdriver_host_project_id
+      project_id  = var.WORKSPACE_PROJECT_ID
       measurement = {
-        filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
+        good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
         filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""
       }
     }

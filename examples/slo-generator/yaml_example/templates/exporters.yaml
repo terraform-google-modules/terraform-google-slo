@@ -14,14 +14,14 @@
 ---
 pipeline:
   - class: Bigquery
-    project_id: ${project_id}
+    project_id: ${PROJECT_ID}
     dataset_id: slo_reports
     table_id: report
 
   - class: Stackdriver
-    project_id: ${stackdriver_host_project_id}
+    project_id: ${STACKDRIVER_HOST_PROJECT_ID}
 
 slo:
   - class: Pubsub
-    project_id: ${project_id}
-    topic_name: ${pubsub_topic_name}
+    project_id: ${PROJECT_ID}
+    topic_name: ${PUBSUB_TOPIC_NAME}
