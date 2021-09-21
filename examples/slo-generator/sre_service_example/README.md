@@ -13,6 +13,12 @@ To run this example, you'll need:
 
 - a GCP project (see an example definition [here](../../test/setup/main.tf).
 - the IAM role `roles/owner` on the project for the service account running the Terraform.
+- the following APIs enabled on the project:
+  - cloudscheduler.googleapis.com
+  - cloudrun.googleapis.com
+  - secretmanager.goolgeapis.com
+  - appengine.gooelapis.com
+  - compute.googleapis.com
 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -27,6 +33,8 @@ To run this example, you'll need:
 | region | Region | string | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | string | `"* * * * */1"` | no |
 | secrets | slo-generator secrets | map | `<map>` | no |
+| team1\_project\_id | Team 1 project id | string | n/a | yes |
+| team2\_project\_id | Team 2 project id | string | n/a | yes |
 
 ## Outputs
 
