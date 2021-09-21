@@ -6,8 +6,13 @@ variable "config" {
   description = "slo-generator shared config"
 }
 
+variable "bucket_name" {
+  description = "slo-generator GCS bucket name"
+  default     = ""
+}
+
 variable "service_account_email" {
-  description = "Cloud Run service account"
+  description = "Cloud Run service account. Defaults to compute service account."
   default     = ""
 }
 
@@ -42,7 +47,7 @@ variable "slo_generator_service_url" {
   default     = ""
 }
 
-variable "slos" {
+variable "slo_configs" {
   description = "SLO configs"
   default     = []
 }

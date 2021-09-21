@@ -1,6 +1,8 @@
 locals {
   signature_type        = var.mode == "compute" ? "http" : "cloudevent"
   service_account_email = var.service_account_email == "" ? "${data.google_project.project.number}-compute@developer.gserviceaccount.com" : var.service_account_email
+  bucket_name           = var.bucket_name != "" ? var.bucket_name : "slo-generator-${random_id.suffix.hex}"
+  # cloud_run_service_url = var.slo_generator_service_url != "" ? var.slo_generator_service_url : lookup(google_cloud_run_service.service[0].status, "url")
 }
 
 resource "random_id" "suffix" {
@@ -9,7 +11,7 @@ resource "random_id" "suffix" {
 
 resource "google_storage_bucket" "slos" {
   project       = var.project_id
-  name          = "slo-generator-${random_id.suffix.hex}"
+  name          = local.bucket_name
   location      = var.region
   force_destroy = true
   labels        = var.labels
@@ -29,14 +31,14 @@ resource "google_storage_bucket_object" "shared_exporters" {
 }
 
 resource "google_storage_bucket_object" "slos" {
-  for_each = { for config in var.slos : config.metadata.name => config }
+  for_each = { for config in var.slo_configs : config.metadata.name => config }
   name     = "slos/${each.key}.yaml"
   content  = yamlencode(each.value)
   bucket   = google_storage_bucket.slos.name
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  for_each = { for cfg in google_storage_bucket_object.slos : cfg.output_name => cfg }
+  for_each = { for config in var.slo_configs : config.metadata.name => config }
   project  = var.project_id
   region   = var.region
   schedule = var.schedule
@@ -45,15 +47,15 @@ resource "google_cloud_scheduler_job" "scheduler" {
     for_each = var.mode == "export" ? ["yes"] : []
     content {
       topic_name = var.pubsub_topic_name
-      data       = base64encode("gs://${google_storage_bucket_object.slos.name}/${each.key}")
+      data       = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
     }
   }
   dynamic "http_target" {
     for_each = var.mode == "compute" ? ["yes"] : []
     content {
       http_method = "POST"
-      uri         = google_cloud_run_service.service.url
-      body        = "gs://${google_storage_bucket_object.slos.name}/${each.key}"
+      uri         = google_cloud_run_service.service.status.url
+      body        = "gs://${local.bucket_name}/slos/${each.key}.yaml"
     }
   }
 }

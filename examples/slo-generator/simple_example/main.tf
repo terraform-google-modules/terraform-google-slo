@@ -15,30 +15,26 @@
  */
 
 provider "google" {
-  version = "~> 3.19"
+  version = "~> 3.85"
 }
 
 provider "google-beta" {
-  version = "~> 3.19"
+  version = "~> 3.85"
 }
 
 locals {
-  config    = yamldecode(file("templates/config.yaml"))
-  exporters = yamldecode(templatefile("templates/exporters.yaml", var.secrets))
+  config = yamldecode(file("templates/config.yaml"))
   slo_configs = [
-    for file in fileset(path.module, "/templates/slo_*.yaml") :
-    yamldecode(templatefile(file, var.secrets), {
-      exporters = ["cloud_monitoring"]
-    })
+    for cfg in fileset(path.module, "/templates/slo_*.yaml") :
+    yamldecode(file(cfg))
   ]
 }
 
-module "slo-service-compute" {
-  source      = "../../modules/slo-generator"
+module "slo-generator" {
+  source      = "../../../modules/slo-generator"
   project_id  = var.project_id
   region      = var.region
-  bucket_name = var.bucket_name
   config      = local.config
   slo_configs = local.slo_configs
-  exporters   = local.exporters.slo
+  secrets     = var.secrets
 }

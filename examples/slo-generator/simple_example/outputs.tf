@@ -14,29 +14,10 @@
  * limitations under the License.
  */
 
-variable "project_id" {
-  description = "Project id"
-}
+# Note: As most of the submodules outputs are needed: we are just forwarding all
+# submodules outputs here. Please refer to the submodules outputs.tf file to
+# have a breakdown.
 
-variable "bucket_name" {
-  description = "Bucket name for SLO configs and GCF code zips"
-}
-
-variable "secrets" {
-  description = "slo-generator secrets"
-}
-
-variable "schedule" {
-  description = "Cron-like Cloud Scheduler schedule"
-  default     = "* * * * */1"
-}
-
-variable "region" {
-  description = "Region"
-  default     = "us-east1"
-}
-
-variable "labels" {
-  description = "Project labels"
-  default     = {}
+output "slo-generator" {
+  value = module.slo-generator
 }

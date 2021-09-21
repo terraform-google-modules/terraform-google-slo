@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-# Note: As most of the submodules outputs are needed: we are just forwarding all
-# submodules outputs here. Please refer to the submodules outputs.tf file to
-# have a breakdown.
-
-output "slo_pipeline" {
-  description = "SLO pipeline outputs"
-  value       = module.slo-pipeline
+variable "project_id" {
+  description = "Project id"
 }
 
-output "slo-generator-bq-latency" {
-  value = module.slo-generator-bq-latency
+variable "secrets" {
+  description = "slo-generator secrets"
 }
 
-output "slo-generator-gcf-errors" {
-  value = module.slo-generator-gcf-errors
+variable "schedule" {
+  description = "Cron-like Cloud Scheduler schedule"
+  default     = "* * * * */1"
 }
 
-output "slo-generator-pubsub-ack" {
-  value = module.slo-generator-pubsub-ack
+variable "region" {
+  description = "Region"
+  default     = "us-east1"
+}
+
+variable "labels" {
+  description = "Project labels"
+  default     = {}
 }
