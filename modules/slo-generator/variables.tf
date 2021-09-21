@@ -42,7 +42,7 @@ variable "slo_generator_version" {
   default     = "2.0.0-rc3"
 }
 
-variable "slo_generator_service_url" {
+variable "service_url" {
   description = "slo-generator service URL. Will be created if empty."
   default     = ""
 }
@@ -78,4 +78,14 @@ variable "annotations" {
   default = {
     "autoscaling.knative.dev/minScale" = "1"
   }
+}
+
+variable "additional_project_roles" {
+  description = "Additional roles to grant to service account in project"
+  default     = []
+}
+
+variable "create_bucket" {
+  description = "Whether to create a new GCS bucket"
+  default     = true
 }

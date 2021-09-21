@@ -1,11 +1,11 @@
-# Simple Example
+# SRE Service Example
 
-This example illustrates how to use the `slo` module.
+This example illustrates how to use the `slo-generator` module, when the run 
+model is as follow:
 
-The example will create the following resources:
-
-- An [SLO pipeline](../../modules/slo-pipeline) that export SLO results to BigQuery, Stackdriver Monitoring
-- A sample [SLO](../../modules/slo) that computes the number of exported Pub/Sub messages over the total number of Pub/Sub messages
+- **SRE team** runs the `slo-generator` as-a-service; they put it to disposition for application teams to use on request.
+- **Team 1** want freedom to compute their SLOs; they want to run their own `slo-generator` service on Cloud Run, and export only the SLOs they care about.
+- **Team 2** does not want to bother running their own service; they want to use the SRE team's service.
 
 ## Prerequisites
 
@@ -20,11 +20,13 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | string | `"slos"` | no |
 | labels | Project labels | map | `<map>` | no |
 | project\_id | Project id | string | n/a | yes |
+| pubsub\_topic\_name | PubSub topic name | string | `"slo-export"` | no |
 | region | Region | string | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | string | `"* * * * */1"` | no |
-| secrets | slo-generator secrets | string | n/a | yes |
+| secrets | slo-generator secrets | map | `<map>` | no |
 
 ## Outputs
 

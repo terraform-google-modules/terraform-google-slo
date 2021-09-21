@@ -1,0 +1,30 @@
+apiVersion: sre.google.com/v2
+kind: ServiceLevelObjective
+metadata:
+  name: generator-gcf-errors
+  labels:
+    service_name: generator
+    feature_name: gcf
+    slo_name: errors
+    team: team2
+    env: test
+spec:
+  description: Less than 0.01% of errors in Cloud Functions logs
+  backend: cloud_monitoring/team2
+  method: good_bad_ratio
+  exporters:
+  - bigquery
+  - cloud_monitoring
+  - cloud_monitoring/team2
+  - pubsub
+  service_level_indicator:
+    filter_good: >
+      project="${TEAM2_PROJECT_ID}"
+      metric.type="cloudfunctions.googleapis.com/function/execution_count"
+      resource.type="cloud_function"
+      metric.label."status"="ok"
+    filter_valid: >
+      project="${TEAM2_PROJECT_ID}"
+      metric.type="cloudfunctions.googleapis.com/function/execution_count"
+      resource.type="cloud_function"
+  goal: 0.99

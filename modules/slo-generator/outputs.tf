@@ -1,7 +1,7 @@
-output "storage_objects" {
-  value = google_storage_bucket_object.slos
+output "service_url" {
+  value = local.service_url
 }
 
-output "scheduler_jobs" {
-  value = google_cloud_scheduler_job.scheduler
+output "bucket_name" {
+  value = local.bucket_name
 }
