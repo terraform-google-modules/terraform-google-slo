@@ -21,7 +21,7 @@ spec:
     filter_valid: >
       metric.type="serviceruntime.googleapis.com/api/request_latencies"
       resource.type="consumed_api"
-      resource.label."project_id"="${project_id}"
+      resource.label."project_id"="${PROJECT_ID}"
       resource.label."service"="bigquery.googleapis.com"
     good_below_threshold: true
     threshold_bucket: 17
