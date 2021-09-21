@@ -2,7 +2,7 @@ locals {
   signature_type        = var.mode == "compute" ? "http" : "cloudevent"
   service_account_email = var.service_account_email == "" ? "${data.google_project.project.number}-compute@developer.gserviceaccount.com" : var.service_account_email
   bucket_name           = var.bucket_name != "" ? var.bucket_name : "slo-generator-${random_id.suffix.hex}"
-  service_url           = var.service_url != "" ? var.service_url : google_cloud_run_service.service[0].status[0].url
+  service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status.*.url) : var.service_url
 }
 
 resource "random_id" "suffix" {
@@ -53,17 +53,19 @@ resource "google_cloud_scheduler_job" "scheduler" {
   dynamic "http_target" {
     for_each = var.mode == "compute" ? ["yes"] : []
     content {
-      service_account_email = local.service_account_email
-      http_method           = "POST"
-      uri                   = local.service_url
-      body                  = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
+      # oauth_token {
+      #   service_account_email = local.service_account_email
+      # }
+      http_method = "POST"
+      uri         = local.service_url
+      body        = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
     }
   }
 }
 
 resource "google_cloud_run_service" "service" {
-  count                      = var.service_url == "" ? 1 : 0
-  name                       = "slo-generator"
+  count                      = var.create_service ? 1 : 0
+  name                       = var.service_name
   location                   = var.region
   project                    = var.project_id
   autogenerate_revision_name = true

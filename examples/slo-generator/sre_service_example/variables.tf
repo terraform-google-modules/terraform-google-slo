@@ -47,3 +47,11 @@ variable "bigquery_dataset_name" {
   description = "BigQuery dataset to hold SLO reports"
   default     = "slos"
 }
+
+variable "team1_project_id" {
+  description = "Team 1 project id"
+}
+
+variable "team2_project_id" {
+  description = "Team 2 project id"
+}

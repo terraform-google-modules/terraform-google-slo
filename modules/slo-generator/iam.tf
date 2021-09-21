@@ -1,6 +1,6 @@
-local {
+locals {
   roles = concat([
-    "roles/storage.objectReader",
+    "roles/storage.objectViewer",
     "roles/monitoring.viewer",
     "roles/monitoring.metricWriter",
     "roles/run.invoker"

@@ -14,12 +14,11 @@ resource "google_pubsub_topic_iam_member" "pubsub-publisher" {
 
 # BigQuery dataset to export SLOs to
 resource "google_bigquery_dataset" "export-dataset" {
-  project                     = var.project_id
-  dataset_id                  = var.bigquery_dataset_name
-  friendly_name               = "slos"
-  description                 = "SLO Reports"
-  location                    = "EU"
-  default_table_expiration_ms = -1
+  project       = var.project_id
+  dataset_id    = var.bigquery_dataset_name
+  friendly_name = "slos"
+  description   = "SLO Reports"
+  location      = "EU"
   access {
     role          = "OWNER"
     user_by_email = local.service_account_email

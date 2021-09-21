@@ -36,19 +36,21 @@ locals {
 # Team1 deploys their SLOs configs to a bucket located in their own project, but 
 # do not want to manage the slo-generator service.
 module "team1-slos" {
-  source      = "../../../modules/slo-generator"
-  project_id  = var.team1_project_id
-  region      = var.region
-  slo_configs = local.team1_configs
-  service_url = module.slo-generator.service_url
+  source         = "../../../modules/slo-generator"
+  project_id     = var.team1_project_id
+  region         = var.region
+  slo_configs    = local.team1_configs
+  service_url    = module.slo-generator.service_url
+  create_service = false
 }
 
 # Team23 manages their own slo-generator service, but still want to export to 
 # the shared destinations to get SRE insights.
 module "team2-slos" {
-  source      = "../../../modules/slo-generator"
-  project_id  = var.team2_project_id
-  region      = var.region
-  config      = local.config
-  slo_configs = local.team1_configs
+  source       = "../../../modules/slo-generator"
+  project_id   = var.team2_project_id
+  region       = var.region
+  config       = local.config
+  slo_configs  = local.team1_configs
+  service_name = "slo-generator-team2"
 }

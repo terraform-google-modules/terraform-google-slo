@@ -22,6 +22,6 @@ module "slo-generator" {
     TEAM2_PROJECT_ID      = var.team2_project_id,
     SRE_PROJECT_ID        = var.project_id,
     SRE_PUBSUB_TOPIC_NAME = var.pubsub_topic_name,
-    BIGQUERY_DATASET_ID   = google_bigquery_dataset.export-dataset_id
+    BIGQUERY_DATASET_ID   = google_bigquery_dataset.export-dataset.dataset_id
   })
 }
