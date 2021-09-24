@@ -45,8 +45,10 @@ module "slo_basic" {
 A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/native/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
 
 ## SLO generator (any monitoring backend)
-The [`slo-generator`](./modules/slo-generator) and [`slo`] modules deploy the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
+The [`slo-generator`](./modules/slo-generator) module deploys the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
 in Cloud Run in order to compute and export SLOs on a schedule.
+
+SLO Configurations are pushed to Google Cloud Storage, and schedules are maintained using Google Cloud Schedulers.
 
 **Use this setup if:**
 - You are using other metrics backends than Cloud Monitoring that you want to create SLOs out of (e.g: Elastic, Datadog, Prometheus, ...).
