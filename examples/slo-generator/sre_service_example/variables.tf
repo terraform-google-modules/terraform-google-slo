@@ -18,19 +18,6 @@ variable "project_id" {
   description = "Project id"
 }
 
-variable "bucket_name" {
-  description = "Bucket name for SLO configs and GCF code zips"
-}
-
-variable "bucket_location" {
-  description = "Bucket name for SLO configs and GCF code zips"
-  default     = "US"
-}
-
-variable "stackdriver_host_project_id" {
-  description = "Stackdriver host project id"
-}
-
 variable "schedule" {
   description = "Cron-like Cloud Scheduler schedule"
   default     = "* * * * */1"
@@ -44,6 +31,11 @@ variable "region" {
 variable "labels" {
   description = "Project labels"
   default     = {}
+}
+
+variable "secrets" {
+  description = "SLO Generator secrets"
+  default = {}
 }
 
 variable "pubsub_topic_name" {
