@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 locals {
   projects = [
     var.project_id,
@@ -21,7 +21,7 @@ locals {
     var.team2_project_id,
   ]
   service_account_email = google_service_account.service_account.email
-  sre_config = yamldecode(file("configs/sre/config.yaml"))
+  sre_config            = yamldecode(file("configs/sre/config.yaml"))
   sre_slo_configs = [
     for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
     yamldecode(file(cfg))
@@ -36,7 +36,7 @@ module "slo-generator" {
   region                = var.region
   config                = local.sre_config
   service_account_email = local.service_account_email
-  slo_configs = local.sre_slo_configs
+  slo_configs           = local.sre_slo_configs
   secrets = merge(var.secrets, {
     TEAM1_PROJECT_ID      = var.team1_project_id,
     SRE_PROJECT_ID        = var.project_id,

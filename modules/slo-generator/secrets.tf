@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 data "google_project" "project" {
   project_id = var.project_id
 }

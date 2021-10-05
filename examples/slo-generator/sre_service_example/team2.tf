@@ -34,8 +34,8 @@ module "team2-slos" {
   config       = local.team2_shared_config
   slo_configs  = local.team2_configs
   secrets = {
-    PROJECT_ID = var.team2_project_id
-    SRE_PROJECT_ID   = var.project_id
+    PROJECT_ID     = var.team2_project_id
+    SRE_PROJECT_ID = var.project_id
   }
 }
 
