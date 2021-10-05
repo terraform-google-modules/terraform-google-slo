@@ -25,22 +25,20 @@ To run this example, you'll need:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | string | `"slos"` | no |
-| labels | Project labels | map | `<map>` | no |
-| project\_id | Project id | string | n/a | yes |
-| pubsub\_topic\_name | PubSub topic name | string | `"slo-export"` | no |
-| region | Region | string | `"us-east1"` | no |
-| schedule | Cron-like Cloud Scheduler schedule | string | `"* * * * */1"` | no |
-| secrets | slo-generator secrets | map | `<map>` | no |
-| team1\_project\_id | Team 1 project id | string | n/a | yes |
-| team2\_project\_id | Team 2 project id | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | `string` | `"slos"` | no |
+| labels | Project labels | `map` | `{}` | no |
+| project\_id | Project id | `any` | n/a | yes |
+| pubsub\_topic\_name | PubSub topic name | `string` | `"slo-export"` | no |
+| region | Region | `string` | `"us-east1"` | no |
+| schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
+| secrets | SLO Generator secrets | `map` | `{}` | no |
+| team1\_project\_id | Team 1 project id | `any` | n/a | yes |
+| team2\_project\_id | Team 2 project id | `any` | n/a | yes |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| slo-generator |  |
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

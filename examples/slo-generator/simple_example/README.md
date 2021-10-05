@@ -18,19 +18,20 @@ To run this example, you'll need:
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
-| Name                           | Description                        | Type     | Default         | Required |
-| ------------------------------ | ---------------------------------- | -------- | --------------- | :------: |
-| labels                         | Project labels                     | `map`    | `{}`            |    no    |
-| project\_id                    | Project id                         | `string` | n/a             |   yes    |
-| region                         | Region                             | `string` | `"us-east1"`    |    no    |
-| schedule                       | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` |    no    |
-| stackdriver\_host\_project\_id | Stackdriver host project id        | `any`    | n/a             |   yes    |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| bq\_location | Location of BQ dataset | `string` | `"US"` | no |
+| labels | Project labels | `map` | `{}` | no |
+| project\_id | Project id | `any` | n/a | yes |
+| region | Region | `string` | `"us-east1"` | no |
+| schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
+| secrets | slo-generator secrets | `any` | n/a | yes |
 
 ## Outputs
 
-| Name          | Description |
-| ------------- | ----------- |
-| slo-generator |             |
+| Name | Description |
+|------|-------------|
+| slo-generator | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
