@@ -18,25 +18,25 @@ exporters:
 error_budget_policies:
   default:
     steps:
-    - name: a.Last 1 hour
+    - name: 1h
       burn_rate_threshold: 9
       alert: true
       message_alert: Page to defend the SLO
       message_ok: Last hour on track
       window: 3600
-    - name: b.Last 12 hours
+    - name: 12h
       burn_rate_threshold: 3
       alert: true
       message_alert: Page to defend the SLO
       message_ok: Last 12 hours on track
       window: 43200
-    - name: c.Last 7 days
+    - name: 7d
       burn_rate_threshold: 1.5
       alert: false
       message_alert: Dev team dedicates 25% of engineers to the reliability backlog
       message_ok: Last week on track
       window: 604800
-    - name: d.Last 28 days
+    - name: 28d
       burn_rate_threshold: 1
       alert: false
       message_alert: Freeze release, unless related to reliability or security

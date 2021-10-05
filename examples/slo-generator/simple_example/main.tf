@@ -14,34 +14,11 @@
  * limitations under the License.
  */
 
-terraform {
-  required_providers {
-    google = {
-      version = "~> 3.19"
-    }
-    google-beta = {
-      version = "~> 3.19"
-    }
-  }
-}
-
-module "slo-pipeline" {
-  source     = "../../../modules/slo-pipeline"
-  project_id = var.project_id
-  region     = var.region
-  exporters = [
-    {
-      class      = "Stackdriver"
-      project_id = var.stackdriver_host_project_id
-    },
-    {
-      class                      = "Bigquery"
-      project_id                 = var.project_id
-      dataset_id                 = "slo"
-      table_id                   = "reports"
-      location                   = var.bq_location
-      delete_contents_on_destroy = true
-    }
+locals {
+  config = file("configs/config.yaml")
+  slo_configs = [
+    for cfg in fileset(path.module, "/configs/slos/team1/slo_*.yaml") :
+    yamldecode(file(cfg))
   ]
 }
 
