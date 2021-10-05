@@ -53,9 +53,9 @@ resource "google_cloud_scheduler_job" "scheduler" {
   dynamic "http_target" {
     for_each = var.mode == "compute" ? ["yes"] : []
     content {
-      # oauth_token {
-      #   service_account_email = local.service_account_email
-      # }
+      oidc_token {
+        service_account_email = local.service_account_email
+      }
       http_method = "POST"
       uri         = local.service_url
       body        = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
