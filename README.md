@@ -62,8 +62,10 @@ SLO Configurations are pushed to Google Cloud Storage, and schedules are maintai
 ![Architecture](./diagram.png)
 
 ### Compatibility
-
-This module is meant for use with Terraform 0.12.
+This module is meant for use with Terraform 0.13. If you haven't
+[upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
+0.12.x-compatible version of this module, the last released version
+intended for Terraform 0.12.x is [v1.0.2](https://registry.terraform.io/modules/terraform-google-modules/-slo/google/v1.0.2).
 
 ### Usage
 

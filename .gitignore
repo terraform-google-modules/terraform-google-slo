@@ -24,6 +24,9 @@ Session.vim
 # Local .terraform directories
 **/.terraform/*
 
+# Terraform init lock file
+.terraform.lock.hcl
+
 # .tfstate files
 *.tfstate
 *.tfstate.*

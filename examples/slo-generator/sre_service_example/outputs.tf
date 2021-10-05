@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-# Note: As most of the submodules outputs are needed: we are just forwarding all
-# submodules outputs here. Please refer to the submodules outputs.tf file to
-# have a breakdown.
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
 
-output "slo-generator" {
-  value = module.slo-generator
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.53"
+    }
+  }
+
+  provider_meta "google" {
+    module_name = "blueprints/terraform/terraform-google-slo:slo/v2.0.0"
+  }
+
 }

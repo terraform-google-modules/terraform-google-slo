@@ -16,34 +16,29 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 8.0"
-
-  name                 = "ci-slo"
-  random_project_id    = "true"
-  org_id               = var.org_id
-  folder_id            = var.folder_id
-  billing_account      = var.billing_account
-  skip_gcloud_download = true
+  version = "~> 10.2"
+  name              = "ci-slo"
+  random_project_id = "true"
+  org_id            = var.org_id
+  folder_id         = var.folder_id
+  billing_account   = var.billing_account
   activate_apis = [
     "appengine.googleapis.com",
     "bigquery.googleapis.com",
-    "cloudbuild.googleapis.com",
-    "cloudfunctions.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
     "cloudscheduler.googleapis.com",
+    "iam.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
-    "pubsub.googleapis.com",
-    "iam.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
-    "serviceusage.googleapis.com"
+    "run.googleapis.com",
+    "serviceusage.googleapis.com",
   ]
 }
 
 module "app-engine" {
-  source           = "terraform-google-modules/project-factory/google//modules/app_engine"
-  version          = "~> 3.0"
-  location_id      = var.region
-  serving_status   = "SERVING"
-  feature_settings = [{ enabled = true }]
-  project_id       = module.project.project_id
+  source         = "terraform-google-modules/project-factory/google//modules/app_engine"
+  version        = "~> 10.2"
+  location_id    = var.region
+  serving_status = "SERVING"
+  project_id     = module.project.project_id
 }
