@@ -13,3 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+output "slo-generator" {
+  value = module.slo-generator
+}
+
+output "service_account_email" {
+  value = google_service_account.service_account.email
+}

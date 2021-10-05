@@ -9,22 +9,20 @@ metadata:
     team: team2
     env: test
 spec:
+  goal: 0.99
   description: Less than 0.01% of errors in Cloud Functions logs
-  backend: cloud_monitoring/team2
+  backend: cloud_monitoring
   method: good_bad_ratio
   exporters:
-  - bigquery
+  - bigquery/sre
   - cloud_monitoring
-  - cloud_monitoring/team2
-  - pubsub
   service_level_indicator:
     filter_good: >
-      project="${TEAM2_PROJECT_ID}"
+      project="${PROJECT_ID}"
       metric.type="cloudfunctions.googleapis.com/function/execution_count"
       resource.type="cloud_function"
       metric.label."status"="ok"
     filter_valid: >
-      project="${TEAM2_PROJECT_ID}"
+      project="${PROJECT_ID}"
       metric.type="cloudfunctions.googleapis.com/function/execution_count"
       resource.type="cloud_function"
-  goal: 0.99

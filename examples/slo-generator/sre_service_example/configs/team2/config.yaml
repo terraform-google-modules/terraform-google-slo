@@ -2,18 +2,15 @@
 
 backends:
   cloud_monitoring:
-    project_id: ${STACKDRIVER_HOST_PROJECT_ID}
+    project_id: ${PROJECT_ID}
 
 exporters:
-  bigquery:
-    project_id: ${PROJECT_ID}
+  bigquery/sre:
+    project_id: ${SRE_PROJECT_ID}
     dataset_id: slo_reports
     table_id: report
   cloud_monitoring:
-    project_id: ${STACKDRIVER_HOST_PROJECT_ID}
-  pubsub:
     project_id: ${PROJECT_ID}
-    topic_name: ${PUBSUB_TOPIC_NAME}
 
 error_budget_policies:
   default:

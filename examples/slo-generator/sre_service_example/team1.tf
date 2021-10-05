@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.85"
-}
-
-provider "google-beta" {
-  version = "~> 3.85"
-}
-
 locals {
   team1_configs = [
-    for cfg in fileset(path.module, "/configs/slos/team1/slo_*.yaml") :
-    yamldecode(file(cfg))
-  ]
-  team2_configs = [
-    for cfg in fileset(path.module, "/configs/slos/team2/slo_*.yaml") :
+    for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
 }
 
-# Team1 deploys their SLOs configs to a bucket located in their own project, but 
-# do not want to manage the slo-generator service.
+# MODEL: Self-managed configs
+# Team1 deploys their SLOs configs to a bucket located in their own project, and
+# want to use the shared slo-generator service managed by SRE team.
 module "team1-slos" {
   source         = "../../../modules/slo-generator"
   project_id     = var.team1_project_id
@@ -44,13 +33,6 @@ module "team1-slos" {
   create_service = false
 }
 
-# Team23 manages their own slo-generator service, but still want to export to 
-# the shared destinations to get SRE insights.
-module "team2-slos" {
-  source       = "../../../modules/slo-generator"
-  project_id   = var.team2_project_id
-  region       = var.region
-  config       = local.config
-  slo_configs  = local.team1_configs
-  service_name = "slo-generator-team2"
+output "team1-slos" {
+  value = module.team1-slos
 }

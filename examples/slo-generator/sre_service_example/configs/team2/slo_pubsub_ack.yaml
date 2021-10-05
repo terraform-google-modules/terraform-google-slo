@@ -9,21 +9,18 @@ metadata:
     team: team2
     env: test
 spec:
+  goal: 0.99
   description: 99% of outstanding PubSub messages are acknowledged
-  backend: cloud_monitoring/team2
+  backend: cloud_monitoring
   method: good_bad_ratio
   exporters:
-  - bigquery
   - cloud_monitoring
-  - cloud_monitoring/team2
-  - pubsub
   service_level_indicator:
     filter_good: >
-      project="${TEAM2_PROJECT_ID}"
+      project="${PROJECT_ID}"
       metric.type="pubsub.googleapis.com/subscription/ack_message_count"
       resource.type="pubsub_subscription"
     filter_bad: >
-      project="${TEAM2_PROJECT_ID}"
+      project="${PROJECT_ID}"
       metric.type="pubsub.googleapis.com/subscription/num_outstanding_messages"
       resource.type="pubsub_subscription"
-  goal: 0.99

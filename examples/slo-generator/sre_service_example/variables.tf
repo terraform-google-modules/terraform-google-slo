@@ -15,7 +15,7 @@
  */
 
 variable "project_id" {
-  description = "Project id"
+  description = "SRE Project id"
 }
 
 variable "schedule" {
@@ -35,7 +35,7 @@ variable "labels" {
 
 variable "secrets" {
   description = "SLO Generator secrets"
-  default = {}
+  default     = {}
 }
 
 variable "pubsub_topic_name" {
