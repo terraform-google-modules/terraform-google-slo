@@ -55,7 +55,7 @@ SLO Configurations are pushed to Google Cloud Storage, and schedules are maintai
 
 - You want to have custom reporting and exporting for your SLO data, along with historical data (e.g: BigQuery, DataStudio, custom metrics).
 
-- You want to have a common configuration format for all SLOs (see [documentation](https://github.com/google/slo-generator/README.md#configuration)).
+- You want to have a common configuration format for all SLOs (see [documentation](https://github.com/google/slo-generator/README.md)).
 
 ### Architecture
 
