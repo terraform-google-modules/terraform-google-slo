@@ -21,7 +21,7 @@ locals {
     var.team2_project_id,
   ]
   service_account_email = google_service_account.service_account.email
-  sre_config            = yamldecode(file("configs/sre/config.yaml"))
+  sre_config            = yamldecode(file("${path.module}/configs/sre/config.yaml"))
   sre_slo_configs = [
     for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
     yamldecode(file(cfg))

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-slo_pipeline = attribute('slo_pipeline')
+slo_generator = attribute('slo-generator')
 
 control "gsutil" do
   title "gsutil"

@@ -19,7 +19,7 @@ locals {
     for cfg in fileset(path.module, "/configs/team2/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
-  team2_shared_config = yamldecode(file("configs/team2/config.yaml"))
+  team2_shared_config = yamldecode(file("${path.module}/configs/team2/config.yaml"))
 }
 
 # MODEL: Self-managed service
