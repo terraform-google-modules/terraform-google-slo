@@ -28,8 +28,8 @@ locals {
   ]
 }
 
-# SLOs as-a-service, run by SRE team. 
-# This service can be used by the various teams to compute their SLOs. 
+# SLOs as-a-service, run by SRE team.
+# This service can be used by the various teams to compute their SLOs.
 module "slo-generator" {
   source                = "../../../modules/slo-generator"
   project_id            = var.project_id

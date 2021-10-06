@@ -25,7 +25,7 @@ To run this example, you'll need:
 | project\_id | Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
-| secrets | slo-generator secrets | `any` | n/a | yes |
+| secrets | slo-generator secrets | `map` | `{}` | no |
 
 ## Outputs
 

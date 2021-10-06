@@ -20,6 +20,7 @@ variable "project_id" {
 
 variable "secrets" {
   description = "slo-generator secrets"
+  default     = {}
 }
 
 variable "schedule" {

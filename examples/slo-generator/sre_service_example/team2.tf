@@ -23,8 +23,8 @@ locals {
 }
 
 # MODEL: Self-managed service
-# Team2 deploys their own slo-generator service (shared config is team2/config.yaml), 
-# and still want to export to the shared BigQuery dataset to get analytics 
+# Team2 deploys their own slo-generator service (shared config is team2/config.yaml),
+# and still want to export to the shared BigQuery dataset to get analytics
 # results by SRE team.
 module "team2-slos" {
   source       = "../../../modules/slo-generator"

@@ -15,10 +15,8 @@
  */
 
 module "example" {
-  source                      = "../../../examples/slo-generator/simple_example"
-  project_id                  = var.project_id
-  stackdriver_host_project_id = var.stackdriver_host_project_id
-  schedule                    = var.schedule
-  region                      = var.region
-  labels                      = var.labels
+  source     = "../../../examples/slo-generator/simple_example"
+  project_id = var.project_id
+  region     = var.region
+  labels     = var.labels
 }

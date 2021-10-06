@@ -1,6 +1,6 @@
 # SRE Service Example
 
-This example illustrates how to use the `slo-generator` module, when the run 
+This example illustrates how to use the `slo-generator` module, when the run
 model is as follow:
 
 - **SRE team** runs the `slo-generator` as-a-service; they put it to disposition for application teams to use on request.
@@ -28,7 +28,7 @@ To run this example, you'll need:
 |------|-------------|------|---------|:--------:|
 | bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | `string` | `"slos"` | no |
 | labels | Project labels | `map` | `{}` | no |
-| project\_id | Project id | `any` | n/a | yes |
+| project\_id | SRE Project id | `any` | n/a | yes |
 | pubsub\_topic\_name | PubSub topic name | `string` | `"slo-export"` | no |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
@@ -38,7 +38,12 @@ To run this example, you'll need:
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| service\_account\_email | n/a |
+| slo-generator | n/a |
+| team1-slos | n/a |
+| team2-slos | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
