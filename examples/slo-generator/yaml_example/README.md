@@ -20,9 +20,10 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| bucket\_location | Bucket name for SLO configs and GCF code zips | `string` | `"US"` | no |
 | bucket\_name | Bucket name for SLO configs and GCF code zips | `any` | n/a | yes |
 | labels | Project labels | `map` | `{}` | no |
-| project\_id | Project id | `string` | n/a | yes |
+| project\_id | Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
 | stackdriver\_host\_project\_id | Stackdriver host project id | `any` | n/a | yes |

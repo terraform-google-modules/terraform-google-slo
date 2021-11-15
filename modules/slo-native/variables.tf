@@ -16,7 +16,7 @@
 
 variable "config" {
   description = "SLO configuration"
-  type        = map
+  type        = map(any)
 }
 #
 # variable "project_id" {
