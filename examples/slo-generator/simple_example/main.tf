@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-terraform {
-  required_providers {
-    google = {
-      version = "~> 3.19"
-    }
-    google-beta = {
-      version = "~> 3.19"
-    }
-  }
-}
-
 module "slo-pipeline" {
   source     = "../../../modules/slo-pipeline"
   project_id = var.project_id
