@@ -32,7 +32,7 @@ See [`examples/native/simple_example`](./examples/native/simple_example) for ano
 
 #### YAML format
 You can also write an SLO in a YAML definition file and load it into the module:
-```
+```hcl
 locals {
   config = yamldecode(file("configs/my_slo_config.yaml"))
 }
