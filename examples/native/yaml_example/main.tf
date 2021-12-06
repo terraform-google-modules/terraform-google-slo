@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.19"
-}
-
-provider "google-beta" {
-  version = "~> 3.19"
-}
-
 locals {
   slo_configs = [
     for file in fileset(path.module, "/templates/*.yaml") :

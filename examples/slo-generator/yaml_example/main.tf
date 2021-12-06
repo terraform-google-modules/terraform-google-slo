@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-terraform {
-  required_providers {
-    google = {
-      version = "~> 3.19"
-    }
-    google-beta = {
-      version = "~> 3.19"
-    }
-  }
-}
-
 locals {
   // Load error budget policy
   error_budget_policy = yamldecode(file("templates/error_budget_policy.yaml"))
