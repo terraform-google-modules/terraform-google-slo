@@ -7,6 +7,14 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v2.0.0...v2.1.0) (2021-12-06)
+
+
+### Features
+
+* update TPG version constraints to allow 4.0 ([37864c4](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/37864c46c3a669a230b9383fd68aaba9521748ba))
+* update TPG version constraints to allow 4.0 ([9ccd3fb](https://www.github.com/terraform-google-modules/terraform-google-slo/commit/9ccd3fba06529b54fcea3844bfa945fe1473875d))
+
 ## [2.0.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v1.0.3...v2.0.0) (2021-07-05)
 
 
