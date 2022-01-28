@@ -32,6 +32,5 @@ module "slo-generator" {
   gcr_project_id        = var.gcr_project_id
   secrets = {
     PROJECT_ID = var.project_id
-    DEBUG      = "1"
   }
 }
