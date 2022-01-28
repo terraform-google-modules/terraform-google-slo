@@ -1,5 +1,5 @@
 locals {
-  team1_config = yamldecode(file("${path.module}/configs/team1/config.yaml"))
+  team1_config  = yamldecode(file("${path.module}/configs/team1/config.yaml"))
   team1_configs = [
     for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
     yamldecode(file(cfg))
@@ -14,7 +14,7 @@ locals {
 # dataset.
 module "team1-slos" {
   source                = "../../../modules/slo-generator"
-  project_id            = var.team1_project_id 
+  project_id            = var.team1_project_id
   region                = var.region
   config                = local.team1_config
   slo_configs           = local.team1_configs

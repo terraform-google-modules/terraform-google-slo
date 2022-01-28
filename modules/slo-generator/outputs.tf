@@ -29,3 +29,7 @@ output "bucket_name" {
 output "service_account_email" {
   value = local.service_account_email
 }
+
+output "authorized_members" {
+  value = google_cloud_run_service_iam_member.run-invokers[*].member
+}

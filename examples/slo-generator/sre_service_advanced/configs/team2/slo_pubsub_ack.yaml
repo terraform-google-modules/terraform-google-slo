@@ -25,10 +25,10 @@ metadata:
 spec:
   goal: 0.99
   description: 99% of outstanding PubSub messages are acknowledged
-  backend: cloud_monitoring
+  backend: cloud_monitoring/team2
   method: good_bad_ratio
   exporters:
-  - cloud_monitoring
+  - cloud_monitoring/team2
   service_level_indicator:
     filter_good: >
       project="${PROJECT_ID}"

@@ -17,7 +17,7 @@
 locals {
   service_account_email = google_service_account.service_account.email
   sre_config            = yamldecode(file("${path.module}/configs/sre/config.yaml"))
-  sre_slo_configs = [
+  sre_slo_configs       = [
     for cfg in fileset(path.module, "/configs/sre/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
@@ -37,10 +37,10 @@ module "slo-generator" {
   secrets = {
     SRE_PROJECT_ID          = var.project_id
     SRE_BIGQUERY_DATASET_ID = google_bigquery_dataset.export-dataset.dataset_id
-    TEAM2_PROJECT_ID        = var.team1_project_id
+    TEAM2_PROJECT_ID        = var.team2_project_id
   }
   authorized_members = [
-    "serviceAccount:${module.team1-slos.service_account_email}"
+    "serviceAccount:${module.team2-slos.service_account_email}"
   ]
 }
 
