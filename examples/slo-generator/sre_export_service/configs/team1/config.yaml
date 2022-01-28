@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,15 +13,19 @@
 # limitations under the License.
 
 ---
-default_exporters: [cloud_monitoring]
+default_exporters: [cloudevent/sre, cloud_monitoring]
 
 backends:
   cloud_monitoring:
-    project_id: ${PROJECT_ID}
+    project_id: ${TEAM1_PROJECT_ID}
 
 exporters:
+  cloudevent/sre:
+    service_url: ${SRE_SERVICE_URL}
+    auth:
+      google_service_account_auth: true
   cloud_monitoring:
-    project_id: ${PROJECT_ID}
+    project_id: ${TEAM1_PROJECT_ID}
 
 error_budget_policies:
   default:

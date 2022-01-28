@@ -39,13 +39,6 @@ resource "google_storage_bucket_object" "shared_config" {
   bucket  = google_storage_bucket.slos.name
 }
 
-resource "google_storage_bucket_object" "shared_exporters" {
-  count   = length(values(var.exporters)) > 0 ? 1 : 0
-  name    = "exporters.yaml"
-  content = yamlencode(var.exporters)
-  bucket  = google_storage_bucket.slos.name
-}
-
 resource "google_storage_bucket_object" "slos" {
   for_each = { for config in var.slo_configs : config.metadata.name => config }
   name     = "slos/${each.key}.yaml"
@@ -111,10 +104,6 @@ resource "google_cloud_run_service" "service" {
         env {
           name  = "CONFIG_PATH"
           value = "gs://${google_storage_bucket.slos.name}/config.yaml"
-        }
-        env {
-          name  = "EXPORTERS_PATH"
-          value = "gs://${google_storage_bucket.slos.name}/exporters.yaml"
         }
         dynamic "env" {
           for_each = google_secret_manager_secret.secret

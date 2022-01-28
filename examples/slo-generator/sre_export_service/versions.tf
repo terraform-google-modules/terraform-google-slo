@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-output "service_url" {
-  value = local.service_url
-}
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
 
-output "bucket_name" {
-  value = local.bucket_name
-}
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.53"
+    }
+  }
 
-output "service_account_email" {
-  value = local.service_account_email
+  provider_meta "google" {
+    module_name = "blueprints/terraform/terraform-google-slo:slo/v2.0.0"
+  }
+
 }

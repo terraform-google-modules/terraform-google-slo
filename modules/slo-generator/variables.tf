@@ -28,9 +28,13 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "config" {
+  description = "slo-generator shared config"
+}
+
 variable "slo_generator_version" {
   description = "slo-generator version to deploy"
-  default     = "2.0.0-rc3"
+  default     = "2.1.0"
 }
 
 variable "service_name" {
@@ -56,11 +60,6 @@ variable "bucket_name" {
 
 variable "secrets" {
   description = "slo-generator secrets"
-  default     = {}
-}
-
-variable "config" {
-  description = "slo-generator shared config"
   default     = {}
 }
 
@@ -93,6 +92,12 @@ variable "labels" {
   description = "Resource labels"
   type        = map(any)
   default     = {}
+}
+
+variable "authorized_members" {
+  description = "List of emails that are allowed to call the service"
+  type        = list(string)
+  default     = []
 }
 
 variable "annotations" {

@@ -15,28 +15,27 @@
 apiVersion: sre.google.com/v2
 kind: ServiceLevelObjective
 metadata:
-  name: generator-pubsub-ack
+  name: slo-generator-errors
   labels:
-    service_name: generator
-    feature_name: pubsub
-    slo_name: ack
-    metadata:
-      env: test
+    service_name: slo-generator
+    feature_name: cloudrun
+    slo_name: errors
+    team: sre
+    env: test
 spec:
-  description: 99% of outstanding PubSub messages are acknowledged
+  goal: 0.99
+  description: 99% of requests to Cloud Run service have a good HTTP status code
   backend: cloud_monitoring
   method: good_bad_ratio
   exporters:
-  - bigquery
-  - cloud_monitoring
-  - pubsub
+  - cloud_monitoring/sre
+  - bigquery/sre
+  - pubsub/sre
   service_level_indicator:
     filter_good: >
-      project="${PROJECT_ID}"
-      metric.type="pubsub.googleapis.com/subscription/ack_message_count"
-      resource.type="pubsub_subscription"
-    filter_bad: >
-      project="${PROJECT_ID}"
-      metric.type="pubsub.googleapis.com/subscription/num_outstanding_messages"
-      resource.type="pubsub_subscription"
-  goal: 0.99
+      project="${TEAM1_PROJECT_ID}"
+      metric.type="run.googleapis.com/request_count"
+      metric.label."response_code_class"="2xx"
+    filter_valid: >
+      project="${TEAM1_PROJECT_ID}"
+      metric.type="run.googleapis.com/request_count"

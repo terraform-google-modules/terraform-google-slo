@@ -18,11 +18,6 @@ variable "project_id" {
   description = "Project id"
 }
 
-variable "secrets" {
-  description = "slo-generator secrets"
-  default     = {}
-}
-
 variable "schedule" {
   description = "Cron-like Cloud Scheduler schedule"
   default     = "* * * * */1"
@@ -33,9 +28,14 @@ variable "region" {
   default     = "us-east1"
 }
 
-variable "bq_location" {
-  description = "Location of BQ dataset"
-  default     = "US"
+variable "gcr_project_id" {
+  description = "Google Container registry project where image is hosted"
+  default     = "slo-generator-ci-a2b4"
+}
+
+variable "slo_generator_version" {
+  description = "SLO generator version"
+  default     = "latest"
 }
 
 variable "labels" {

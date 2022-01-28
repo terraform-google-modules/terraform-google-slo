@@ -21,17 +21,8 @@ locals {
     "roles/monitoring.metricWriter",
     "roles/run.invoker",
     "roles/secretmanager.secretAccessor",
-    "roles/storage.objectViewer",
-    google_project_iam_custom_role.bucket-reader.id
+    "roles/storage.admin",
   ], var.additional_project_roles)
-}
-
-resource "google_project_iam_custom_role" "bucket-reader" {
-  project     = var.project_id
-  role_id     = "BucketAccessor"
-  title       = "Bucket accessor"
-  description = "Bucket accessor"
-  permissions = ["storage.buckets.get"]
 }
 
 resource "google_project_iam_member" "sa-roles" {
@@ -39,4 +30,13 @@ resource "google_project_iam_member" "sa-roles" {
   project = var.project_id
   role    = local.roles[count.index]
   member  = "serviceAccount:${local.service_account_email}"
+}
+
+resource "google_cloud_run_service_iam_member" "run-invokers" {
+  count    = var.create_iam_roles ? length(var.authorized_members) : 0
+  location = google_cloud_run_service.service[0].location
+  project  = google_cloud_run_service.service[0].project
+  service  = google_cloud_run_service.service[0].name
+  role     = "roles/run.invoker"
+  member   = var.authorized_members[count.index]
 }

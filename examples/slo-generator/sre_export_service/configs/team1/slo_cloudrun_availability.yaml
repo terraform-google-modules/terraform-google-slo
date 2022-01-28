@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,32 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+---
 apiVersion: sre.google.com/v2
 kind: ServiceLevelObjective
 metadata:
-  name: generator-gcf-errors
+  name: slo-generator-errors
   labels:
-    service_name: generator
-    feature_name: gcf
+    service_name: slo-generator
+    feature_name: cloudrun
     slo_name: errors
-    metadata:
-      env: test
+    team: sre
+    env: test
 spec:
-  description: Less than 0.01% of errors in Cloud Functions logs
+  goal: 0.99
+  description: 99% of requests to Cloud Run service have a good HTTP status code
   backend: cloud_monitoring
   method: good_bad_ratio
-  exporters:
-  - bigquery
-  - cloud_monitoring
-  - pubsub
   service_level_indicator:
     filter_good: >
-      project="${PROJECT_ID}"
-      metric.type="cloudfunctions.googleapis.com/function/execution_count"
-      resource.type="cloud_function"
-      metric.label."status"="ok"
+      project="${SRE_PROJECT_ID}"
+      metric.type="run.googleapis.com/request_count"
+      metric.label."response_code_class"="2xx"
     filter_valid: >
-      project="${PROJECT_ID}"
-      metric.type="cloudfunctions.googleapis.com/function/execution_count"
-      resource.type="cloud_function"
-  goal: 0.99
+      project="${SRE_PROJECT_ID}"
+      metric.type="run.googleapis.com/request_count"

@@ -15,18 +15,23 @@
  */
 
 locals {
-  config = file("${path.module}/configs/config.yaml")
+  config = yamldecode(file("${path.module}/configs/config.yaml"))
   slo_configs = [
-    for cfg in fileset(path.module, "/configs/slos/team1/slo_*.yaml") :
+    for cfg in fileset(path.module, "/configs/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
 }
 
 module "slo-generator" {
-  source      = "../../../modules/slo-generator"
-  project_id  = var.project_id
-  region      = var.region
-  config      = local.config
-  slo_configs = local.slo_configs
-  secrets     = var.secrets
+  source                = "../../../modules/slo-generator"
+  project_id            = var.project_id
+  region                = var.region
+  config                = local.config
+  slo_configs           = local.slo_configs
+  slo_generator_version = var.slo_generator_version
+  gcr_project_id        = var.gcr_project_id
+  secrets               = {
+    PROJECT_ID = var.project_id
+    DEBUG = "1"
+  }
 }

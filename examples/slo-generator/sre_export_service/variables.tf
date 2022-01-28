@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-output "service_url" {
-  value = local.service_url
+variable "region" {
+  description = "Region"
+  default     = "us-east1"
 }
 
-output "bucket_name" {
-  value = local.bucket_name
+variable "project_id" {
+  description = "SRE Project id"
 }
 
-output "service_account_email" {
-  value = local.service_account_email
+variable "team1_project_id" {
+  description = "Team 1 project id"
+}
+
+variable "gcr_project_id" {
+  description = "Google Container Registry project to fetch slo-generator image from"
+  default = "slo-generator-ci-a2b4"
+}
+
+variable "slo_generator_version" {
+  description = "Version of slo-generator image"
+  default     = "latest"
 }
