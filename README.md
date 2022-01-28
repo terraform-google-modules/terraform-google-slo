@@ -88,7 +88,7 @@ module "slo-generator" {
 }
 ```
 
-For information on the config formats, lease refer to the `slo-generator` documentation:
+For information on the config formats, please refer to the `slo-generator` documentation:
 * [slo-generator config](https://github.com/google/slo-generator#shared-configuration)
 * [SLO config](https://github.com/google/slo-generator#slo-configuration)
 
