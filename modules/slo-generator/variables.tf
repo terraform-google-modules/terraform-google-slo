@@ -30,6 +30,7 @@ variable "region" {
 
 variable "config" {
   description = "slo-generator shared config"
+  default     = {}
 }
 
 variable "slo_generator_version" {

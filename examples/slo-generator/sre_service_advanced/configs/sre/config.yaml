@@ -18,8 +18,8 @@ default_exporters: [bigquery/sre, cloud_monitoring/sre]
 backends:
   cloud_monitoring/sre:
     project_id: ${SRE_PROJECT_ID}
-  cloud_monitoring/team1:
-    project_id: ${TEAM1_PROJECT_ID}
+  cloud_monitoring/team2:
+    project_id: ${TEAM2_PROJECT_ID}
 
 exporters:
   bigquery/sre:

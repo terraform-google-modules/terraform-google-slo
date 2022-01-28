@@ -34,11 +34,14 @@ module "slo-generator" {
   slo_configs           = local.sre_slo_configs
   gcr_project_id        = var.project_id
   slo_generator_version = var.slo_generator_version
-  secrets = merge(var.secrets, {
-    SRE_PROJECT_ID          = var.project_id,
+  secrets = {
+    SRE_PROJECT_ID          = var.project_id
     SRE_BIGQUERY_DATASET_ID = google_bigquery_dataset.export-dataset.dataset_id
-    TEAM2_PROJECT_ID        = var.team1_project_id,
-  })
+    TEAM2_PROJECT_ID        = var.team1_project_id
+  }
+  authorized_members = [
+    "serviceAccount:${module.team1-slos.service_account_email}"
+  ]
 }
 
 # SRE SA for slo-generator service
@@ -70,10 +73,9 @@ resource "google_project_iam_member" "monitoring-metric-writer" {
 }
 
 # Team2 SA needs to write data to BigQuery table in SRE project
-resource "google_bigquery_table_iam_member" "member" {
-  project    = var.team2_project_id
+resource "google_bigquery_dataset_iam_member" "member" {
+  project    = var.project_id
   dataset_id = google_bigquery_dataset.export-dataset.dataset_id
-  table_id   = "reports"
   role       = "roles/bigquery.dataEditor"
-  member     = "serviceAccount:${local.service_account_email}"
+  member     = "serviceAccount:${module.team1-slos.service_account_email}"
 }

@@ -19,7 +19,7 @@ output "service_url" {
 }
 
 output "service_name" {
-  value = google_cloud_run_service.service[0].name
+  value = var.create_service ? google_cloud_run_service.service[0].name : ""
 }
 
 output "bucket_name" {

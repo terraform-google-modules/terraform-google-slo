@@ -28,16 +28,6 @@ variable "region" {
   default     = "us-east1"
 }
 
-variable "labels" {
-  description = "Project labels"
-  default     = {}
-}
-
-variable "secrets" {
-  description = "SLO Generator secrets"
-  default     = {}
-}
-
 variable "pubsub_topic_name" {
   description = "PubSub topic name"
   default     = "slo-export"
@@ -45,7 +35,7 @@ variable "pubsub_topic_name" {
 
 variable "bigquery_dataset_name" {
   description = "BigQuery dataset to hold SLO reports"
-  default     = "slos"
+  default     = "slo"
 }
 
 variable "team1_project_id" {

@@ -27,8 +27,6 @@ spec:
   description: 99% of requests to Cloud Run service have a good HTTP status code
   backend: cloud_monitoring
   method: good_bad_ratio
-  exporters:
-  - cloud_monitoring/team1
   service_level_indicator:
     filter_good: >
       project="${TEAM1_PROJECT_ID}"
