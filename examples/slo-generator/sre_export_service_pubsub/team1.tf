@@ -15,24 +15,23 @@
  */
 
 locals {
-  team1_configs = [
-    for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
+  config = yamldecode(file("${path.module}/configs/config.yaml"))
+  slo_configs = [
+    for cfg in fileset(path.module, "/configs/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
 }
 
-# MODEL: Self-managed configs
-# Team1 deploys their SLOs configs to a bucket located in their own project, and
-# want to use the shared slo-generator service managed by SRE team.
-module "team1-slos" {
-  source         = "../../../modules/slo-generator"
-  project_id     = var.team1_project_id
-  region         = var.region
-  slo_configs    = local.team1_configs
-  service_url    = module.slo-generator.service_url
-  create_service = false
-}
-
-output "team1-slos" {
-  value = module.team1-slos
+module "slo-generator" {
+  source                = "../../../modules/slo-generator"
+  project_id            = var.project_id
+  region                = var.region
+  config                = local.config
+  slo_configs           = local.slo_configs
+  slo_generator_version = var.slo_generator_version
+  gcr_project_id        = var.gcr_project_id
+  secrets               = {
+    PROJECT_ID        = var.project_id
+    PUBSUB_TOPIC_NAME = google_pubsub_topic.topic.name
+  }
 }

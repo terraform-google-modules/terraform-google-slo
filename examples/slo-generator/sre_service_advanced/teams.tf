@@ -10,16 +10,16 @@ locals {
 }
 
 module "team1-slos" {
-  source         = "../../../modules/slo-generator"
-  project_id     = var.team1_project_id
-  region         = var.region
-  slo_configs    = local.team1_configs
+  source      = "../../../modules/slo-generator"
+  project_id  = var.team1_project_id
+  region      = var.region
+  slo_configs = local.team1_configs
 }
 
 module "team2-slos" {
-  source         = "../../../modules/slo-generator"
-  project_id     = var.team2_project_id
-  region         = var.region
-  slo_configs    = local.team2_configs
-  service_url    = module.slo-generator.service_url
+  source      = "../../../modules/slo-generator"
+  project_id  = var.team2_project_id
+  region      = var.region
+  slo_configs = local.team2_configs
+  service_url = module.slo-generator.service_url
 }
