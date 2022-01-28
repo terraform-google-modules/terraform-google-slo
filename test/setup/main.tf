@@ -23,22 +23,9 @@ module "project" {
   folder_id         = var.folder_id
   billing_account   = var.billing_account
   activate_apis = [
-    "appengine.googleapis.com",
     "bigquery.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
     "cloudscheduler.googleapis.com",
-    "iam.googleapis.com",
-    "logging.googleapis.com",
-    "monitoring.googleapis.com",
     "run.googleapis.com",
-    "serviceusage.googleapis.com",
+    "secretmanager.googleapis.com",
   ]
-}
-
-module "app-engine" {
-  source         = "terraform-google-modules/project-factory/google//modules/app_engine"
-  version        = "~> 10.2"
-  location_id    = var.region
-  serving_status = "SERVING"
-  project_id     = module.project.project_id
 }

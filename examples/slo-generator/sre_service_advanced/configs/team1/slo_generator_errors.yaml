@@ -29,9 +29,9 @@ spec:
   method: good_bad_ratio
   service_level_indicator:
     filter_good: >
-      project="${TEAM1_PROJECT_ID}"
+      project="${PROJECT_ID}"
       metric.type="run.googleapis.com/request_count"
       metric.label."response_code_class"="2xx"
     filter_valid: >
-      project="${TEAM1_PROJECT_ID}"
+      project="${PROJECT_ID}"
       metric.type="run.googleapis.com/request_count"

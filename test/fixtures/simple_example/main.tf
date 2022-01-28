@@ -17,6 +17,4 @@
 module "example" {
   source     = "../../../examples/slo-generator/simple_example"
   project_id = var.project_id
-  region     = var.region
-  labels     = var.labels
 }
