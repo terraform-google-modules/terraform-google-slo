@@ -34,7 +34,7 @@ variable "config" {
 
 variable "slo_generator_version" {
   description = "slo-generator version to deploy"
-  default     = "2.1.0"
+  default     = "latest"
 }
 
 variable "service_name" {
