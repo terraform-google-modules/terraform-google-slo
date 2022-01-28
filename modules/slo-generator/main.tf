@@ -47,28 +47,18 @@ resource "google_storage_bucket_object" "slos" {
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  for_each = { for config in var.slo_configs : config.metadata.name => config }
+  for_each = { for config in var.slo_configs : config.metadata.name => config if var.create_cloud_schedulers }
   project  = var.project_id
   region   = var.region
   schedule = var.schedule
   name     = each.key
-  dynamic "pubsub_target" {
-    for_each = var.mode == "export" ? ["yes"] : []
-    content {
-      topic_name = var.pubsub_topic_name
-      data       = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
+  http_target {
+    oidc_token {
+      service_account_email = local.service_account_email
     }
-  }
-  dynamic "http_target" {
-    for_each = var.mode == "compute" ? ["yes"] : []
-    content {
-      oidc_token {
-        service_account_email = local.service_account_email
-      }
-      http_method = "POST"
-      uri         = local.service_url
-      body        = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
-    }
+    http_method = "POST"
+    uri         = local.service_url
+    body        = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
   }
 }
 

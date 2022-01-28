@@ -19,6 +19,12 @@ locals {
   sre_config            = yamldecode(file("${path.module}/configs/sre/config.yaml"))
 }
 
+resource "google_service_account" "sre_service_account" {
+  project      = var.project_id
+  account_id   = "slo-generator-export"
+  display_name = "SLO Generator Service Account"
+}
+
 module "slo-generator-export" {
   source                = "../../../modules/slo-generator"
   service_name          = "slo-generator-export"
@@ -36,12 +42,6 @@ module "slo-generator-export" {
   authorized_members = [
     "serviceAccount:${google_service_account.team1_service_account.email}"
   ]
-}
-
-resource "google_service_account" "sre_service_account" {
-  project      = var.project_id
-  account_id   = "slo-generator-export"
-  display_name = "SLO Generator Service Account"
 }
 
 resource "google_bigquery_dataset" "export-dataset" {

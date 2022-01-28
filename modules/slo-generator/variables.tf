@@ -83,6 +83,11 @@ variable "schedule" {
   default     = "* * * * *"
 }
 
+variable "create_cloud_schedulers" {
+  description = "Whether to create Cloud Schedulers for each SLO or not"
+  default     = true
+}
+
 variable "pubsub_topic_name" {
   description = "Input PubSub topic"
   default     = "export"

@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-output "service_url" {
-  value = local.service_url
-}
-
-output "service_name" {
-  value = google_cloud_run_service.service[0].name
-}
-
-output "bucket_name" {
-  value = local.bucket_name
-}
-
-output "service_account_email" {
-  value = local.service_account_email
+terraform {
+  required_providers {
+    google = {
+      version = "~> 3.19"
+    }
+    google-beta = {
+      version = "~> 3.19"
+    }
+  }
 }

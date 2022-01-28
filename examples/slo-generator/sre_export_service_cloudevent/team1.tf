@@ -22,6 +22,12 @@ locals {
   ]
 }
 
+resource "google_service_account" "team1_service_account" {
+  project      = var.team1_project_id
+  account_id   = "slo-generator"
+  display_name = "SLO Generator Service Account"
+}
+
 module "slo-generator" {
   source                = "../../../modules/slo-generator"
   project_id            = var.team1_project_id
@@ -36,10 +42,4 @@ module "slo-generator" {
     SRE_SERVICE_URL = module.slo-generator-export.service_url
     MIN_VALID_EVENTS = 0
   }
-}
-
-resource "google_service_account" "team1_service_account" {
-  project      = var.team1_project_id
-  account_id   = "slo-generator"
-  display_name = "SLO Generator Service Account"
 }

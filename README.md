@@ -59,7 +59,7 @@ SLO Configurations are pushed to Google Cloud Storage, and schedules are maintai
 
 ### Architecture
 
-![Architecture](./diagram.png)
+![Architecture](./arch.png)
 
 ### Compatibility
 This module is meant for use with Terraform 0.13. If you haven't
@@ -89,7 +89,7 @@ module "slo-generator" {
 ```
 
 See [`examples/slo-generator/simple_example`](./examples/slo-generator/simple_example) for a complete example.
-See [`examples/slo-generator/sre_service_example`](./examples/slo-generator/sre_service_example) for a real-world organizational example, where the application teams deploy their SLOs using the `slo-generator` service deployed by an SRE team.
+See [`examples/slo-generator/sre_service_advanced`](./examples/slo-generator/sre_service_advanced) for a real-world organizational example, where the application teams deploy their SLOs using the `slo-generator` service deployed by an SRE team.
 
 ## Contributing
 
