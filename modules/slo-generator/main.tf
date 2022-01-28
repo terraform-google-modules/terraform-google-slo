@@ -96,6 +96,13 @@ resource "google_cloud_run_service" "service" {
           value = "gs://${google_storage_bucket.slos.name}/config.yaml"
         }
         dynamic "env" {
+          for_each = var.env
+          content {
+            name  = each.key
+            value = each.value
+          }
+        }
+        dynamic "env" {
           for_each = google_secret_manager_secret.secret
           content {
             name = env.value.secret_id

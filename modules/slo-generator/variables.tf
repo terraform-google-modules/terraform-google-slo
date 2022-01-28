@@ -58,6 +58,11 @@ variable "bucket_name" {
   default     = ""
 }
 
+variable "env" {
+  description = "slo-generator env variables"
+  default     = {}
+}
+
 variable "secrets" {
   description = "slo-generator secrets"
   default     = {}
