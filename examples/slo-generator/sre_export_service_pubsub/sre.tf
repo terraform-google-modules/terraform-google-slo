@@ -1,5 +1,5 @@
 locals {
-    config_export = yamldecode(file("${path.module}/configs/config_export.yaml"))
+  config_export = yamldecode(file("${path.module}/configs/config_export.yaml"))
 }
 
 module "slo-generator-export" {
@@ -11,7 +11,7 @@ module "slo-generator-export" {
   config                = local.config_export
   slo_generator_version = var.slo_generator_version
   gcr_project_id        = var.gcr_project_id
-  secrets               = {
+  secrets = {
     SRE_PROJECT_ID = var.project_id
   }
 }

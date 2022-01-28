@@ -30,7 +30,7 @@ module "slo-generator" {
   slo_configs           = local.slo_configs
   slo_generator_version = var.slo_generator_version
   gcr_project_id        = var.gcr_project_id
-  secrets               = {
+  secrets = {
     PROJECT_ID        = var.project_id
     PUBSUB_TOPIC_NAME = google_pubsub_topic.topic.name
   }
