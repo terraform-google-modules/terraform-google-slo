@@ -88,7 +88,12 @@ module "slo-generator" {
 }
 ```
 
+For information on the config formats, lease refer to the `slo-generator` documentation:
+* [slo-generator config](https://github.com/google/slo-generator#shared-configuration)
+* [SLO config](https://github.com/google/slo-generator#slo-configuration)
+
 See [`examples/slo-generator/simple_example`](./examples/slo-generator/simple_example) for a complete example.
+
 See [`examples/slo-generator/sre_service_advanced`](./examples/slo-generator/sre_service_advanced) for a real-world organizational example, where the application teams deploy their SLOs using the `slo-generator` service deployed by an SRE team.
 
 ## Contributing
