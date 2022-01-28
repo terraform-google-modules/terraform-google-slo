@@ -52,9 +52,9 @@ resource "google_service_account" "service_account" {
 }
 
 # SRE SA service account needs to be able to read GCS configs in team2's GCS bucket
-resource "google_project_iam_member" "object-viewer" {
-  project = var.team2_project_id
-  role    = "roles/storage.objectViewer"
+resource "google_storage_bucket_iam_member" "storage-admin" {
+  bucket  = module.team2-slos.bucket_name
+  role    = "roles/storage.admin"
   member  = "serviceAccount:${local.service_account_email}"
 }
 
