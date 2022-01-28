@@ -29,7 +29,7 @@ variable "team1_project_id" {
 
 variable "gcr_project_id" {
   description = "Google Container Registry project to fetch slo-generator image from"
-  default = "slo-generator-ci-a2b4"
+  default     = "slo-generator-ci-a2b4"
 }
 
 variable "slo_generator_version" {

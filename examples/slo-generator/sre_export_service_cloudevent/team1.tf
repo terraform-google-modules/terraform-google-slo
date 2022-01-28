@@ -39,7 +39,7 @@ module "slo-generator" {
   service_account_email = google_service_account.team1_service_account.email
   secrets = {
     TEAM1_PROJECT_ID = var.team1_project_id
-    SRE_SERVICE_URL = module.slo-generator-export.service_url
+    SRE_SERVICE_URL  = module.slo-generator-export.service_url
     MIN_VALID_EVENTS = 0
   }
 }
