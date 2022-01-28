@@ -13,6 +13,8 @@
 # limitations under the License.
 
 ---
+default_exporters: [bigquery/sre, cloud_monitoring/sre]
+
 backends:
   cloud_monitoring/sre:
     project_id: ${SRE_PROJECT_ID}
@@ -22,15 +24,12 @@ backends:
 exporters:
   bigquery/sre:
     project_id: ${SRE_PROJECT_ID}
-    dataset_id: slo_reports
+    dataset_id: ${SRE_BIGQUERY_DATASET_ID}
     table_id: report
   cloud_monitoring/sre:
     project_id: ${SRE_PROJECT_ID}
-  cloud_monitoring/team1:
-    project_id: ${TEAM1_PROJECT_ID}
-  pubsub/sre:
-    project_id: ${SRE_PROJECT_ID}
-    topic_name: ${SRE_PUBSUB_TOPIC_NAME}
+  cloud_monitoring/team2:
+    project_id: ${TEAM2_PROJECT_ID}
 
 error_budget_policies:
   default:

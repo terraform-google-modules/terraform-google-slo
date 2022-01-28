@@ -28,9 +28,7 @@ spec:
   backend: cloud_monitoring
   method: good_bad_ratio
   exporters:
-  - cloud_monitoring/sre
-  - bigquery/sre
-  - pubsub/sre
+  - cloud_monitoring/team1
   service_level_indicator:
     filter_good: >
       project="${TEAM1_PROJECT_ID}"

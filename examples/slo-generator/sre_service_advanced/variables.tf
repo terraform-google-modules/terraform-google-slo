@@ -55,3 +55,7 @@ variable "team1_project_id" {
 variable "team2_project_id" {
   description = "Team 2 project id"
 }
+
+variable "slo_generator_version" {
+  description = "slo-generator image version"
+}
