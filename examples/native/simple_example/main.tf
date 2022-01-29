@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.19"
-}
-
-provider "google-beta" {
-  version = "~> 3.19"
-}
-
 module "slo_basic" {
   source = "../../../modules/slo-native"
   config = {

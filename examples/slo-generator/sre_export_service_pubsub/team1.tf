@@ -17,8 +17,8 @@
 locals {
   config = yamldecode(file("${path.module}/configs/config.yaml"))
   slo_configs = [
-    for cfg in fileset(path.module, "/configs/slo_*.yaml") :
-    yamldecode(file(cfg))
+    for cfg_path in fileset(path.module, "/configs/slo_*.yaml") :
+    yamldecode(file("${path.module}/${cfg_path}"))
   ]
 }
 

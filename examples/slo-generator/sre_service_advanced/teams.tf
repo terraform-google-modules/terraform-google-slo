@@ -17,12 +17,12 @@
 locals {
   team1_config = yamldecode(file("${path.module}/configs/team1/config.yaml"))
   team1_configs = [
-    for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
-    yamldecode(file(cfg))
+    for cfg_path in fileset(path.module, "/configs/team1/slo_*.yaml") :
+    yamldecode(file("${path.module}/${cfg_path}"))
   ]
   team2_configs = [
-    for cfg in fileset(path.module, "/configs/team2/slo_*.yaml") :
-    yamldecode(file(cfg))
+    for cfg_path in fileset(path.module, "/configs/team2/slo_*.yaml") :
+    yamldecode(file("${path.module}/${cfg_path}"))
   ]
 }
 
