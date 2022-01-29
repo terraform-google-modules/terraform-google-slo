@@ -10,7 +10,7 @@ locals {
   ]
 }
 
-# Team 1 computes their own SLOs, and sets up an exporter to SRE's BigQuery 
+# Team 1 computes their own SLOs, and sets up an exporter to SRE's BigQuery
 # dataset.
 module "team1-slos" {
   source                = "../../../modules/slo-generator"
@@ -27,7 +27,7 @@ module "team1-slos" {
   }
 }
 
-# Team 2 manages a GCS bucket with their SLO configs, but wants to use 
+# Team 2 manages a GCS bucket with their SLO configs, but wants to use
 # SRE-as-a-service.
 module "team2-slos" {
   source         = "../../../modules/slo-generator"

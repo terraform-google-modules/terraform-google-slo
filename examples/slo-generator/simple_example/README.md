@@ -1,6 +1,6 @@
 # Simple Example
 
-This example illustrates how to use the `slo-generator` module, with a simple 
+This example illustrates how to use the `slo-generator` module, with a simple
 config (backend is Cloud Monitoring, and exporter is also Cloud Monitoring).
 
 ## Prerequisites
