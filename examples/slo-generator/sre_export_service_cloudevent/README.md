@@ -4,7 +4,7 @@ This example illustrates how to use the `slo-generator` module, when the run
 model is as follow:
 
 - **SRE team** runs the `slo-generator` as-a-service for exporting SLO report **only** (no compute).
-- **Team 1** want freedom to compute their SLOs; they want to run their own 
+- **Team 1** want freedom to compute their SLOs; they want to run their own
 `slo-generator` service on Cloud Run, and export only the SLOs they care about.
 They use the SRE team export service so that SRE team can get an overview on all
 SLOs.

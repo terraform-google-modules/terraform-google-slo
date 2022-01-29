@@ -44,6 +44,19 @@ module "slo-generator" {
   ]
 }
 
+# BigQuery dataset to export SLOs to
+resource "google_bigquery_dataset" "export-dataset" {
+  project       = var.project_id
+  dataset_id    = var.bigquery_dataset_name
+  friendly_name = "slos"
+  description   = "SLO Reports"
+  location      = "EU"
+  access {
+    role          = "OWNER"
+    user_by_email = local.service_account_email
+  }
+}
+
 # SRE SA for slo-generator service
 resource "google_service_account" "service_account" {
   project      = var.project_id
