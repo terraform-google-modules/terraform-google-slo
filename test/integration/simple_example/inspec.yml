@@ -10,7 +10,3 @@ attributes:
   - name: project_id
     required: true
     type: string
-
-  - name: slo-generator
-    required: false
-    type: hash
