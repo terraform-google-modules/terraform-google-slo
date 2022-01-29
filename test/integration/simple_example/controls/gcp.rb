@@ -15,7 +15,7 @@
 control "gcp" do
   title "GCP Resources"
 
-  describe google_storage_bucket(name: slo_generator[:bucket_name]) do
+  describe google_storage_bucket(name: attribute[:bucket_name]) do
     it { should exist }
   end
 end
