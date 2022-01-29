@@ -17,7 +17,7 @@
 locals {
   service_account_email = google_service_account.service_account.email
   sre_config            = yamldecode(file("${path.module}/configs/sre/config.yaml"))
-  sre_slo_configs       = [
+  sre_slo_configs = [
     for cfg in fileset(path.module, "/configs/sre/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
@@ -53,9 +53,9 @@ resource "google_service_account" "service_account" {
 
 # SRE SA service account needs to be able to read GCS configs in team2's GCS bucket
 resource "google_storage_bucket_iam_member" "storage-admin" {
-  bucket  = module.team2-slos.bucket_name
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${local.service_account_email}"
+  bucket = module.team2-slos.bucket_name
+  role   = "roles/storage.admin"
+  member = "serviceAccount:${local.service_account_email}"
 }
 
 # SRE SA needs to read metrics from Cloud Ops workspace in team2's project

@@ -28,13 +28,13 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | `string` | `"slos"` | no |
-| labels | Project labels | `map` | `{}` | no |
+| bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | `string` | `"slo"` | no |
+| gcr\_project\_id | Google Container registry project where image is hosted | `string` | `"slo-generator-ci-a2b4"` | no |
 | project\_id | SRE Project id | `any` | n/a | yes |
 | pubsub\_topic\_name | PubSub topic name | `string` | `"slo-export"` | no |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
-| secrets | SLO Generator secrets | `map` | `{}` | no |
+| slo\_generator\_version | slo-generator image version | `any` | n/a | yes |
 | team1\_project\_id | Team 1 project id | `any` | n/a | yes |
 | team2\_project\_id | Team 2 project id | `any` | n/a | yes |
 

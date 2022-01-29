@@ -1,5 +1,5 @@
 locals {
-  team1_config  = yamldecode(file("${path.module}/configs/team1/config.yaml"))
+  team1_config = yamldecode(file("${path.module}/configs/team1/config.yaml"))
   team1_configs = [
     for cfg in fileset(path.module, "/configs/team1/slo_*.yaml") :
     yamldecode(file(cfg))
@@ -21,6 +21,7 @@ module "team1-slos" {
   gcr_project_id        = var.team1_project_id
   slo_generator_version = var.slo_generator_version
   secrets = {
+    SRE_PROJECT_ID          = var.project_id
     SRE_BIGQUERY_DATASET_ID = google_bigquery_dataset.export-dataset.dataset_id
     PROJECT_ID              = var.team1_project_id
   }
