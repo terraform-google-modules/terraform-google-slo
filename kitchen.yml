@@ -38,7 +38,3 @@ suites:
           controls:
             - gcloud
             - gsutil
-        - name: simple_example gcp
-          backend: gcp
-          controls:
-            - gcp
