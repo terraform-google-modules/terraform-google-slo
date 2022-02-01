@@ -53,4 +53,5 @@ variable "bigquery_dataset_name" {
 
 variable "slo_generator_version" {
   description = "slo-generator image version"
+  default     = "latest"
 }

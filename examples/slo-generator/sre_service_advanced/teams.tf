@@ -34,7 +34,7 @@ module "team1-slos" {
   region                = var.region
   config                = local.team1_config
   slo_configs           = local.team1_configs
-  gcr_project_id        = var.team1_project_id
+  gcr_project_id        = var.gcr_project_id
   slo_generator_version = var.slo_generator_version
   secrets = {
     SRE_PROJECT_ID          = var.project_id
