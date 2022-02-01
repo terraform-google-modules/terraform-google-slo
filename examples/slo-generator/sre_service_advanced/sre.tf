@@ -55,6 +55,10 @@ resource "google_bigquery_dataset" "export-dataset" {
     role          = "OWNER"
     user_by_email = local.service_account_email
   }
+  access {
+    role          = "roles/bigquery.dataEditor"
+    user_by_email = module.team1-slos.service_account_email
+  }
 }
 
 # SRE SA for slo-generator service
@@ -83,12 +87,4 @@ resource "google_project_iam_member" "monitoring-metric-writer" {
   project = var.team2_project_id
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${local.service_account_email}"
-}
-
-# Team2 SA needs to write data to BigQuery table in SRE project
-resource "google_bigquery_dataset_iam_member" "member" {
-  project    = var.project_id
-  dataset_id = google_bigquery_dataset.export-dataset.dataset_id
-  role       = "roles/bigquery.dataEditor"
-  member     = "serviceAccount:${module.team1-slos.service_account_email}"
 }
