@@ -22,7 +22,7 @@ exporters:
   bigquery/sre:
     project_id: ${SRE_PROJECT_ID}
     dataset_id: ${SRE_BIGQUERY_DATASET_ID}
-    table_id: reports
+    table_id: report
   cloud_monitoring:
     project_id: ${PROJECT_ID}
 
