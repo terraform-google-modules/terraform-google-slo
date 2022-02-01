@@ -49,4 +49,6 @@ crash.log
 modules/**/*.json
 
 credentials.json
-TODO.md
+
+# tf lock file
+.terraform.lock.hcl
