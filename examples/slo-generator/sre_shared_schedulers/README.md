@@ -1,11 +1,11 @@
 # SRE - Shared Cloud Schedulers
 
 This example illustrates how to use the `slo-generator` module, with a simple
-config (backend is Cloud Monitoring, and exporter is also Cloud Monitoring), 
+config (backend is Cloud Monitoring, and exporter is also Cloud Monitoring),
 using shared Cloud Schedulers to diminish the costs associated with running
 one scheduler per SLO.
 
-This example uses the `slo-generator` api "batch mode", which re-distribute a 
+This example uses the `slo-generator` api "batch mode", which re-distribute a
 shared load coming from a Cloud Scheduler.
 
 

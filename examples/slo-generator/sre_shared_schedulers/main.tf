@@ -21,18 +21,18 @@ locals {
     yamldecode(file("${path.module}/${cfg_path}"))
   ]
   freqs = {
-    "every-minute": "* * * * *",
-    "every-5-minutes": "*/5 * * * *",
-    "every-20-minutes": "*/20 * * * *"
+    "every-minute" : "* * * * *",
+    "every-5-minutes" : "*/5 * * * *",
+    "every-20-minutes" : "*/20 * * * *"
   }
   frequencies = {
     for name, value in local.freqs :
-    name => {frequency: value, names: [for config in local.slo_configs : config.metadata.name if config.spec.frequency == value]}
+    name => { frequency : value, names : [for config in local.slo_configs : config.metadata.name if config.spec.frequency == value] }
   }
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  for_each = { for key, conf in local.frequencies: key => conf if conf.names != [] }
+  for_each = { for key, conf in local.frequencies : key => conf if conf.names != [] }
   project  = var.project_id
   region   = var.region
   schedule = each.value.frequency
