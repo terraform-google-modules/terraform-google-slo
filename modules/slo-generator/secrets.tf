@@ -44,4 +44,3 @@ resource "google_secret_manager_secret_version" "secret-version-data" {
   secret_data = var.secrets[each.key]
 }
 
-
