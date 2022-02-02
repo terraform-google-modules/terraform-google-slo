@@ -29,6 +29,7 @@ locals {
     for name, value in local.freqs :
     name => { frequency : value, names : [for config in local.slo_configs : config.metadata.name if config.spec.frequency == value] }
   }
+  pubsub_sa_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
@@ -58,6 +59,37 @@ module "slo-generator" {
   gcr_project_id          = var.gcr_project_id
   create_cloud_schedulers = false
   secrets = {
-    PROJECT_ID = var.project_id
+    PROJECT_ID        = var.project_id
+    PUBSUB_TOPIC_NAME = google_pubsub_topic.batch.name
   }
+  authorized_members = [
+    "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  ]
+}
+
+data "google_project" "project" {
+  project_id = var.project_id
+}
+
+resource "google_pubsub_topic" "batch" {
+  name    = "slo-batch"
+  project = var.project_id
+}
+
+resource "google_pubsub_subscription" "batch" {
+  project = var.project_id
+  name    = "slo-batch"
+  topic   = google_pubsub_topic.batch.id
+  push_config {
+    push_endpoint = module.slo-generator.service_url
+    oidc_token {
+      service_account_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+    }
+  }
+}
+
+resource "google_project_iam_member" "pubsub-sa-token-creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:service-${data.google_project.project.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }

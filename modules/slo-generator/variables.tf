@@ -79,9 +79,15 @@ variable "service_account_email" {
   default     = ""
 }
 
-variable "mode" {
-  description = "SLO Generator API mode"
-  default     = "compute" # "export" is possible
+variable "signature_type" {
+  description = "Functions Framework signature type, between 'http' and 'cloudevent'. In 'cloudevent' mode the POST request data needs to be warpped in a Cloud Event."
+  type        = string
+  default     = "http"
+}
+
+variable "target" {
+  description = "Functions Framework target, between 'run_compute' and 'run_export'. If `run_compute`, the API accepts SLO configs as input, if 'run_export' the API accepts SLO reports as input."
+  default     = "run_compute" # "run_export" is possible
 }
 
 variable "schedule" {

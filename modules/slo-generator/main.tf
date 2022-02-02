@@ -15,7 +15,6 @@
  */
 
 locals {
-  signature_type        = var.mode == "compute" ? "http" : "cloudevent"
   service_account_email = var.service_account_email == "" ? "${data.google_project.project.number}-compute@developer.gserviceaccount.com" : var.service_account_email
   bucket_name           = var.bucket_name != "" ? var.bucket_name : "slo-generator-${random_id.suffix.hex}"
   service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status.*.url) : var.service_url
@@ -72,13 +71,13 @@ resource "google_cloud_run_service" "service" {
 
   metadata {
     annotations = {
-      "run.googleapis.com/launch-stage" = "BETA"
+      "run.googleapis.com/ingress" = "all"
     }
   }
 
   template {
     metadata {
-      annotations = var.annotations
+      annotations = merge(var.annotations, { "autoscaling.knative.dev/maxScale" = "100" })
       labels      = var.labels
     }
     spec {
@@ -88,8 +87,8 @@ resource "google_cloud_run_service" "service" {
         command = ["slo-generator"]
         args = [
           "api",
-          "--signature-type=${local.signature_type}",
-          "--target=run_${var.mode}"
+          "--signature-type=${var.signature_type}",
+          "--target=${var.target}"
         ]
         env {
           name  = "CONFIG_PATH"

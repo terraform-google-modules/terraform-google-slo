@@ -28,7 +28,8 @@ resource "google_service_account" "sre_service_account" {
 module "slo-generator-export" {
   source                = "../../../modules/slo-generator"
   service_name          = "slo-generator-export"
-  mode                  = "export"
+  target                = "run_export"
+  signature_type        = "cloudevent"
   project_id            = var.project_id
   region                = var.region
   config                = local.sre_config

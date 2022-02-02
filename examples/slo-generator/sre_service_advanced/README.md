@@ -4,7 +4,7 @@ This example illustrates how to use the `slo-generator` module, when the run
 model is as follow:
 
 - **SRE team** runs the `slo-generator` as-a-service; they put it to disposition for application teams to use on request.
-- **Team 1** want freedom to compute their SLOs; they want to run their own `slo-generator` service on Cloud Run, and export only the SLOs they care about.
+- **Team 1** want freedom to compute their SLOs; they want to run their own `slo-generator` service on Cloud Run, and export only the SLOs they care about to the shared BigQuery dataset owned by SRE.
 - **Team 2** does not want to bother running their own service; they want to use the SRE team's service.
 
 ![Architecture](./arch.png)
