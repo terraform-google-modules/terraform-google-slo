@@ -38,7 +38,7 @@ to convert your SLO configurations to the new format.
 
 1. Create a new Terraform config. It is easier to re-create a Terraform config
 from scratch by following one the [examples](../examples). The closest example
-from the `slo` + `slo-piplein` setup can be found in the [sre_export_cloudevent_exporter](../examples/sre_export_cloudevent_exporter)
+from the `slo` + `slo-pipeline` setup can be found in the [sre_export_cloudevent_exporter](../examples/sre_export_cloudevent_exporter)
 example.
 
 2. Backup your BigQuery data into Cloud Storage as a JSON, see [here](https://cloud.google.com/bigquery/docs/exporting-data#exporting_data_stored_in)
