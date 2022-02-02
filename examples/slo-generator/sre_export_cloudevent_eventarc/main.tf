@@ -15,7 +15,26 @@
  */
 
 locals {
+  config        = yamldecode(file("${path.module}/configs/config.yaml"))
   config_export = yamldecode(file("${path.module}/configs/config_export.yaml"))
+  slo_configs = [
+    for cfg_path in fileset(path.module, "/configs/slo_*.yaml") :
+    yamldecode(file("${path.module}/${cfg_path}"))
+  ]
+}
+
+module "slo-generator" {
+  source                = "../../../modules/slo-generator"
+  project_id            = var.project_id
+  region                = var.region
+  config                = local.config
+  slo_configs           = local.slo_configs
+  slo_generator_version = var.slo_generator_version
+  gcr_project_id        = var.gcr_project_id
+  secrets = {
+    PROJECT_ID        = var.project_id
+    PUBSUB_TOPIC_NAME = google_pubsub_topic.topic.name
+  }
 }
 
 module "slo-generator-export" {
