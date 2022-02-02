@@ -47,4 +47,4 @@ example.
 
 4. Run `terraform destroy` on the old Terraform config.
 
-5. Import the existing data into the new BigQuery dataset.
+5. Import the existing JSON data into the new BigQuery dataset, see [here](https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json).
