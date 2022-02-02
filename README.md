@@ -74,9 +74,9 @@ Deploy the SLO generator service with some SLO configs:
 
 ```hcl
 locals {
-  config = yamldecode(file("templates/config.yaml"))
+  config = yamldecode(file("configs/config.yaml"))
   slo_configs = [
-    for cfg in fileset(path.module, "/templates/slo_*.yaml") :
+    for cfg in fileset(path.module, "/configs/slo_*.yaml") :
     yamldecode(file(cfg))
   ]
 }
@@ -93,9 +93,7 @@ For information on the config formats, please refer to the `slo-generator` docum
 * [slo-generator config](https://github.com/google/slo-generator#shared-configuration)
 * [SLO config](https://github.com/google/slo-generator#slo-configuration)
 
-See [`examples/slo-generator/simple_example`](./examples/slo-generator/simple_example) for a complete example.
-
-See [`examples/slo-generator/sre_service_advanced`](./examples/slo-generator/sre_service_advanced) for a real-world organizational example, where the application teams deploy their SLOs using the `slo-generator` service deployed by an SRE team.
+See [`examples/slo-generator/`](./examples/slo-generator/) for more examples with different setups.
 
 ## Contributing
 

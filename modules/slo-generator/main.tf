@@ -54,9 +54,10 @@ resource "google_cloud_scheduler_job" "scheduler" {
   http_target {
     oidc_token {
       service_account_email = local.service_account_email
+      audience              = local.service_url
     }
     http_method = "POST"
-    uri         = local.service_url
+    uri         = "${local.service_url}/"
     body        = base64encode("gs://${local.bucket_name}/slos/${each.key}.yaml")
   }
 }

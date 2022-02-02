@@ -57,7 +57,7 @@ resource "google_bigquery_dataset" "export-dataset" {
     user_by_email = local.service_account_email
   }
   access {
-    role          = "roles/bigquery.dataEditor"
+    role          = "WRITER"
     user_by_email = module.team1-slos.service_account_email
   }
 }
