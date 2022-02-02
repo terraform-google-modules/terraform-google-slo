@@ -34,7 +34,7 @@ To run this example, you'll need:
 | pubsub\_topic\_name | PubSub topic name | `string` | `"slo-export"` | no |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
-| slo\_generator\_version | slo-generator image version | `any` | n/a | yes |
+| slo\_generator\_version | slo-generator image version | `string` | `"latest"` | no |
 | team1\_project\_id | Team 1 project id | `any` | n/a | yes |
 | team2\_project\_id | Team 2 project id | `any` | n/a | yes |
 
@@ -44,6 +44,8 @@ To run this example, you'll need:
 |------|-------------|
 | service\_account\_email | n/a |
 | slo-generator | n/a |
+| team1-slos | n/a |
+| team2-slos | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
