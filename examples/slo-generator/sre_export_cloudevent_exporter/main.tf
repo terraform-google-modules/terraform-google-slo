@@ -73,11 +73,12 @@ module "slo-generator-export" {
 }
 
 resource "google_bigquery_dataset" "export-dataset" {
-  project       = var.project_id
-  dataset_id    = "slos"
-  friendly_name = "slos"
-  description   = "SLO Reports"
-  location      = "EU"
+  project                    = var.project_id
+  dataset_id                 = "slos"
+  friendly_name              = "slos"
+  description                = "SLO Reports"
+  location                   = "EU"
+  delete_contents_on_destroy = true
   access {
     role          = "OWNER"
     user_by_email = local.service_account_email
