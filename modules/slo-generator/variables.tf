@@ -18,11 +18,6 @@ variable "project_id" {
   description = "Project id"
 }
 
-variable "gcr_project_id" {
-  description = "GCR Project id"
-  default     = "slo-generator-ci-a2b4"
-}
-
 variable "region" {
   description = "GCP region"
   default     = "europe-west1"
@@ -33,25 +28,57 @@ variable "config" {
   default     = {}
 }
 
+variable "slo_configs" {
+  description = "slo-generator SLO configs"
+  default     = []
+}
+
+variable "gcr_project_id" {
+  description = "slo-generator image project id"
+  default     = "slo-generator-ci-a2b4"
+}
+
 variable "slo_generator_version" {
-  description = "slo-generator version to deploy"
+  description = "slo-generator container image version"
   default     = "latest"
 }
 
 variable "service_name" {
-  description = "slo-generator service name"
+  description = "Cloud Run service name"
   default     = "slo-generator"
 }
 
 variable "service_url" {
-  description = "slo-generator service URL. Will be created if empty."
+  description = "Cloud Run service URL. Will be created if empty."
   default     = ""
 }
 
-variable "exporters" {
-  description = "slo-generator shared exporters"
-  type        = map(any)
+variable "annotations" {
+  description = "Cloud Run service annotations (see https://cloud.google.com/run/docs/reference/rest/v1/RevisionTemplate)"
   default     = {}
+}
+
+variable "ingress" {
+  description = "Cloud Run service ingress settings, between 'all', 'internal', 'internal-and-cloud-load-balancing', see https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress"
+  default     = "all"
+}
+
+variable "requests" {
+  description = "Cloud Run service resources.requests configuration"
+  default     = {}
+}
+
+variable "limits" {
+  description = "Cloud Run service resources.limits configuration"
+  default = {
+    cpu    = "1000m"
+    memory = "512Mi"
+  }
+}
+
+variable "concurrency" {
+  description = "Cloud Run service concurrency (number of threads per container instance)"
+  default     = 80
 }
 
 variable "bucket_name" {
@@ -60,18 +87,13 @@ variable "bucket_name" {
 }
 
 variable "env" {
-  description = "slo-generator env variables"
+  description = "Cloud Run service env variables"
   default     = {}
 }
 
 variable "secrets" {
-  description = "slo-generator secrets"
+  description = "Cloud Run service secrets"
   default     = {}
-}
-
-variable "slo_configs" {
-  description = "slo-generator SLO configs"
-  default     = []
 }
 
 variable "service_account_email" {
@@ -117,11 +139,6 @@ variable "authorized_members" {
   default     = []
 }
 
-variable "annotations" {
-  description = "Cloud Run service annotations (see https://cloud.google.com/run/docs/reference/rest/v1/RevisionTemplate)"
-  default     = {}
-}
-
 variable "additional_project_roles" {
   description = "Additional roles to grant to service account in project"
   default     = []
@@ -135,27 +152,4 @@ variable "create_iam_roles" {
 variable "create_service" {
   description = "Create service"
   default     = true
-}
-
-variable "ingress" {
-  description = "Ingress settings, between 'all', 'internal', 'internal-and-cloud-load-balancing', see https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress"
-  default     = "all"
-}
-
-variable "requests" {
-  description = "Cloud Run container resources.requests configuration"
-  default     = {}
-}
-
-variable "limits" {
-  description = "Cloud Run container resources.limits configuration"
-  default     = {
-    cpu    = "1000m"
-    memory = "512Mi"
-  }
-}
-
-variable "concurrency" {
-  description = "Container concurrency (number of threads per container instance)"
-  default     = 80
 }
