@@ -18,7 +18,10 @@ locals {
   service_account_email = var.service_account_email == "" ? "${data.google_project.project.number}-compute@developer.gserviceaccount.com" : var.service_account_email
   bucket_name           = var.bucket_name != "" ? var.bucket_name : "slo-generator-${random_id.suffix.hex}"
   service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status.*.url) : var.service_url
-  default_annotations   = { "autoscaling.knative.dev/maxScale" = "100" }
+  default_annotations = {
+    "autoscaling.knative.dev/minScale" = "1"
+    "autoscaling.knative.dev/maxScale" = "100"
+  }
 }
 
 resource "random_id" "suffix" {
@@ -73,7 +76,7 @@ resource "google_cloud_run_service" "service" {
 
   metadata {
     annotations = {
-      "run.googleapis.com/ingress" = "all"
+      "run.googleapis.com/ingress" = var.ingress
     }
   }
 
@@ -83,7 +86,8 @@ resource "google_cloud_run_service" "service" {
       labels      = var.labels
     }
     spec {
-      service_account_name = local.service_account_email
+      service_account_name  = local.service_account_email
+      container_concurrency = var.concurrency
       containers {
         image   = "gcr.io/${var.gcr_project_id}/slo-generator:${var.slo_generator_version}"
         command = ["slo-generator"]
@@ -114,6 +118,10 @@ resource "google_cloud_run_service" "service" {
               }
             }
           }
+        }
+        resources {
+          requests = var.requests
+          limits   = var.limits
         }
       }
     }

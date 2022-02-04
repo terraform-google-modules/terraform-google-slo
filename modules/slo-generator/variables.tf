@@ -119,9 +119,7 @@ variable "authorized_members" {
 
 variable "annotations" {
   description = "Cloud Run service annotations (see https://cloud.google.com/run/docs/reference/rest/v1/RevisionTemplate)"
-  default = {
-    "autoscaling.knative.dev/minScale" = "1"
-  }
+  default     = {}
 }
 
 variable "additional_project_roles" {
@@ -137,4 +135,27 @@ variable "create_iam_roles" {
 variable "create_service" {
   description = "Create service"
   default     = true
+}
+
+variable "ingress" {
+  description = "Ingress settings, between 'all', 'internal', 'internal-and-cloud-load-balancing', see https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress"
+  default     = "all"
+}
+
+variable "requests" {
+  description = "Cloud Run container resources.requests configuration"
+  default     = {}
+}
+
+variable "limits" {
+  description = "Cloud Run container resources.limits configuration"
+  default     = {
+    cpu    = "1000m"
+    memory = "512Mi"
+  }
+}
+
+variable "concurrency" {
+  description = "Container concurrency (number of threads per container instance)"
+  default     = 80
 }
