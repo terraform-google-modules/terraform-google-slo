@@ -7,6 +7,22 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0](https://github.com/terraform-google-modules/terraform-google-slo/compare/v2.1.0...v3.0.0) (2022-03-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* deprecate slo and slo-pipeline module for Cloud Functions, add slo-generator module on Cloud Run
+
+### Features
+
+* deprecate slo and slo-pipeline module for Cloud Functions, add slo-generator module on Cloud Run ([fd65f49](https://github.com/terraform-google-modules/terraform-google-slo/commit/fd65f4916c80a3ec872a1c7eb99546de7028d094))
+
+
+### Bug Fixes
+
+* add name output to slo-native module ([a5acdf9](https://github.com/terraform-google-modules/terraform-google-slo/commit/a5acdf93af9154c44d90cac7dee42d003c38eda1))
+
 ## [2.1.0](https://www.github.com/terraform-google-modules/terraform-google-slo/compare/v2.0.0...v2.1.0) (2021-12-06)
 
 
