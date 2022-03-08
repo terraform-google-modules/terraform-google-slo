@@ -1,11 +1,7 @@
 # Simple Example
 
-This example illustrates how to use the `slo` module.
-
-The example will create the following resources:
-
-- An [SLO pipeline](../../modules/slo-pipeline) that export SLO results to BigQuery, Stackdriver Monitoring
-- A sample [SLO](../../modules/slo) that computes the number of exported Pub/Sub messages over the total number of Pub/Sub messages
+This example illustrates how to use the `slo-generator` module, with a simple
+config (backend is Cloud Monitoring, and exporter is also Cloud Monitoring).
 
 ## Prerequisites
 
@@ -20,19 +16,18 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bq\_location | Location of BQ dataset | `string` | `"US"` | no |
+| gcr\_project\_id | Google Container registry project where image is hosted | `string` | `"slo-generator-ci-a2b4"` | no |
 | labels | Project labels | `map` | `{}` | no |
 | project\_id | Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
 | schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
-| stackdriver\_host\_project\_id | Stackdriver host project id | `any` | n/a | yes |
+| slo\_generator\_version | SLO generator version | `string` | `"latest"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| slo | SLO outputs |
-| slo\_pipeline | SLO pipeline outputs |
+| slo-generator | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

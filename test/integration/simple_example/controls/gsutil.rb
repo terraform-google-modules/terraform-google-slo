@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-slo_pipeline = attribute('slo_pipeline')
-
 control "gsutil" do
   title "gsutil"
 
   describe command("gsutil ls -p #{attribute("project_id")}") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq "" }
-    its(:stdout) { should match "gs://#{slo_pipeline["function_bucket_name"]}" }
+    # its(:stdout) { should match "gs://#{attribute["bucket_name"]}" }
   end
 end

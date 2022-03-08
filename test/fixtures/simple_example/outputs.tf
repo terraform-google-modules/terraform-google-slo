@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-output "slo_pipeline" {
-  description = "SLO pipeline outputs"
-  value       = module.example.slo_pipeline
-}
-
-output "slo" {
-  description = "SLO outputs"
-  value       = module.example.slo
+output "slo-generator" {
+  description = "SLO Generator outputs"
+  value       = module.example.slo-generator
 }
 
 output "project_id" {

@@ -1,0 +1,51 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+default_exporters: [cloud_monitoring]
+
+backends:
+  cloud_monitoring:
+    project_id: ${PROJECT_ID}
+
+exporters:
+  cloud_monitoring:
+    project_id: ${PROJECT_ID}
+
+error_budget_policies:
+  default:
+    steps:
+    - name: 1h
+      burn_rate_threshold: 9
+      alert: true
+      message_alert: Page to defend the SLO
+      message_ok: Last hour on track
+      window: 3600
+    - name: 12h
+      burn_rate_threshold: 3
+      alert: true
+      message_alert: Page to defend the SLO
+      message_ok: Last 12 hours on track
+      window: 43200
+    - name: 7d
+      burn_rate_threshold: 1.5
+      alert: false
+      message_alert: Dev team dedicates 25% of engineers to the reliability backlog
+      message_ok: Last week on track
+      window: 604800
+    - name: 28d
+      burn_rate_threshold: 1
+      alert: false
+      message_alert: Freeze release, unless related to reliability or security
+      message_ok: Unfreeze release, per the agreed roll-out policy
+      window: 2419200

@@ -1,0 +1,41 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+apiVersion: sre.google.com/v2
+kind: ServiceLevelObjective
+metadata:
+  name: generator-gcf-errors
+  labels:
+    service_name: generator
+    feature_name: gcf
+    slo_name: errors
+    team: team2
+    env: test
+spec:
+  goal: 0.99
+  description: Less than 0.01% of errors in Cloud Functions logs
+  backend: cloud_monitoring/team2
+  method: good_bad_ratio
+  exporters:
+  - cloud_monitoring/team2
+  service_level_indicator:
+    filter_good: >
+      project="${TEAM2_PROJECT_ID}"
+      metric.type="cloudfunctions.googleapis.com/function/execution_count"
+      resource.type="cloud_function"
+      metric.label."status"="ok"
+    filter_valid: >
+      project="${TEAM2_PROJECT_ID}"
+      metric.type="cloudfunctions.googleapis.com/function/execution_count"
+      resource.type="cloud_function"

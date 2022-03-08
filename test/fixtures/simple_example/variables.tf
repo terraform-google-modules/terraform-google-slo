@@ -17,22 +17,3 @@
 variable "project_id" {
   description = "Project id"
 }
-
-variable "stackdriver_host_project_id" {
-  description = "Stackdriver host project id"
-}
-
-variable "schedule" {
-  description = "Cron-like Cloud Scheduler schedule"
-  default     = "* * * * */1"
-}
-
-variable "region" {
-  description = "Region"
-  default     = "us-east1"
-}
-
-variable "labels" {
-  description = "Project labels"
-  default     = {}
-}

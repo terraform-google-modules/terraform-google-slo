@@ -21,34 +21,6 @@ depends:
 
 attributes:
 
-  - name: function_name
-    required: true
-    type: string
-
-  - name: bucket_name
-    required: true
-    type: string
-
   - name: project_id
     required: true
     type: string
-
-  - name: stackdriver_host_project_id
-    required: true
-    type: string
-
-  - name: schedule
-    required: false
-    type: string
-
-  - name: region
-    required: false
-    type: string
-
-  - name: labels
-    required: false
-    type: string
-
-  - name: slo_pipeline
-    required: true
-    type: hash

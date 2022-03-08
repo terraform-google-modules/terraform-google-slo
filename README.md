@@ -45,30 +45,21 @@ module "slo_basic" {
 A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/native/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
 
 ## SLO generator (any monitoring backend)
-The [`slo-pipeline`](./modules/slo-pipeline) and [`slo`] modules deploy the [`slo-generator`](https://github.com/GoogleCloudPlatform/professional-services/tree/master/tools/slo-generator)
-in Cloud Functions in order to compute and export SLOs on a schedule.
+The [`slo-generator`](./modules/slo-generator) module deploys the [`slo-generator`](https://github.com/google/slo-generator/blob/master/README.md)
+in Cloud Run in order to compute and export SLOs on a schedule.
+
+SLO Configurations are pushed to Google Cloud Storage, and schedules are maintained using Google Cloud Schedulers.
 
 **Use this setup if:**
 - You are using other metrics backends than Cloud Monitoring that you want to create SLOs out of (e.g: Elastic, Datadog, Prometheus, ...).
 
 - You want to have custom reporting and exporting for your SLO data, along with historical data (e.g: BigQuery, DataStudio, custom metrics).
 
-- You want to have a common configuration format for all SLOs (see [documentation](https://github.com/google/slo-generator/README.md#configuration)).
+- You want to have a common configuration format for all SLOs (see [documentation](https://github.com/google/slo-generator/blob/master/README.md)).
 
 ### Architecture
 
-![Architecture](./diagram.png)
-
-This architecture requires two submodules:
-
-* `slo`: This submodule deploys the infrastructure needed to compute SLO reports
-for **one** SLO. Users should use **one invocation of this submodule by SLO defined**.
-Once the SLO report is computed, the result is fed to the shared Pub/Sub topic
-created by the `slo-pipeline` module.
-
-* `slo-pipeline`: This submodule handles **exporting** SLO reports to different
-destinations (Cloud Pub/Sub, BigQuery, Cloud Monitoring). The infrastructure is
-shared by all SLOs and a Pub/Sub topic created as input stream for SLO reports.
+![Architecture](./arch.png)
 
 ### Compatibility
 This module is meant for use with Terraform 0.13+ and tested using Terraform 1.0+. If you find incompatibilities using Terraform >=0.13, please open an issue.
@@ -79,88 +70,30 @@ intended for Terraform 0.12.x is [v1.0.2](https://registry.terraform.io/modules/
 
 ### Usage
 
-First, deploy the SLO export pipeline (shared module):
-
-```hcl
-module "slo-pipeline" {
-  source                      = "terraform-google-modules/slo/google//modules/slo-pipeline"
-  function_name               = "slo-pipeline"
-  region                      = "us-east"
-  project_id                  = "test-project"
-  exporters = [
-    {
-      class      = "Stackdriver"
-      project_id = var.stackdriver_host_project_id
-    },
-    {
-      class                      = "Bigquery"
-      project_id                 = "test-project"
-      dataset_id                 = "slo"
-      table_id                   = "reports"
-      location                   = "EU"
-      delete_contents_on_destroy = true
-    }
-  ]
-}
-```
-
-Now, deploy an SLO definition:
-
-### HCL format
-```hcl
-module "slo" {
-  source     = "terraform-google-modules/slo/google//modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
-  config = {
-    slo_name        = "pubsub-ack"
-    slo_target      = "0.9"
-    slo_description = "Acked Pub/Sub messages over total number of Pub/Sub messages"
-    service_name    = "svc"
-    feature_name    = "pubsub"
-    backend = {
-      class       = "Stackdriver"
-      method      = "good_bad_ratio"
-      project_id  = var.stackdriver_host_project_id
-      measurement = {
-        filter_good = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/ack_message_count\""
-        filter_bad  = "project=\"${module.slo-pipeline.project_id}\" AND metric.type=\"pubsub.googleapis.com/subscription/num_outstanding_messages\""
-      }
-    }
-    exporters = [
-      {
-        class      = "Pubsub"
-        project_id = module.slo-pipeline.project_id
-        topic_name = module.slo-pipeline.pubsub_topic_name
-      }
-    ]
-  }
-}
-```
-
-#### YAML format
+Deploy the SLO generator service with some SLO configs:
 
 ```hcl
 locals {
-  config = yamldecode(file("configs/my_slo_config.yaml"))
+  config = yamldecode(file("configs/config.yaml"))
+  slo_configs = [
+    for cfg in fileset(path.module, "/configs/slo_*.yaml") :
+    yamldecode(file(cfg))
+  ]
 }
 
-module "slo" {
-  source     = "terraform-google-modules/slo/google//modules/slo"
-  schedule   = var.schedule
-  region     = var.region
-  project_id = var.project_id
-  labels     = var.labels
-  config     = local.config
+module "slo-generator" {
+  source = "terraform-google-modules/slo/google//modules/slo-generator"
+  project_id  = "<PROJECT_ID>"
+  config      = local.config
+  slo_configs = local.slo_configs
 }
 ```
-A standard SRE practice is to write SLO definitions as YAML files, and follow DRY principles. See [`examples/slo-generator/yaml_example`](./examples/slo-generator/yaml_example) for an example of how to write re-usable YAML templates loaded into Terraform.
 
+For information on the config formats, please refer to the `slo-generator` documentation:
+* [slo-generator config](https://github.com/google/slo-generator#shared-configuration)
+* [SLO config](https://github.com/google/slo-generator#slo-configuration)
 
-Additional information, including description of the Inputs / Outputs is
-available in [`modules/slo-pipeline/README.md`](./modules/slo-pipeline/README.md) and [`modules/slo/README.md`](./modules/slo/README.md).
+See [`examples/slo-generator/`](./examples/slo-generator/) for more examples with different setups.
 
 ## Contributing
 
