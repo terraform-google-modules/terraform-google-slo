@@ -16,7 +16,7 @@
 
 module "project" {
   source                  = "terraform-google-modules/project-factory/google"
-  version                 = "~> 10.2"
+  version                 = "~> 14.0"
   name                    = "ci-slo"
   random_project_id       = "true"
   org_id                  = var.org_id
