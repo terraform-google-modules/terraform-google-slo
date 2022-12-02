@@ -26,8 +26,17 @@ resource "google_monitoring_slo" "slo" {
   dynamic "basic_sli" {
     for_each = local.type == "basic_sli" ? ["yes"] : []
     content {
-      latency {
-        threshold = local.latency_threshold
+      dynamic "latency" {
+        for_each = local.latency_threshold != null ? ["yes"] : []
+        content {
+          threshold = local.latency_threshold
+        }
+      }
+      dynamic "availability" {
+        for_each = local.latency_threshold == null ? ["yes"] : []
+        content {
+          enabled = true
+        }
       }
     }
   }
