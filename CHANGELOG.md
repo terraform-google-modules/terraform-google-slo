@@ -7,6 +7,13 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0](https://github.com/terraform-google-modules/terraform-google-slo/compare/v3.0.0...v3.1.0) (2022-12-29)
+
+
+### Features
+
+* add availability as an option ([#110](https://github.com/terraform-google-modules/terraform-google-slo/issues/110)) ([84ef32c](https://github.com/terraform-google-modules/terraform-google-slo/commit/84ef32c19b1cc576caf9dacb63fbd045f75b641c))
+
 ## [3.0.0](https://github.com/terraform-google-modules/terraform-google-slo/compare/v2.1.0...v3.0.0) (2022-03-08)
 
 
