@@ -80,6 +80,12 @@ resource "google_cloud_run_service" "service" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations,
+    ]
+  }
+
   template {
     metadata {
       annotations = merge(local.default_annotations, var.annotations)
