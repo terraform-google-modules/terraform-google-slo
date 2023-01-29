@@ -45,7 +45,7 @@ resource "google_cloud_scheduler_job" "scheduler" {
     }
     http_method = "POST"
     uri         = "${module.slo-generator.service_url}/?batch=true"
-    body        = base64encode(join(";", [for name in each.value.names : "gs://${module.slo-generator.bucket_name}/slos/${name}.yaml"]))
+    body        = base64encode(join("\n---\n", [for name in each.value.names : "gs://${module.slo-generator.bucket_name}/slos/${name}.yaml"]))
   }
 }
 
