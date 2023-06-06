@@ -4,7 +4,7 @@ This example illustrates how to use the `slo-native` module.
 
 The example will create the following resources:
 
-- A set of [SLOs](../../modules/slo-native).
+- A set of [SLOs](../../../modules/slo-native).
 
 ## Prerequisites
 
