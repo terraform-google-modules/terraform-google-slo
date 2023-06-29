@@ -124,6 +124,7 @@ resource "google_cloud_run_service" "service" {
           limits   = var.limits
         }
       }
+      timeout_seconds = var.timeout_seconds
     }
   }
 

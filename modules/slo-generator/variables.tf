@@ -81,6 +81,11 @@ variable "concurrency" {
   default     = 80
 }
 
+variable "timeout_seconds" {
+  description = "Cloud Run service TimeoutSeconds holds the max duration the instance is allowed for responding to a request."
+  default     = 300
+}
+
 variable "bucket_name" {
   description = "slo-generator GCS bucket name"
   default     = ""
