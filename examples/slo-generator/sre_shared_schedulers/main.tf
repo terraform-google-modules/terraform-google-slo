@@ -49,7 +49,9 @@ resource "google_cloud_scheduler_job" "scheduler" {
 }
 
 module "slo-generator" {
-  source                  = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   project_id              = var.project_id
   region                  = var.region
   config                  = local.config

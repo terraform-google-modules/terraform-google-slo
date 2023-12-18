@@ -15,7 +15,9 @@
  */
 
 module "slo_basic" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = {
     project_id        = var.app_engine_project_id
     service           = data.google_monitoring_app_engine_service.default.service_id
@@ -30,7 +32,9 @@ module "slo_basic" {
 }
 
 module "slo_request_based" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = {
     project_id          = var.project_id
     service             = google_monitoring_custom_service.customsrv.service_id
@@ -51,7 +55,9 @@ EOF
 }
 
 module "slo_windows_based_boolean" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = {
     project_id      = var.project_id
     slo_id          = "uptime-pass-window"
@@ -70,7 +76,9 @@ EOF
 }
 
 module "slo_windows_based_mean_range" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = {
     project_id          = var.project_id
     slo_id              = "cass-latency5ms-window"
@@ -90,7 +98,9 @@ EOF
 }
 
 module "slo_windows_based_sum_range" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = {
     project_id          = var.project_id
     slo_id              = "uptime-latency500ms-window"
@@ -111,7 +121,9 @@ EOF
 }
 
 module "slo_windows_based_good_total_ratio_threshold" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = {
     project_id          = var.project_id
     slo_id              = "gcp-latency500ms-window"

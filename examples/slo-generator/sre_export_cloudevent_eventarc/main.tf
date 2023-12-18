@@ -24,7 +24,9 @@ locals {
 }
 
 module "slo-generator" {
-  source                = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   project_id            = var.project_id
   region                = var.region
   config                = local.config
@@ -38,7 +40,9 @@ module "slo-generator" {
 }
 
 module "slo-generator-export" {
-  source                = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   service_name          = "slo-generator-export"
   target                = "run_export"
   signature_type        = "cloudevent"

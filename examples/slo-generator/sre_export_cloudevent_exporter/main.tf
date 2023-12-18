@@ -31,7 +31,9 @@ resource "google_service_account" "team1_service_account" {
 }
 
 module "slo-generator" {
-  source                = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   project_id            = var.team1_project_id
   region                = var.region
   config                = local.team1_config
@@ -53,7 +55,9 @@ resource "google_service_account" "sre_service_account" {
 }
 
 module "slo-generator-export" {
-  source                = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   service_name          = "slo-generator-export"
   target                = "run_export"
   signature_type        = "cloudevent"

@@ -28,31 +28,43 @@ locals {
 }
 
 module "slo-cass-latency5ms-window" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = local.slo_config_map["cass-latency5ms-window"]
 }
 
 module "slo-gae-latency500ms" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = local.slo_config_map["gae-latency500ms"]
 }
 
 module "slo-gcp-latency400ms" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = local.slo_config_map["gcp-latency400ms"]
 }
 
 module "slo-gcp-latency500ms-window" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = local.slo_config_map["gcp-latency500ms-window"]
 }
 
 module "slo-uptime-latency500ms-window" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = local.slo_config_map["uptime-latency500ms-window"]
 }
 
 module "slo-uptime-pass-window" {
-  source = "../../../modules/slo-native"
+  source  = "terraform-google-modules/slo/google//modules/slo-native"
+  version = "~> 3.0"
+
   config = local.slo_config_map["uptime-pass-window"]
 }
