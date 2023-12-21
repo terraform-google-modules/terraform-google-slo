@@ -29,7 +29,9 @@ locals {
 # Team 1 computes their own SLOs, and sets up an exporter to SRE's BigQuery
 # dataset.
 module "team1-slos" {
-  source                = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   project_id            = var.team1_project_id
   region                = var.region
   config                = local.team1_config
@@ -46,7 +48,9 @@ module "team1-slos" {
 # Team 2 manages a GCS bucket with their SLO configs, but wants to use
 # SRE-as-a-service.
 module "team2-slos" {
-  source         = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   project_id     = var.team2_project_id
   region         = var.region
   slo_configs    = local.team2_configs

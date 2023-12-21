@@ -26,7 +26,9 @@ locals {
 # SLOs as-a-service, run by SRE team.
 # This service can be used by the various teams to compute their SLOs.
 module "slo-generator" {
-  source                = "../../../modules/slo-generator"
+  source  = "terraform-google-modules/slo/google//modules/slo-generator"
+  version = "~> 3.0"
+
   project_id            = var.project_id
   region                = var.region
   config                = local.sre_config
