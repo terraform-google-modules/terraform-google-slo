@@ -25,6 +25,6 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-slo:slo-generator/v3.1.0"
+    module_name = "blueprints/terraform/terraform-google-slo:slo-generator/v4.0.0"
   }
 }
