@@ -29,11 +29,10 @@ locals {
     for name, value in local.freqs :
     name => { frequency : value, names : [for config in local.slo_configs : config.metadata.name if config.spec.frequency == value] }
   }
-  pubsub_sa_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  for_each = { for key, conf in local.frequencies : key => conf if conf.names != [] }
+  for_each = { for key, conf in local.frequencies : key => conf if length(conf.names) != 0 }
   project  = var.project_id
   region   = var.region
   schedule = each.value.frequency

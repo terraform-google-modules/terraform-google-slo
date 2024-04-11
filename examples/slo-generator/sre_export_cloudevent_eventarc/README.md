@@ -25,10 +25,8 @@ To run this example, you'll need:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | gcr\_project\_id | Google Container registry project where image is hosted | `string` | `"slo-generator-ci-a2b4"` | no |
-| labels | Project labels | `map` | `{}` | no |
 | project\_id | Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
-| schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
 | slo\_generator\_version | SLO generator version | `string` | `"latest"` | no |
 
 ## Outputs

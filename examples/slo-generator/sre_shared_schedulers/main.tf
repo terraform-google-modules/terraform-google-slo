@@ -32,7 +32,7 @@ locals {
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  for_each = { for key, conf in local.frequencies : key => conf if conf.names != [] }
+  for_each = { for key, conf in local.frequencies : key => conf if length(conf.names) != 0 }
   project  = var.project_id
   region   = var.region
   schedule = each.value.frequency

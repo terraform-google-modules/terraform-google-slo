@@ -17,7 +17,7 @@
 locals {
   service_account_email = var.service_account_email == "" ? "${data.google_project.project.number}-compute@developer.gserviceaccount.com" : var.service_account_email
   bucket_name           = var.bucket_name != "" ? var.bucket_name : "slo-generator-${random_id.suffix.hex}"
-  service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status.*.url) : var.service_url
+  service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status[*].url) : var.service_url
   default_annotations = {
     "autoscaling.knative.dev/minScale" = "1"
     "autoscaling.knative.dev/maxScale" = "100"

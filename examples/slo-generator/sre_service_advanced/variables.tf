@@ -31,19 +31,9 @@ variable "gcr_project_id" {
   default     = "slo-generator-ci-a2b4"
 }
 
-variable "schedule" {
-  description = "Cron-like Cloud Scheduler schedule"
-  default     = "* * * * */1"
-}
-
 variable "region" {
   description = "Region"
   default     = "us-east1"
-}
-
-variable "pubsub_topic_name" {
-  description = "PubSub topic name"
-  default     = "slo-export"
 }
 
 variable "bigquery_dataset_name" {
