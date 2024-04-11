@@ -136,4 +136,8 @@ resource "google_cloud_run_service" "service" {
     google_project_iam_member.sa-roles,
     google_secret_manager_secret_version.secret-version-data
   ]
+
+  timeouts {
+    create = "20m"
+  }
 }
