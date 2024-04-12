@@ -32,7 +32,7 @@ module "slo-generator" {
   config                = local.config
   slo_configs           = local.slo_configs
   slo_generator_version = var.slo_generator_version
-  gcr_project_id        = var.gcr_project_id
+  slo_generator_image   = var.slo_generator_image
   secrets = {
     PROJECT_ID        = var.project_id
     PUBSUB_TOPIC_NAME = google_pubsub_topic.topic.name
@@ -50,7 +50,7 @@ module "slo-generator-export" {
   region                = var.region
   config                = local.config_export
   slo_generator_version = var.slo_generator_version
-  gcr_project_id        = var.gcr_project_id
+  slo_generator_image   = var.slo_generator_image
   secrets = {
     SRE_PROJECT_ID = var.project_id
   }

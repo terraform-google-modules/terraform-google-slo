@@ -38,7 +38,7 @@ module "slo-generator" {
   region                = var.region
   config                = local.team1_config
   slo_configs           = local.team1_slo_configs
-  gcr_project_id        = var.gcr_project_id
+  slo_generator_image   = var.slo_generator_image
   slo_generator_version = var.slo_generator_version
   service_account_email = google_service_account.team1_service_account.email
   secrets = {
@@ -64,7 +64,7 @@ module "slo-generator-export" {
   project_id            = var.project_id
   region                = var.region
   config                = local.sre_config
-  gcr_project_id        = var.gcr_project_id
+  slo_generator_image   = var.slo_generator_image
   slo_generator_version = var.slo_generator_version
   service_account_email = local.service_account_email
   secrets = {

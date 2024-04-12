@@ -28,14 +28,14 @@ variable "region" {
   default     = "us-east1"
 }
 
-variable "gcr_project_id" {
-  description = "Google Container registry project where image is hosted"
-  default     = "slo-generator-ci-a2b4"
+variable "slo_generator_image" {
+  description = "SLO generator image"
+  default     = "ghcr.io/google/slo-generator"
 }
 
 variable "slo_generator_version" {
   description = "SLO generator version"
-  default     = "latest"
+  default     = "master"
 }
 
 variable "labels" {

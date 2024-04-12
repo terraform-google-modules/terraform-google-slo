@@ -33,14 +33,14 @@ variable "slo_configs" {
   default     = []
 }
 
-variable "gcr_project_id" {
-  description = "slo-generator image project id"
-  default     = "slo-generator-ci-a2b4"
+variable "slo_generator_image" {
+  description = "SLO generator image"
+  default     = "ghcr.io/google/slo-generator"
 }
 
 variable "slo_generator_version" {
-  description = "slo-generator container image version"
-  default     = "latest"
+  description = "SLO generator version"
+  default     = "master"
 }
 
 variable "service_name" {
