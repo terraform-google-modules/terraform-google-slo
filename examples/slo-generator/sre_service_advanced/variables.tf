@@ -26,9 +26,14 @@ variable "team2_project_id" {
   description = "Team 2 project id"
 }
 
-variable "gcr_project_id" {
-  description = "Google Container registry project where image is hosted"
-  default     = "slo-generator-ci-a2b4"
+variable "slo_generator_image" {
+  description = "SLO generator image"
+  default     = "ghcr.io/google/slo-generator"
+}
+
+variable "slo_generator_version" {
+  description = "SLO generator version"
+  default     = "master"
 }
 
 variable "schedule" {
@@ -49,9 +54,4 @@ variable "pubsub_topic_name" {
 variable "bigquery_dataset_name" {
   description = "BigQuery dataset to hold SLO reports"
   default     = "slo"
-}
-
-variable "slo_generator_version" {
-  description = "slo-generator image version"
-  default     = "latest"
 }

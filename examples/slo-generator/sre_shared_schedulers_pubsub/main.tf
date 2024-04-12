@@ -58,7 +58,7 @@ module "slo-generator" {
   config                  = local.config
   slo_configs             = local.slo_configs
   slo_generator_version   = var.slo_generator_version
-  gcr_project_id          = var.gcr_project_id
+  slo_generator_image     = var.slo_generator_image
   create_cloud_schedulers = false
   secrets = {
     PROJECT_ID        = var.project_id

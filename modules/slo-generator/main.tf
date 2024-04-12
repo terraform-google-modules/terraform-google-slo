@@ -89,7 +89,7 @@ resource "google_cloud_run_service" "service" {
       service_account_name  = local.service_account_email
       container_concurrency = var.concurrency
       containers {
-        image   = "gcr.io/${var.gcr_project_id}/slo-generator:${var.slo_generator_version}"
+        image   = "${var.slo_generator_image}:${var.slo_generator_version}"
         command = ["slo-generator"]
         args = [
           "api",

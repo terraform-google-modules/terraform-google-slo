@@ -34,7 +34,7 @@ module "slo-generator" {
   config                = local.sre_config
   service_account_email = local.service_account_email
   slo_configs           = local.sre_slo_configs
-  gcr_project_id        = var.gcr_project_id
+  slo_generator_image   = var.slo_generator_image
   slo_generator_version = var.slo_generator_version
   secrets = {
     SRE_PROJECT_ID          = var.project_id
