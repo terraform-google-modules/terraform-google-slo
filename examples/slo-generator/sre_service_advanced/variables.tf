@@ -26,29 +26,9 @@ variable "team2_project_id" {
   description = "Team 2 project id"
 }
 
-variable "slo_generator_image" {
-  description = "SLO generator image"
-  default     = "ghcr.io/google/slo-generator"
-}
-
-variable "slo_generator_version" {
-  description = "SLO generator version"
-  default     = "master"
-}
-
-variable "schedule" {
-  description = "Cron-like Cloud Scheduler schedule"
-  default     = "* * * * */1"
-}
-
 variable "region" {
   description = "Region"
   default     = "us-east1"
-}
-
-variable "pubsub_topic_name" {
-  description = "PubSub topic name"
-  default     = "slo-export"
 }
 
 variable "bigquery_dataset_name" {

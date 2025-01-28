@@ -32,8 +32,6 @@ To run this example, you'll need:
 |------|-------------|------|---------|:--------:|
 | project\_id | SRE Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
-| slo\_generator\_image | SLO generator image | `string` | `"ghcr.io/google/slo-generator"` | no |
-| slo\_generator\_version | SLO generator version | `string` | `"master"` | no |
 | team1\_project\_id | Team 1 project id | `any` | n/a | yes |
 
 ## Outputs

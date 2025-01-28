@@ -30,11 +30,7 @@ To run this example, you'll need:
 |------|-------------|------|---------|:--------:|
 | bigquery\_dataset\_name | BigQuery dataset to hold SLO reports | `string` | `"slo"` | no |
 | project\_id | SRE Project id | `any` | n/a | yes |
-| pubsub\_topic\_name | PubSub topic name | `string` | `"slo-export"` | no |
 | region | Region | `string` | `"us-east1"` | no |
-| schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
-| slo\_generator\_image | SLO generator image | `string` | `"ghcr.io/google/slo-generator"` | no |
-| slo\_generator\_version | SLO generator version | `string` | `"master"` | no |
 | team1\_project\_id | Team 1 project id | `any` | n/a | yes |
 | team2\_project\_id | Team 2 project id | `any` | n/a | yes |
 

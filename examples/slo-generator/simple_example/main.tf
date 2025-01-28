@@ -26,12 +26,10 @@ module "slo-generator" {
   source  = "terraform-google-modules/slo/google//modules/slo-generator"
   version = "~> 3.0"
 
-  project_id            = var.project_id
-  region                = var.region
-  config                = local.config
-  slo_configs           = local.slo_configs
-  slo_generator_version = var.slo_generator_version
-  slo_generator_image   = var.slo_generator_image
+  project_id  = var.project_id
+  region      = var.region
+  config      = local.config
+  slo_configs = local.slo_configs
   secrets = {
     PROJECT_ID = var.project_id
   }

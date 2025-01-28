@@ -16,12 +16,8 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| labels | Project labels | `map` | `{}` | no |
 | project\_id | Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
-| schedule | Cron-like Cloud Scheduler schedule | `string` | `"* * * * */1"` | no |
-| slo\_generator\_image | SLO generator image | `string` | `"ghcr.io/google/slo-generator"` | no |
-| slo\_generator\_version | SLO generator version | `string` | `"master"` | no |
 
 ## Outputs
 

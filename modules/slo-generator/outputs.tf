@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2021-2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,26 @@
  */
 
 output "service_url" {
-  value = local.service_url
+  description = "Service URL"
+  value       = local.service_url
 }
 
 output "service_name" {
-  value = var.create_service ? google_cloud_run_service.service[0].name : ""
+  description = "Service Name"
+  value       = var.create_service ? google_cloud_run_service.service[0].name : ""
 }
 
 output "bucket_name" {
-  value = local.bucket_name
+  description = "Bucket Name"
+  value       = local.bucket_name
 }
 
 output "service_account_email" {
-  value = local.service_account_email
+  description = "Service Account Email"
+  value       = local.service_account_email
 }
 
 output "authorized_members" {
-  value = google_cloud_run_service_iam_member.run-invokers[*].member
+  description = "Authorized Members"
+  value       = google_cloud_run_service_iam_member.run-invokers[*].member
 }

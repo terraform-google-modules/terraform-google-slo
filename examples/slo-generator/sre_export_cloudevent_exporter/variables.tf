@@ -26,13 +26,3 @@ variable "project_id" {
 variable "team1_project_id" {
   description = "Team 1 project id"
 }
-
-variable "slo_generator_image" {
-  description = "SLO generator image"
-  default     = "ghcr.io/google/slo-generator"
-}
-
-variable "slo_generator_version" {
-  description = "SLO generator version"
-  default     = "master"
-}

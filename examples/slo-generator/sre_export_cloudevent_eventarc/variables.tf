@@ -18,27 +18,7 @@ variable "project_id" {
   description = "Project id"
 }
 
-variable "schedule" {
-  description = "Cron-like Cloud Scheduler schedule"
-  default     = "* * * * */1"
-}
-
 variable "region" {
   description = "Region"
   default     = "us-east1"
-}
-
-variable "slo_generator_image" {
-  description = "SLO generator image"
-  default     = "ghcr.io/google/slo-generator"
-}
-
-variable "slo_generator_version" {
-  description = "SLO generator version"
-  default     = "master"
-}
-
-variable "labels" {
-  description = "Project labels"
-  default     = {}
 }

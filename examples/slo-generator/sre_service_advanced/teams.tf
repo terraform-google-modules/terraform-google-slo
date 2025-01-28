@@ -32,12 +32,10 @@ module "team1-slos" {
   source  = "terraform-google-modules/slo/google//modules/slo-generator"
   version = "~> 3.0"
 
-  project_id            = var.team1_project_id
-  region                = var.region
-  config                = local.team1_config
-  slo_configs           = local.team1_configs
-  slo_generator_image   = var.slo_generator_image
-  slo_generator_version = var.slo_generator_version
+  project_id  = var.team1_project_id
+  region      = var.region
+  config      = local.team1_config
+  slo_configs = local.team1_configs
   secrets = {
     SRE_PROJECT_ID          = var.project_id
     SRE_BIGQUERY_DATASET_ID = google_bigquery_dataset.export-dataset.dataset_id

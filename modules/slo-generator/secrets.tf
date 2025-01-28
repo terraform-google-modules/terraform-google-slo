@@ -20,7 +20,6 @@ data "google_project" "project" {
 
 resource "google_secret_manager_secret" "secret" {
   for_each  = var.secrets
-  provider  = google-beta
   project   = var.project_id
   secret_id = each.key
   replication {
@@ -30,7 +29,6 @@ resource "google_secret_manager_secret" "secret" {
 
 resource "google_secret_manager_secret_iam_member" "secret-access" {
   for_each  = google_secret_manager_secret.secret
-  provider  = google-beta
   project   = var.project_id
   secret_id = each.value.id
   role      = "roles/secretmanager.secretAccessor"
@@ -39,7 +37,6 @@ resource "google_secret_manager_secret_iam_member" "secret-access" {
 
 resource "google_secret_manager_secret_version" "secret-version-data" {
   for_each    = google_secret_manager_secret.secret
-  provider    = google-beta
   secret      = each.value.id
   secret_data = var.secrets[each.key]
 }

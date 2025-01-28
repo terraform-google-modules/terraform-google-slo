@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2021-2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,10 @@ locals {
     for name, value in local.freqs :
     name => { frequency : value, names : [for config in local.slo_configs : config.metadata.name if config.spec.frequency == value] }
   }
-  pubsub_sa_email = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
 resource "google_cloud_scheduler_job" "scheduler" {
-  for_each = { for key, conf in local.frequencies : key => conf if conf.names != [] }
+  for_each = { for key, conf in local.frequencies : key => conf if length(conf.names) != 0 }
   project  = var.project_id
   region   = var.region
   schedule = each.value.frequency
@@ -57,8 +56,6 @@ module "slo-generator" {
   region                  = var.region
   config                  = local.config
   slo_configs             = local.slo_configs
-  slo_generator_version   = var.slo_generator_version
-  slo_generator_image     = var.slo_generator_image
   create_cloud_schedulers = false
   secrets = {
     PROJECT_ID        = var.project_id
