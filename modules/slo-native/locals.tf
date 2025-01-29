@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 locals {
-  project_id           = lookup(var.config, "project_id")
-  service              = lookup(var.config, "service")
-  slo_id               = lookup(var.config, "slo_id")
-  display_name         = lookup(var.config, "display_name")
-  goal                 = lookup(var.config, "goal")
-  type                 = lookup(var.config, "type")
+  project_id           = var.config["project_id"]
+  service              = var.config["service"]
+  slo_id               = var.config["slo_id"]
+  display_name         = var.config["display_name"]
+  goal                 = var.config["goal"]
+  type                 = var.config["type"]
   calendar_period      = lookup(var.config, "calendar_period", null)
   rolling_period_days  = lookup(var.config, "rolling_period_days", null)
   method               = lookup(var.config, "method", null)

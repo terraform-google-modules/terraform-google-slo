@@ -27,12 +27,10 @@ module "slo-generator" {
   source  = "terraform-google-modules/slo/google//modules/slo-generator"
   version = "~> 3.0"
 
-  project_id            = var.project_id
-  region                = var.region
-  config                = local.config
-  slo_configs           = local.slo_configs
-  slo_generator_version = var.slo_generator_version
-  gcr_project_id        = var.gcr_project_id
+  project_id  = var.project_id
+  region      = var.region
+  config      = local.config
+  slo_configs = local.slo_configs
   secrets = {
     PROJECT_ID        = var.project_id
     PUBSUB_TOPIC_NAME = google_pubsub_topic.topic.name
@@ -43,14 +41,12 @@ module "slo-generator-export" {
   source  = "terraform-google-modules/slo/google//modules/slo-generator"
   version = "~> 3.0"
 
-  service_name          = "slo-generator-export"
-  target                = "run_export"
-  signature_type        = "cloudevent"
-  project_id            = var.project_id
-  region                = var.region
-  config                = local.config_export
-  slo_generator_version = var.slo_generator_version
-  gcr_project_id        = var.gcr_project_id
+  service_name   = "slo-generator-export"
+  target         = "run_export"
+  signature_type = "cloudevent"
+  project_id     = var.project_id
+  region         = var.region
+  config         = local.config_export
   secrets = {
     SRE_PROJECT_ID = var.project_id
   }

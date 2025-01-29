@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2021-2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 locals {
   service_account_email = var.service_account_email == "" ? "${data.google_project.project.number}-compute@developer.gserviceaccount.com" : var.service_account_email
   bucket_name           = var.bucket_name != "" ? var.bucket_name : "slo-generator-${random_id.suffix.hex}"
-  service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status.*.url) : var.service_url
+  service_url           = var.create_service ? join("", google_cloud_run_service.service[0].status[*].url) : var.service_url
   default_annotations = {
     "autoscaling.knative.dev/minScale" = "1"
     "autoscaling.knative.dev/maxScale" = "100"
@@ -72,7 +72,6 @@ resource "google_cloud_run_service" "service" {
   location                   = var.region
   project                    = var.project_id
   autogenerate_revision_name = true
-  provider                   = google-beta
 
   metadata {
     annotations = {
@@ -89,7 +88,7 @@ resource "google_cloud_run_service" "service" {
       service_account_name  = local.service_account_email
       container_concurrency = var.concurrency
       containers {
-        image   = "gcr.io/${var.gcr_project_id}/slo-generator:${var.slo_generator_version}"
+        image   = "${google_artifact_registry_repository.slo-generator-repo.location}-docker.pkg.dev/${google_artifact_registry_repository.slo-generator-repo.project}/${google_artifact_registry_repository.slo-generator-repo.name}/${var.slo_generator_image}:${var.slo_generator_version}"
         command = ["slo-generator"]
         args = [
           "api",
@@ -136,4 +135,20 @@ resource "google_cloud_run_service" "service" {
     google_project_iam_member.sa-roles,
     google_secret_manager_secret_version.secret-version-data
   ]
+}
+
+resource "google_artifact_registry_repository" "slo-generator-repo" {
+  project       = var.project_id
+  location      = var.region
+  repository_id = "slo-generator-repo-${random_id.suffix.hex}"
+  description   = "slo generator repo"
+  format        = "DOCKER"
+  mode          = "REMOTE_REPOSITORY"
+  remote_repository_config {
+    description                 = "slo generator remote"
+    disable_upstream_validation = true
+    common_repository {
+      uri = "https://${var.slo_generator_remote}"
+    }
+  }
 }

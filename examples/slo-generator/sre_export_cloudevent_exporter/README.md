@@ -30,10 +30,8 @@ To run this example, you'll need:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| gcr\_project\_id | Google Container Registry project to fetch slo-generator image from | `string` | `"slo-generator-ci-a2b4"` | no |
 | project\_id | SRE Project id | `any` | n/a | yes |
 | region | Region | `string` | `"us-east1"` | no |
-| slo\_generator\_version | Version of slo-generator image | `string` | `"latest"` | no |
 | team1\_project\_id | Team 1 project id | `any` | n/a | yes |
 
 ## Outputs
