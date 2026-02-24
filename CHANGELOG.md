@@ -7,6 +7,19 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0](https://github.com/terraform-google-modules/terraform-google-slo/compare/v3.1.0...v4.0.0) (2026-02-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>=6.12:** support image for slo_generator ([#137](https://github.com/terraform-google-modules/terraform-google-slo/issues/137))
+* upgrade to tpgv5 ([#123](https://github.com/terraform-google-modules/terraform-google-slo/issues/123))
+
+### Features
+
+* **TPG>=6.12:** support image for slo_generator ([#137](https://github.com/terraform-google-modules/terraform-google-slo/issues/137)) ([ec6f9fd](https://github.com/terraform-google-modules/terraform-google-slo/commit/ec6f9fde10e244600ac209e71d5cc9b196b9a573))
+* upgrade to tpgv5 ([#123](https://github.com/terraform-google-modules/terraform-google-slo/issues/123)) ([4f59c3a](https://github.com/terraform-google-modules/terraform-google-slo/commit/4f59c3a8496abcc682254bf0c9878b94fac1b045))
+
 ## [3.1.0](https://github.com/terraform-google-modules/terraform-google-slo/compare/v3.0.0...v3.1.0) (2022-12-29)
 
 
