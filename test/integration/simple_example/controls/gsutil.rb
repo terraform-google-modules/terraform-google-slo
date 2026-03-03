@@ -15,7 +15,7 @@
 control "gsutil" do
   title "gsutil"
 
-  describe command("gsutil ls -p #{attribute("project_id")}") do
+  describe command("gcloud storage ls --project=#{attribute("project_id")}") do
     its(:exit_status) { should eq 0 }
     its(:stderr) { should eq "" }
     # its(:stdout) { should match "gs://#{attribute["bucket_name"]}" }
